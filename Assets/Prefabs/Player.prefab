@@ -63,11 +63,12 @@ MonoBehaviour:
   activeCamera: {fileID: 0}
   currentCharacter: {fileID: 0}
   characterPrefab: {fileID: 9097060641597270815, guid: c4ad43563aff9a640a2aa56bbb327d73, type: 3}
+  rightHand: {fileID: 0}
   arrowIndicatorPrefab: {fileID: 5965764284006694056, guid: c2f14587be506b542b0a3579b4cd8cca, type: 3}
   arrowObject: {fileID: 0}
   moveSpeed: 15
   rotationAngle: 0
-  primaryWeaponPrefab: {fileID: 1727071150036172477, guid: 7e6dcdc00eca95c439c26d895558b4d9, type: 3}
+  currentWeaponPrefab: {fileID: 1727071150036172477, guid: 7e6dcdc00eca95c439c26d895558b4d9, type: 3}
   currentWeapon: {fileID: 0}
   isTertiaryWeaponActive: 0
   movementState: 0
