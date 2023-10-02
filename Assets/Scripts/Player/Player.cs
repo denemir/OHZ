@@ -127,6 +127,7 @@ public class Player : MonoBehaviour
         InitializePrimaryWeapon();
         InitializeArrowIndicator();
         InitializeCamera();
+        InitializeNameTag();
     }
     private void InitializeCharacterModel()
     {
