@@ -1,0 +1,60 @@
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class Bullet : MonoBehaviour
+{
+    private Vector3 direction;
+    private Quaternion rotation;
+
+    //physical stats
+    private float velocity;
+    private float damage;
+    private float criticalChance;
+    private float criticalDamage;
+
+    private float life = 5f;
+    private float despawnTime;
+    // Start is called before the first frame update
+    void Start()
+    {
+        despawnTime = Time.time + life;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        transform.position += direction * velocity * Time.deltaTime;
+        if(Time.time > despawnTime)
+        {
+            Destroy(this.gameObject);
+        }
+        transform.rotation = rotation;
+    }
+
+    public void SetDamageAndCritValues(float damage, float criticalChance, float criticalDamage)
+    {
+        this.damage = damage;
+        this.criticalChance = criticalChance;   
+        this.criticalDamage = criticalDamage;  
+    }
+
+    public void SetDirection(Vector3 direction)
+    {
+        this.direction = direction;
+    }
+
+    public void SetVelocity(float velocity)
+    {
+        this.velocity = velocity;
+    }
+
+    public void SetRotationValues(Quaternion rotation)
+    {
+        this.rotation = rotation;
+    }
+
+    public void Damage()
+    {
+
+    }
+}

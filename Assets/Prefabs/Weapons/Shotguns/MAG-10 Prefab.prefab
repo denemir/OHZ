@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1727071150036172477
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2654708301017111204}
+  - component: {fileID: 4422963551661396218}
+  m_Layer: 0
+  m_Name: MAG-10 Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2654708301017111204
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727071150036172477}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4422963551661396218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727071150036172477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 726710e51b196614192db3e9707165c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponName: MAG-10
+  fireRate: 0.8
+  isFullAuto: 0
+  canToggleFullAuto: 0
+  damage: 15
+  criticalDamage: 20
+  criticalChance: 0
+  reloadState: 0
+  isActive: 0
+  timeToReload: 2
+  magazineSize: 8
+  currentAmmoInMag: 8
+  currentStockAmmo: 80
+  maxStockAmmo: 80
+  isWeaponHandLoaded: 1
+  roundsReloadedPerInstance: 1
+  recoilSpread: 50
+  currentRecoilSpread: 0
+  recoilRate: 15
+  type: 3
+  weaponModelPrefab: {fileID: 2224583070869084832, guid: d17c028f2ffbd5d44a2f1162089a1a95, type: 3}
+  weaponModel: {fileID: 0}
+  barrelTipTransform: {fileID: 0}
+  barrelTip: {fileID: 0}
+  bulletModelPrefab: {fileID: 5527745764002851422, guid: 3ec4e7cb42c193241999b9db7c1e4ce1, type: 3}
+  bulletVelocity: 40
+  player: {fileID: 0}
+  character: {fileID: 0}
+  rightHand: {fileID: 0}
+  playerGUIHandler: {fileID: 0}
+  numberOfPellets: 5
+  minimumSpread: 2
