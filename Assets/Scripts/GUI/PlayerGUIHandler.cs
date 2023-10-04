@@ -16,6 +16,7 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
     // implement other players to display
 
     //texts
+    public Text playerNameText;
     public Text currentWaveTextPrefab;
     public Text currentPointsTextPrefab;
     public Text ammoInMagTextPrefab;
@@ -34,6 +35,8 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
     // Start is called before the first frame update
     void Start()
     {
+        CreatePlayerCanvas();
+        playerNameText.text = GetComponent<Player>().playerName;
         //currentTargetedPlayer = GetComponent<Player>();
         //playerCanvas = Instantiate(canvasPrefab, currentTargetedPlayer.transform);
 
@@ -76,6 +79,28 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
         //        weaponNameText.text = currentTargetedPlayer.currentWeapon.weaponName.ToString();
         //        weaponNameText.color = Color.white;
         //    }
+    }
+
+    public void CreatePlayerCanvas()
+    {
+        if (canvasPrefab != null)
+            playerCanvas = Instantiate(canvasPrefab);
+        else Debug.LogWarning("Canvas not found");
+        playerCanvas.worldCamera = GetComponent<Player>().activeCamera;
+
+        //set canvas position based on player id
+        int playerID = GetComponent<Player>().id;
+
+        float canvasWidth = 0.5f;
+        float canvasHeight = 0.5f;
+
+        float xOffset = (playerID % 2) * canvasWidth;
+        float yOffset = (playerID / 2) * canvasHeight;
+
+        playerCanvas.transform.SetParent(null);
+        playerCanvas.transform.position = new Vector3(xOffset, yOffset, 0);
+        playerCanvas.GetComponent<RectTransform>().sizeDelta = new Vector2(canvasWidth, canvasHeight);
+ 
     }
 
     public void UpdateCurrentWave()

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     //weapons
-    private int numberOfWeaponSlots = 2; //can only be 3 with a perk
+    private int numberOfWeaponSlots/* = 2*/; //can only be 3 with a perk
     public Weapon[] weapons;
 
     private int currentWeaponSlot;

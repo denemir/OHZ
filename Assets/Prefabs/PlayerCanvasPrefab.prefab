@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6523216930866879253}
   - component: {fileID: 6833357054570716554}
   m_Layer: 5
-  m_Name: SinglePlayerCanvas(Clone)
+  m_Name: PlayerCanvasPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

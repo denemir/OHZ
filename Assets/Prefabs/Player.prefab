@@ -111,9 +111,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTargetedPlayer: {fileID: 0}
-  playerCanvas: {fileID: 0}
+  playerCanvas: {fileID: 120847455540090814, guid: 26e9d7426c8836c4a94ff46b879a6310, type: 3}
   canvasPrefab: {fileID: 0}
   currentWave: 0
+  playerNameText: {fileID: 0}
   currentWaveTextPrefab: {fileID: 0}
   currentPointsTextPrefab: {fileID: 0}
   ammoInMagTextPrefab: {fileID: 0}

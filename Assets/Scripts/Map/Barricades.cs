@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Barricades : MonoBehaviour
 {
@@ -13,6 +14,14 @@ public class Barricades : MonoBehaviour
 
     public float barricadeRepairTime; //how much time it takes to place back one piece
     //barricade cube span, how much physical space does it take up
+
+
+
+    //interaction
+    private Interactable interactable;
+
+    public string repairPrompt;
+    public UnityEvent repairBarricades;
 
     // Start is called before the first frame update
     void Start()

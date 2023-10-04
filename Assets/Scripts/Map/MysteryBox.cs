@@ -39,7 +39,6 @@ public class MysteryBox : MonoBehaviour
     public string spinPrompt;
     public UnityEvent spinBox;
 
-
     public string pickUpWeaponPrompt;
     public UnityEvent pickUpWeapon;
 
