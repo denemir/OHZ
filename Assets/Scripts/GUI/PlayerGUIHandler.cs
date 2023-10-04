@@ -36,7 +36,7 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
     void Start()
     {
         CreatePlayerCanvas();
-        playerNameText.text = GetComponent<Player>().playerName;
+        //playerNameText.text = GetComponent<Player>().playerName;
         //currentTargetedPlayer = GetComponent<Player>();
         //playerCanvas = Instantiate(canvasPrefab, currentTargetedPlayer.transform);
 

@@ -112,14 +112,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentTargetedPlayer: {fileID: 0}
   playerCanvas: {fileID: 120847455540090814, guid: 26e9d7426c8836c4a94ff46b879a6310, type: 3}
-  canvasPrefab: {fileID: 0}
+  canvasPrefab: {fileID: 120847455540090814, guid: 26e9d7426c8836c4a94ff46b879a6310, type: 3}
   currentWave: 0
   playerNameText: {fileID: 0}
-  currentWaveTextPrefab: {fileID: 0}
-  currentPointsTextPrefab: {fileID: 0}
-  ammoInMagTextPrefab: {fileID: 0}
-  stockAmmoTextPrefab: {fileID: 0}
-  weaponNameTextPrefab: {fileID: 0}
+  currentWaveTextPrefab: {fileID: 4684374049546311231, guid: 84d5ac794cf796845a6310da91ba25f0, type: 3}
+  currentPointsTextPrefab: {fileID: 5966527929565030783, guid: f5573ce2d92182d4bbcde9dadd816378, type: 3}
+  ammoInMagTextPrefab: {fileID: 8007728038444123500, guid: c67e6330cec931a49b3337dee1b8a994, type: 3}
+  stockAmmoTextPrefab: {fileID: 7046107857295597080, guid: 4b9fb51af7db5e941a45bf0bef502024, type: 3}
+  weaponNameTextPrefab: {fileID: 1191854671300934551, guid: 5bd84453437f7c2468747dc7c245e61a, type: 3}
   currentWaveText: {fileID: 0}
   currentPointsText: {fileID: 0}
   ammoInMagText: {fileID: 0}
