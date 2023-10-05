@@ -68,7 +68,7 @@ MonoBehaviour:
   arrowObject: {fileID: 0}
   moveSpeed: 15
   rotationAngle: 0
-  currentWeaponPrefab: {fileID: 1727071150036172477, guid: 7e6dcdc00eca95c439c26d895558b4d9, type: 3}
+  currentWeaponPrefab: {fileID: 4039396094233068235, guid: be835e691fcac2741912c785c03f17a0, type: 3}
   currentWeapon: {fileID: 0}
   isTertiaryWeaponActive: 0
   movementState: 0
@@ -120,11 +120,13 @@ MonoBehaviour:
   ammoInMagTextPrefab: {fileID: 8007728038444123500, guid: c67e6330cec931a49b3337dee1b8a994, type: 3}
   stockAmmoTextPrefab: {fileID: 7046107857295597080, guid: 4b9fb51af7db5e941a45bf0bef502024, type: 3}
   weaponNameTextPrefab: {fileID: 1191854671300934551, guid: 5bd84453437f7c2468747dc7c245e61a, type: 3}
+  interactionPromptTextPrefab: {fileID: 5966527929565030783, guid: a1f2975fc162a224293fc9b87b2523fd, type: 3}
   currentWaveText: {fileID: 0}
   currentPointsText: {fileID: 0}
   ammoInMagText: {fileID: 0}
   stockAmmoText: {fileID: 0}
   weaponNameText: {fileID: 0}
+  interactPromptText: {fileID: 0}
 --- !u!54 &6059956736831921733
 Rigidbody:
   m_ObjectHideFlags: 0

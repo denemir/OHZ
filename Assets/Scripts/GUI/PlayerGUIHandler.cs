@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PlayerGUIHandler : MonoBehaviour //attaches to player
@@ -22,12 +23,14 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
     public Text ammoInMagTextPrefab;
     public Text stockAmmoTextPrefab;
     public Text weaponNameTextPrefab;
+    public Text interactionPromptTextPrefab;
 
     public Text currentWaveText;
     public Text currentPointsText;
     public Text ammoInMagText;
     public Text stockAmmoText;
     public Text weaponNameText;
+    public Text interactPromptText;
 
     ////target camera
     //public Camera targetCamera;
@@ -36,49 +39,22 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
     void Start()
     {
         CreatePlayerCanvas();
-        //playerNameText.text = GetComponent<Player>().playerName;
-        //currentTargetedPlayer = GetComponent<Player>();
-        //playerCanvas = Instantiate(canvasPrefab, currentTargetedPlayer.transform);
 
-        //currentWaveText = Instantiate(currentWaveTextPrefab, playerCanvas.transform);
-        //currentPointsText = Instantiate(currentPointsTextPrefab, playerCanvas.transform);
-        //ammoInMagText = Instantiate(ammoInMagTextPrefab, playerCanvas.transform);
-        //stockAmmoText = Instantiate(stockAmmoTextPrefab, playerCanvas.transform);
-        //weaponNameText = Instantiate(weaponNameTextPrefab, playerCanvas.transform);
+        currentWaveText = Instantiate(currentWaveTextPrefab, playerCanvas.transform);
+        currentPointsText = Instantiate(currentPointsTextPrefab, playerCanvas.transform);
+        ammoInMagText = Instantiate(ammoInMagTextPrefab, playerCanvas.transform);
+        stockAmmoText = Instantiate(stockAmmoTextPrefab, playerCanvas.transform);
+        weaponNameText = Instantiate(weaponNameTextPrefab, playerCanvas.transform);
+        interactPromptText = Instantiate(interactionPromptTextPrefab, playerCanvas.transform);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //    if (currentWaveText != null)
-        //    {
-        //        currentWaveText.text = currentWave.ToString();
-        //        currentWaveText.color = Color.red;
-        //    }
-
-        //    if (currentPointsText != null)
-        //    {
-        //        currentPointsText.text = currentTargetedPlayer.points.ToString();
-        //        currentPointsText.color = Color.white;
-        //    }
-
-        //    if (ammoInMagText != null)
-        //    {
-        //        ammoInMagText.text = currentTargetedPlayer.currentWeapon.currentAmmoInMag.ToString();
-        //        ammoInMagText.color = Color.blue;
-        //    }
-
-        //    if (stockAmmoText != null)
-        //    {
-        //        stockAmmoText.text = currentTargetedPlayer.currentWeapon.currentStockAmmo.ToString();
-        //        stockAmmoText.color = Color.blue;
-        //    }
-
-        //    if (weaponNameText != null)
-        //    {
-        //        weaponNameText.text = currentTargetedPlayer.currentWeapon.weaponName.ToString();
-        //        weaponNameText.color = Color.white;
-        //    }
+        if (doesPlayerComponentExist())
+        {
+            UpdatePlayerGUI();
+        }
     }
 
     public void CreatePlayerCanvas()
@@ -103,6 +79,13 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
  
     }
 
+    public void UpdatePlayerGUI()
+    {
+        UpdateCurrentWeapon();
+        UpdateCurrentAmmoInWeapon();
+        UpdateCurrentStockAmmo();
+    }
+
     public void UpdateCurrentWave()
     {
         currentWave++;
@@ -115,29 +98,27 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
 
     public void UpdateCurrentWeapon()
     {
-        if (weaponNameText != null)
+        if(doesPlayerHaveWeapon())
         {
-            weaponNameText.text = currentTargetedPlayer.currentWeapon.weaponName.ToString();
-            weaponNameText.color = Color.white;
+            weaponNameText.text = GetComponent<Player>().currentWeapon.weaponName.ToString();
         }
     }
 
     public void UpdateCurrentAmmoInWeapon()
     {
-        if (ammoInMagText != null)
+        if (doesPlayerHaveWeapon())
         {
-            ammoInMagText.text = currentTargetedPlayer.currentWeapon.currentAmmoInMag.ToString();
+            ammoInMagText.text = GetComponent<Player>().currentWeapon.currentAmmoInMag.ToString();
             ammoInMagText.color = Color.blue;
         }
     }
 
     public void UpdateCurrentStockAmmo()
     {
-        if (stockAmmoText != null)
+        if (doesPlayerHaveWeapon())
         {
-            stockAmmoText.text = currentTargetedPlayer.currentWeapon.currentStockAmmo.ToString();
+            stockAmmoText.text = GetComponent<Player>().currentWeapon.currentStockAmmo.ToString();
             stockAmmoText.color = Color.blue;
-            Debug.Log(currentTargetedPlayer.currentWeapon.currentStockAmmo);
         }
     }
 
@@ -158,5 +139,20 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
     public void DisplayCurrentCharacterIcon() //to be used for later
     {
 
+    }
+
+    public void DisplayEventPrompt(Interactable.Interaction interaction)
+        {
+            interactPromptText.text = interaction.prompt;
+        }
+
+    private bool doesPlayerHaveWeapon()
+    {
+        return GetComponent<Player>().currentWeapon != null;
+    }
+
+    private bool doesPlayerComponentExist()
+    {
+        return GetComponent<Player>() != null;
     }
 }
