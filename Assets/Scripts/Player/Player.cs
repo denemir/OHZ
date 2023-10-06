@@ -45,18 +45,20 @@ public class Player : MonoBehaviour
     private PlayerRotation playerRotation;
     public float rotationAngle;
 
-    //weapons
-    public GameObject currentWeaponPrefab; //for spawn weapon
-    //public GameObject secondaryWeaponPrefab;
-    //public GameObject tertiaryWeaponPrefab;
+    //weapons & inventory
+    //public GameObject currentWeaponPrefab; //for spawn weapon
+    ////public GameObject secondaryWeaponPrefab;
+    ////public GameObject tertiaryWeaponPrefab;
+    private PlayerInventory playerInventory;
 
-    public Weapon currentWeapon;
-    public int currentWeaponSlot { get; private set; }
 
-    public Weapon primaryWeapon { get; private set; }
-    public Weapon secondaryWeapon { get; private set; }
-    public Weapon tertiaryWeapon { get; private set; }
-    public bool isTertiaryWeaponActive = false; //false by default
+    //public Weapon currentWeapon;
+    //public int currentWeaponSlot { get; private set; }
+
+    //public Weapon primaryWeapon { get; private set; }
+    //public Weapon secondaryWeapon { get; private set; }
+    //public Weapon tertiaryWeapon { get; private set; }
+    //public bool isTertiaryWeaponActive = false; //false by default
 
     //input
     private float horizontalInput;
@@ -105,6 +107,12 @@ public class Player : MonoBehaviour
         if (characterObject == null)
             characterObject = currentCharacter.model; //test
 
+        if(playerInventory != null && playerInventory.GetCurrentWeapon() != null)
+        {
+            CheckShootCurrentWeapon();
+            CheckReloadCurrentWeapon();
+            CheckReloadCancel();
+        }
         //input
         getInput();
         MoveCharacter(horizontalInput, verticalInput);
@@ -112,22 +120,28 @@ public class Player : MonoBehaviour
         //player rotation manager
         RotationHandler();
 
-        //check if hand dropped weapon
-        if (currentCharacter.rightHand.droppedWeapon)
-        {
-            DropWeapon();
-        }
+        ////check if hand dropped weapon
+        //if (currentCharacter.rightHand.droppedWeapon)
+        //{
+        //    DropWeapon();
+        //}
 
     }
 
     //player initialization
     private void InitializePlayer()
     {
+        InitializePlayerInventory();
         InitializeCharacterModel();
-        InitializePrimaryWeapon();
         InitializeArrowIndicator();
         InitializeCamera();
         InitializeNameTag();
+    }
+    private void InitializePlayerInventory()
+    {
+        if (GetComponent<PlayerInventory>() != null)
+            playerInventory = GetComponent<PlayerInventory>();
+        else Debug.Log("Player inventory component does not exist. Please attach playerInventory script to Player.");
     }
     private void InitializeCharacterModel()
     {
@@ -147,18 +161,18 @@ public class Player : MonoBehaviour
         }
         else Debug.Log("Character not found in prefab for player " + name + ".");
     }
-    private void InitializePrimaryWeapon()
-    {
-        if (currentWeaponPrefab != null)
-        {
-            GameObject primaryWeaponInstance = Instantiate(currentWeaponPrefab);
-            primaryWeapon = primaryWeaponInstance.GetComponent<Weapon>();
+    //private void InitializePrimaryWeapon()
+    //{
+    //    if (currentWeaponPrefab != null)
+    //    {
+    //        GameObject primaryWeaponInstance = Instantiate(currentWeaponPrefab);
+    //        primaryWeapon = primaryWeaponInstance.GetComponent<Weapon>();
 
-            currentWeapon = primaryWeapon;
-            setWeapon(primaryWeapon);
-        }
-        else Debug.Log("Player spawning without weapon.");
-    }
+    //        currentWeapon = primaryWeapon;
+    //        setWeapon(primaryWeapon);
+    //    }
+    //    else Debug.Log("Player spawning without weapon.");
+    //}
     private void InitializeArrowIndicator()
     {
         //player arrow direction indicator
@@ -209,9 +223,8 @@ public class Player : MonoBehaviour
 
         ModifyMovementState(horizontalInput, verticalInput);
 
-
-        if (isCharacterHoldingWeapon())
-        {
+        //if (isCharacterHoldingWeapon())
+        //{
             //firing
             CheckShootCurrentWeapon();
 
@@ -219,7 +232,7 @@ public class Player : MonoBehaviour
 
             //reload interrupt/cancel
             CheckReloadCancel();
-        }
+        //}
 
     }
     private void ModifyMovementState(float horizontalInput, float verticalInput)
@@ -255,50 +268,22 @@ public class Player : MonoBehaviour
     } //handles rotating the player (and children) to face either towards mouse or right thumbstick direction
 
     //weapon methods
-    private void SwapWeapons(Weapon newWeapon)
+    public Weapon GetCurrentWeapon()
     {
-
-    }
-    private void DropWeapon()
-    {
-        currentWeapon = null;
-        currentWeaponPrefab = null;
-        currentCharacter.rightHand.ToggleDroppedWeapon();
-    }
-    protected void PickupWeapon(Weapon weapon)
-    {
-        currentWeapon = weapon;
-        switch (currentWeaponSlot)
+        if(playerInventory != null)
         {
-            case 1:
-                primaryWeapon = weapon;
-                break;
-            case 2:
-                secondaryWeapon = weapon;
-                break;
-            case 3:
-                tertiaryWeapon = weapon;
-                break;
-            default: //in case of fail, just set primary weapon to be picked up weapon
-                primaryWeapon = weapon;
-                break;
+            return playerInventory.GetCurrentWeapon();
         }
-    }
-    public void setWeapon(Weapon newWeapon)
-    {
-        if (doesCharacterHaveRightHand())
-        {
-            if (!isCharacterHoldingWeapon())
-            {
-                currentCharacter.GetComponentInChildren<MeshRenderer>()?.gameObject.GetComponentInChildren<RightHand>().HoldWeapon(newWeapon); //stupid fucking currentCharacter.rightHand.holdWeapon doesnt fucking work for some stupid fucking reason. fuck.
-                currentCharacter.rightHand.holdingWeapon = true;
-            }
-        }
+        return null;
     }
 
     //character model methods
+
+
     public bool doesCharacterHaveRightHand()
     {
+        if (currentCharacter == null)
+            Debug.Log("sacks");
         if (currentCharacter.GetComponentInChildren<MeshRenderer>()?.gameObject.GetComponentInChildren<RightHand>() != null)
             return true;
         Debug.Log("Character right hand does not exist.");
@@ -316,18 +301,17 @@ public class Player : MonoBehaviour
         return true;
     }
 
-    //checks (input checks)
-
+    //checks (input checks)                      //////////////////////////////////////////////////////////////////////////////////////set to use methods in PlayerInventory component
     private void CheckShootCurrentWeapon()
     {
-        switch (currentWeapon.isFullAuto)
+        Weapon weapon = GetComponent<PlayerInventory>().GetCurrentWeapon();
+        switch (weapon.isFullAuto)
         {
             case true:
 
                 if (Input.GetButton("Fire1"))
                 {
-                    currentWeapon.Shoot(transform);
-                    //GetComponent<PlayerGUIHandler>().UpdateCurrentAmmoInWeapon();
+                        weapon.Shoot(transform);                        //fix shotgun spread 
                 }
                 break;
 
@@ -335,30 +319,33 @@ public class Player : MonoBehaviour
 
                 if (Input.GetButtonDown("Fire1"))
                 {
-                    currentWeapon.Shoot(transform);
-                    //GetComponent<PlayerGUIHandler>().UpdateCurrentAmmoInWeapon();
+                        weapon.Shoot(transform);
+                        Debug.Log("Shot");
                 }
                 break;
         }
     }
-
     private void CheckReloadCurrentWeapon()
     {
         //reload
-        if (Input.GetButtonDown("Reload") && currentWeapon.currentAmmoInMag < currentWeapon.magazineSize && currentWeapon.currentStockAmmo > 0)
+        if (Input.GetButtonDown("Reload") && playerInventory.GetCurrentWeapon().currentAmmoInMag < playerInventory.GetCurrentWeapon().magazineSize && playerInventory.GetCurrentWeapon().currentStockAmmo > 0)
         {
-            currentWeapon.BeginReloading();
+            playerInventory.GetCurrentWeapon().BeginReloading();
         }
     }
-
     private void CheckReloadCancel()
     {
         //reload interrupt/cancel
-        if (currentWeapon.reloadState == Weapon.ReloadState.Reloading && Input.GetButton("Sprint")/* && currentWeapon.isWeaponHandLoaded*/)
+        if (playerInventory.GetCurrentWeapon().reloadState == Weapon.ReloadState.Reloading && Input.GetButton("Sprint"))
         {
-            currentWeapon.CancelReload();
+            playerInventory.GetCurrentWeapon().CancelReload();
         }
     }
+
+    private bool DoesPlayerInventoryComponentExist()
+    {
+        return GetComponent<PlayerInventory>() != null;
+    }    
 
     //debug methods (remove later)
     private void hasWeaponChanged()

@@ -17,15 +17,21 @@ public class Interactable : MonoBehaviour
 
     }
 
+    //setting interactions
     public List<Interaction> interactions;
     public Interaction activeInteraction;
+
+    //player context
+    private List<Player> playersInRange;
 
     public void Start()
     {
         interactions = new List<Interaction>();
+        playersInRange = new List<Player>();
         activeInteraction = null;
     }
 
+    //interacting
     public void Interact()
     {
         foreach(Interaction interaction in interactions)
@@ -37,10 +43,32 @@ public class Interactable : MonoBehaviour
             }
         }
     }
-
     public void Interact(Interaction interaction)
     {
         interaction.action.Invoke();
+    }
+
+    //player context
+    public void playerEntersRange(Player player)
+    {
+        if (!playersInRange.Contains(player))
+        {
+            playersInRange.Add(player);
+            //Debug.Log("Player has entered range.");
+        }
+    }
+    public void playerLeavesRange(Player player)
+    {
+        if (playersInRange.Contains(player))
+        {
+            playersInRange.Remove(player);
+            //Debug.Log("Player has left range.");
+        }
+        else Debug.Log("Player is not found within range.");
+    }
+    public List<Player> getPlayersInRange()
+    {
+        return playersInRange;
     }
 
 }

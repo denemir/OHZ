@@ -73,28 +73,14 @@ public class Weapon : MonoBehaviour
     public RightHand rightHand;
     public PlayerGUIHandler playerGUIHandler;
 
+    //interactions
+    public int cost; //if weapon is a wall buy, otherwise keep at 950
+
     // Start is called before the first frame update
     void Start()
     {
-        InstantiateWeapon();
+        InstantiateWeapon(transform);
         roundsReloadedPerInstance = 1;
-
-        //if (playerGUIHandler == null)
-        //{
-        //    Transform currentTransform = transform; // Start from the Weapon's transform
-        //                                            // Keep moving up the hierarchy until we either find the PlayerGUIHandler
-        //                                            // or reach the top level (null parent).
-        //    while (currentTransform != null)
-        //    {
-        //        playerGUIHandler = currentTransform.GetComponent<PlayerGUIHandler>();
-        //        if (playerGUIHandler != null)
-        //        {
-        //            // We found the PlayerGUIHandler, so we can exit the loop.
-        //            break;
-        //        }
-        //        currentTransform = currentTransform.parent;
-        //    }
-        //} //gui
     }
 
     // Update is called once per frame
@@ -114,11 +100,8 @@ public class Weapon : MonoBehaviour
                 BeginReloading();
             } else reloadState = ReloadState.Not_Reloading;
             
-            //playerGUIHandler.UpdateCurrentAmmoInWeapon();
-            //playerGUIHandler.UpdateCurrentStockAmmo();
         } //reload
 
-        //weaponModel.transform.position = transform.position;
         currentRecoilSpread = Mathf.Lerp(currentRecoilSpread, 0, Time.deltaTime * 1.5f); //decrease spread over time
 
     }
@@ -141,7 +124,6 @@ public class Weapon : MonoBehaviour
                     IncreaseSpread();
                     fireRateTimer = Time.time + fireRate;
                     currentAmmoInMag--;
-                    //playerGUIHandler.UpdateCurrentAmmoInWeapon(); //update player gui
                 }
                 else if (currentAmmoInMag == 0) //auto-reload if mag empty and player tries to fire
                 {
@@ -225,10 +207,10 @@ public class Weapon : MonoBehaviour
         reloadState = ReloadState.Not_Reloading;
     } //stops the reload
 
-    public void InstantiateWeapon() //for when weapon gets picked up or spawned it has to be instantiated
+    public void InstantiateWeapon(Transform parentT) //for when weapon gets picked up or spawned it has to be instantiated
     {
         //weapon instantiation
-        weaponModel = Instantiate(weaponModelPrefab, transform);
+        weaponModel = Instantiate(weaponModelPrefab, parentT);
 
         //set barrel tip
         if (weaponModel.GetComponentInChildren<BarrelTip>() != null)
@@ -240,19 +222,20 @@ public class Weapon : MonoBehaviour
         //reloads
         currentTimer = 0;
     }
-    public void InstantiateWeapon(Transform parent)
-    {
-        //weapon instantiation
-        weaponModel = Instantiate(weaponModelPrefab, parent);
+    
+    //public void InstantiateWeapon(Transform parent)
+    //{
+    //    //weapon instantiation
+    //    weaponModel = Instantiate(weaponModelPrefab, parent);
 
-        //set barrel tip
-        if (weaponModel.GetComponentInChildren<BarrelTip>() != null)
-        {
-            barrelTip = weaponModel.GetComponentInChildren<BarrelTip>();
-        }
-        else Debug.Log("Weapon don't got no Barrel tip.");
+    //    //set barrel tip
+    //    if (weaponModel.GetComponentInChildren<BarrelTip>() != null)
+    //    {
+    //        barrelTip = weaponModel.GetComponentInChildren<BarrelTip>();
+    //    }
+    //    else Debug.Log("Weapon don't got no Barrel tip.");
 
-        //reloads
-        currentTimer = 0;
-    }
+    //    //reloads
+    //    currentTimer = 0;
+    //}
 }

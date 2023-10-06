@@ -40,6 +40,8 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
     {
         CreatePlayerCanvas();
 
+        currentTargetedPlayer = GetComponent<Player>();
+
         currentWaveText = Instantiate(currentWaveTextPrefab, playerCanvas.transform);
         currentPointsText = Instantiate(currentPointsTextPrefab, playerCanvas.transform);
         ammoInMagText = Instantiate(ammoInMagTextPrefab, playerCanvas.transform);
@@ -98,9 +100,9 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
 
     public void UpdateCurrentWeapon()
     {
-        if(doesPlayerHaveWeapon())
+        if (doesPlayerHaveWeapon())
         {
-            weaponNameText.text = GetComponent<Player>().currentWeapon.weaponName.ToString();
+            weaponNameText.text = currentTargetedPlayer.GetCurrentWeapon().weaponName.ToString();
         }
     }
 
@@ -108,8 +110,8 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
     {
         if (doesPlayerHaveWeapon())
         {
-            ammoInMagText.text = GetComponent<Player>().currentWeapon.currentAmmoInMag.ToString();
-            ammoInMagText.color = Color.blue;
+            ammoInMagText.text = currentTargetedPlayer.GetCurrentWeapon().currentAmmoInMag.ToString();
+            ammoInMagText.color = Color.white;
         }
     }
 
@@ -117,8 +119,8 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
     {
         if (doesPlayerHaveWeapon())
         {
-            stockAmmoText.text = GetComponent<Player>().currentWeapon.currentStockAmmo.ToString();
-            stockAmmoText.color = Color.blue;
+            stockAmmoText.text = currentTargetedPlayer.GetCurrentWeapon().currentStockAmmo.ToString();
+            stockAmmoText.color = Color.white;
         }
     }
 
@@ -146,9 +148,14 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
             interactPromptText.text = interaction.prompt;
         }
 
+    public void RemovePrompt()
+    {
+        interactPromptText.text = "";
+    }
+
     private bool doesPlayerHaveWeapon()
     {
-        return GetComponent<Player>().currentWeapon != null;
+        return currentTargetedPlayer.GetCurrentWeapon() != null;
     }
 
     private bool doesPlayerComponentExist()

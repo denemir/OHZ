@@ -8,18 +8,26 @@ public class PlayerInventory : MonoBehaviour
     private int numberOfWeaponSlots/* = 2*/; //can only be 3 with a perk
     public Weapon[] weapons;
 
+    public Weapon activeWeapon;
+
     private int currentWeaponSlot;
+    private bool hasWeaponSpawned = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentWeaponSlot = 0;
+
+        SpawnWeapon(currentWeaponSlot);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!hasWeaponSpawned)
+        {
+
+        }
     }
 
     //modifying weapons
@@ -46,12 +54,36 @@ public class PlayerInventory : MonoBehaviour
         DropWeapon(currentWeaponSlot);
         weapons[currentWeaponSlot] = newWeapon;
     }
+    public bool DoesPlayerHaveWeapon(Weapon targetWeapon)
+    {
+        foreach (Weapon weapon in weapons)
+        {
+            if (weapon == targetWeapon)
+                return true;
+        }
+        return false;
+    }
 
     public void AttachCurrentWeaponToHand()
-    { 
-        if(GetComponent<Player>().doesCharacterHaveRightHand())
+    {
+        if (GetComponent<Player>().doesCharacterHaveRightHand())
         {
             weapons[currentWeaponSlot].InstantiateWeapon(GetComponent<Player>().GetRightHand().transform);
+        }
+    }
+
+    public void SpawnWeapon(int slot)
+    {
+        if (weapons[slot] != null)
+        {
+            if (GetComponent<Player>().doesCharacterHaveRightHand())
+            {
+                //weapons[slot].InstantiateWeapon(GetComponent<Player>().GetRightHand().transform);
+                AttachCurrentWeaponToHand();
+                hasWeaponSpawned = true;
+            }
+            else Debug.Log("Player right hand does not exist.");
+
         }
     }
 
@@ -66,4 +98,11 @@ public class PlayerInventory : MonoBehaviour
         }
         return -1;
     } //if there is an open slot in players inventory, return slot id. return -1 any other case
+
+    //use weapons
+    public Weapon GetCurrentWeapon()
+    {
+        //Debug.Log("Returning");
+        return weapons[currentWeaponSlot];
+    }
 }
