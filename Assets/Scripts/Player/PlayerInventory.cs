@@ -68,8 +68,33 @@ public class PlayerInventory : MonoBehaviour
     {
         if (GetComponent<Player>().doesCharacterHaveRightHand())
         {
-            weapons[currentWeaponSlot].InstantiateWeapon(GetComponent<Player>().GetRightHand().transform);
+            Transform rightHandTransform = GetComponent<Player>().GetRightHand().transform;
+            GameObject weaponModel = Instantiate(weapons[currentWeaponSlot].weaponModelPrefab, rightHandTransform);
+
+            if (weaponModel != null)
+            {
+                // Get the Weapon script from the prefab
+                Weapon weaponPrefabScript = weapons[currentWeaponSlot].GetComponent<Weapon>();
+                Debug.Log(weaponPrefabScript.barrelTip == null);
+
+                // Add the Weapon script to the instantiated weapon model
+                Weapon weaponScript = weaponModel.AddComponent<Weapon>();
+
+                // Copy weapon properties from the prefab to the new weapon script
+                weaponScript.CopyWeaponPropertiesFrom(weaponPrefabScript);
+
+                weapons[currentWeaponSlot].SetWeaponModel(weaponModel);
+                weapons[currentWeaponSlot].SetBarrelTip();
+
+                // Copy weapon properties from the inventory weapon to the new weapon script
+                //weaponScript.CopyWeaponPropertiesFrom(weapons[currentWeaponSlot]);
+
+                hasWeaponSpawned = true;
+            }
+            else Debug.Log("Fuck you!");
+
         }
+        else Debug.Log("Player right hand does not exist.");
     }
 
     public void SpawnWeapon(int slot)

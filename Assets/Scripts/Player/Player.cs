@@ -327,10 +327,12 @@ public class Player : MonoBehaviour
     }
     private void CheckReloadCurrentWeapon()
     {
+        Weapon weapon = GetComponent<PlayerInventory>().GetCurrentWeapon();
         //reload
-        if (Input.GetButtonDown("Reload") && playerInventory.GetCurrentWeapon().currentAmmoInMag < playerInventory.GetCurrentWeapon().magazineSize && playerInventory.GetCurrentWeapon().currentStockAmmo > 0)
+        if (Input.GetButtonDown("Reload") && weapon.currentAmmoInMag < weapon.magazineSize && weapon.currentStockAmmo > 0)
         {
-            playerInventory.GetCurrentWeapon().BeginReloading();
+            weapon.BeginReloading();
+            Debug.Log("Reloading...");
         }
     }
     private void CheckReloadCancel()

@@ -102,7 +102,7 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
     {
         if (doesPlayerHaveWeapon())
         {
-            weaponNameText.text = currentTargetedPlayer.GetCurrentWeapon().weaponName.ToString();
+            weaponNameText.text = currentTargetedPlayer.GetCurrentWeapon().name.ToString();
         }
     }
 

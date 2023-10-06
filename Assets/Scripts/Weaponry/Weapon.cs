@@ -79,7 +79,7 @@ public class Weapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InstantiateWeapon(transform);
+        //InstantiateWeapon(transform);
         roundsReloadedPerInstance = 1;
     }
 
@@ -88,7 +88,11 @@ public class Weapon : MonoBehaviour
     {
         if(currentTimer > 0)        
             currentTimer -= 0.005f;
-        
+
+        if (barrelTip == null)
+        {
+            SetBarrelTip();
+        }
 
         if (currentTimer <= 0 && reloadState == ReloadState.Reloading)
         {
@@ -105,6 +109,10 @@ public class Weapon : MonoBehaviour
         currentRecoilSpread = Mathf.Lerp(currentRecoilSpread, 0, Time.deltaTime * 1.5f); //decrease spread over time
 
     }
+
+    //weapon actions
+
+        //shooting
     public void Shoot(Transform shooterTransform)
     {
         switch (reloadState)
@@ -138,6 +146,9 @@ public class Weapon : MonoBehaviour
 
         float angle = Random.Range(-currentRecoilSpread, currentRecoilSpread);
 
+        if (barrelTip == null)
+            Debug.Log("FUCLK");
+
         Vector3 bulletDirection = Quaternion.Euler(0f, angle, 0f) * barrelTip.transform.forward;
 
         GameObject bullet = Instantiate(bulletModelPrefab, barrelTip.transform.position, Quaternion.identity/*Quaternion.LookRotation(bulletDirection)*//*new Quaternion(barrelTip.transform.rotation.x, barrelTip.transform.rotation.y, barrelTip.transform.rotation.z, 0f)*/);
@@ -148,11 +159,8 @@ public class Weapon : MonoBehaviour
         bullet.GetComponent<Bullet>().SetDamageAndCritValues(damage, criticalChance, criticalDamage);
     }
 
-    public void IncreaseSpread()
-    {
-        currentRecoilSpread = Mathf.Clamp(currentRecoilSpread + recoilRate, 0f, recoilSpread); //increases spread within set range
-    } //recoil
 
+        //ammo
     public void Reload()
     {
         switch (isWeaponHandLoaded)
@@ -181,31 +189,36 @@ public class Weapon : MonoBehaviour
                 break;
         }
     } //reloads ammunition in magazine
-
     public void BeginReloading()
     {
         reloadState = ReloadState.Reloading;
 
         currentTimer = timeToReload;
     } //starts reloading timer
-
-    public void Drop()
+    public void CancelReload()
     {
-        Destroy(weaponModel);
-        Destroy(this.gameObject);
-    } //weapon is no longer in existence after player drops
-
+        currentTimer = 0;
+        reloadState = ReloadState.Not_Reloading;
+    } //stops the reload
     public void MaxAmmo()
     {
         currentAmmoInMag = magazineSize;
         currentStockAmmo = maxStockAmmo;
     } //restores players ammo
 
-    public void CancelReload()
+
+        //recoil
+    public void IncreaseSpread()
     {
-        currentTimer = 0;
-        reloadState = ReloadState.Not_Reloading;
-    } //stops the reload
+        currentRecoilSpread = Mathf.Clamp(currentRecoilSpread + recoilRate, 0f, recoilSpread); //increases spread within set range
+    } //recoil
+
+        //misc
+    public void Drop()
+    {
+        Destroy(weaponModel);
+        Destroy(this.gameObject);
+    } //weapon is no longer in existence after player drops
 
     public void InstantiateWeapon(Transform parentT) //for when weapon gets picked up or spawned it has to be instantiated
     {
@@ -213,29 +226,57 @@ public class Weapon : MonoBehaviour
         weaponModel = Instantiate(weaponModelPrefab, parentT);
 
         //set barrel tip
-        if (weaponModel.GetComponentInChildren<BarrelTip>() != null)
-        {
-            barrelTip = weaponModel.GetComponentInChildren<BarrelTip>();
-        }
-        else Debug.Log("Weapon don't got no Barrel tip.");
+        SetBarrelTip();
 
         //reloads
         currentTimer = 0;
     }
-    
-    //public void InstantiateWeapon(Transform parent)
-    //{
-    //    //weapon instantiation
-    //    weaponModel = Instantiate(weaponModelPrefab, parent);
 
-    //    //set barrel tip
-    //    if (weaponModel.GetComponentInChildren<BarrelTip>() != null)
-    //    {
-    //        barrelTip = weaponModel.GetComponentInChildren<BarrelTip>();
-    //    }
-    //    else Debug.Log("Weapon don't got no Barrel tip.");
+    public void SetBarrelTip()
+    {
+        if (weaponModel == null)
+            Debug.Log("kys why");
 
-    //    //reloads
-    //    currentTimer = 0;
-    //}
+        if (weaponModel.GetComponent<BarrelTip>() != null)
+        {
+            barrelTip = weaponModel.GetComponent<BarrelTip>();
+            Debug.Log("barrel tip set");
+        }
+        else Debug.Log("Weapon don't got no Barrel tip.");
+    }
+    public void SetWeaponModel(GameObject model)
+    {
+        weaponModel = model;
+    }
+
+    //for weapon spawning
+    public void CopyWeaponPropertiesFrom(Weapon otherWeapon)
+    {
+        weaponName = otherWeapon.weaponName;
+        fireRate = otherWeapon.fireRate;
+        isFullAuto = otherWeapon.isFullAuto;
+        canToggleFullAuto = otherWeapon.canToggleFullAuto;
+        damage = otherWeapon.damage;
+        criticalDamage = otherWeapon.criticalDamage;
+        criticalChance = otherWeapon.criticalChance;
+        reloadState = otherWeapon.reloadState;
+        isActive = otherWeapon.isActive;
+        timeToReload = otherWeapon.timeToReload;
+        reloadTimer = otherWeapon.reloadTimer;
+        currentTimer = otherWeapon.currentTimer;
+        magazineSize = otherWeapon.magazineSize;
+        currentAmmoInMag = otherWeapon.currentAmmoInMag;
+        currentStockAmmo = otherWeapon.currentStockAmmo;
+        maxStockAmmo = otherWeapon.maxStockAmmo;
+        isWeaponHandLoaded = otherWeapon.isWeaponHandLoaded;
+        roundsReloadedPerInstance = otherWeapon.roundsReloadedPerInstance;
+        recoilSpread = otherWeapon.recoilSpread;
+        currentRecoilSpread = otherWeapon.currentRecoilSpread;
+        recoilRate = otherWeapon.recoilRate;
+        weaponType = otherWeapon.weaponType;
+        bulletModelPrefab = otherWeapon.bulletModelPrefab;
+        bulletVelocity = otherWeapon.bulletVelocity;
+        // Copy any other properties you may have added
+    }
+
 }
