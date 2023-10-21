@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
         if (characterObject == null)
             characterObject = currentCharacter.model; //test
 
-        if(playerInventory != null && playerInventory.GetCurrentWeapon() != null)
+        if (playerInventory != null && playerInventory.GetCurrentWeapon() != null)
         {
             CheckShootCurrentWeapon();
             CheckReloadCurrentWeapon();
@@ -139,9 +139,15 @@ public class Player : MonoBehaviour
     }
     private void InitializePlayerInventory()
     {
-        if (GetComponent<PlayerInventory>() != null)
-            playerInventory = GetComponent<PlayerInventory>();
-        else Debug.Log("Player inventory component does not exist. Please attach playerInventory script to Player.");
+        playerInventory = GetComponent<PlayerInventory>();
+        if (playerInventory == null)
+        {
+            Debug.LogError("PlayerInventory component not found on the player object. Please add the PlayerInventory component to the player object.");
+        }
+
+        //if (GetComponent<PlayerInventory>() != null)
+        //    playerInventory = GetComponent<PlayerInventory>();
+        //else Debug.Log("Player inventory component does not exist. Please attach playerInventory script to Player.");
     }
     private void InitializeCharacterModel()
     {
@@ -161,18 +167,7 @@ public class Player : MonoBehaviour
         }
         else Debug.Log("Character not found in prefab for player " + name + ".");
     }
-    //private void InitializePrimaryWeapon()
-    //{
-    //    if (currentWeaponPrefab != null)
-    //    {
-    //        GameObject primaryWeaponInstance = Instantiate(currentWeaponPrefab);
-    //        primaryWeapon = primaryWeaponInstance.GetComponent<Weapon>();
 
-    //        currentWeapon = primaryWeapon;
-    //        setWeapon(primaryWeapon);
-    //    }
-    //    else Debug.Log("Player spawning without weapon.");
-    //}
     private void InitializeArrowIndicator()
     {
         //player arrow direction indicator
@@ -183,7 +178,7 @@ public class Player : MonoBehaviour
             arrowIndicator.transform.SetParent(transform);
             arrowIndicator.playerTransform = transform;
         }
-        else Debug.Log("Arrow indicator prefab not found on player " + name + ".");        
+        else Debug.Log("Arrow indicator prefab not found on player " + name + ".");
     }
     private void InitializeNameTag()
     {
@@ -225,13 +220,13 @@ public class Player : MonoBehaviour
 
         //if (isCharacterHoldingWeapon())
         //{
-            //firing
-            CheckShootCurrentWeapon();
+        //firing
+        CheckShootCurrentWeapon();
 
-            CheckReloadCurrentWeapon();
+        CheckReloadCurrentWeapon();
 
-            //reload interrupt/cancel
-            CheckReloadCancel();
+        //reload interrupt/cancel
+        CheckReloadCancel();
         //}
 
     }
@@ -270,7 +265,7 @@ public class Player : MonoBehaviour
     //weapon methods
     public Weapon GetCurrentWeapon()
     {
-        if(playerInventory != null)
+        if (playerInventory != null)
         {
             return playerInventory.GetCurrentWeapon();
         }
@@ -311,7 +306,7 @@ public class Player : MonoBehaviour
 
                 if (Input.GetButton("Fire1"))
                 {
-                        weapon.Shoot(transform);                        //fix shotgun spread 
+                    weapon.Shoot(transform);                        //fix shotgun spread 
                 }
                 break;
 
@@ -319,8 +314,8 @@ public class Player : MonoBehaviour
 
                 if (Input.GetButtonDown("Fire1"))
                 {
-                        weapon.Shoot(transform);
-                        Debug.Log("Shot");
+                    weapon.Shoot(transform);
+                    Debug.Log("Shot");
                 }
                 break;
         }
@@ -347,7 +342,7 @@ public class Player : MonoBehaviour
     private bool DoesPlayerInventoryComponentExist()
     {
         return GetComponent<PlayerInventory>() != null;
-    }    
+    }
 
     //debug methods (remove later)
     private void hasWeaponChanged()

@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
-  - {fileID: 4422963551661396218, guid: 7e6dcdc00eca95c439c26d895558b4d9, type: 3}
+  - {fileID: 849071670188823303, guid: be835e691fcac2741912c785c03f17a0, type: 3}
   activeWeapon: {fileID: 0}
 --- !u!114 &405819474494968721
 MonoBehaviour:

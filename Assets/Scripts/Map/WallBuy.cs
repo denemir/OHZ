@@ -78,14 +78,14 @@ public class WallBuy : MonoBehaviour
 
     private int DeterminePlayerState()
     {
-        bool hasPlayerPurchasedWeapon = false;
+        //bool hasPlayerPurchasedWeapon = false;
         foreach(Player player in interactable.getPlayersInRange())
         {
 
-            switch (hasPlayerPurchasedWeapon)
-            { 
+            //switch (hasPlayerPurchasedWeapon)
+            //{ 
                 
-            }
+            //}
 
         }
         return 0;

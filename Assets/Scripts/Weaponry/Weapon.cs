@@ -81,12 +81,23 @@ public class Weapon : MonoBehaviour
     {
         //InstantiateWeapon(transform);
         roundsReloadedPerInstance = 1;
+        weaponModelPrefab = GetComponent<GameObject>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(currentTimer > 0)        
+        //backups
+        if (weaponModel == null)
+        {
+            SetWeaponModel(GetComponent<GameObject>());
+        }
+        //if (barrelTip == null && weaponModel != null)
+        //{
+        //    SetBarrelTip();
+        //}
+
+        if (currentTimer > 0)
             currentTimer -= 0.005f;
 
         if (barrelTip == null)
@@ -102,8 +113,9 @@ public class Weapon : MonoBehaviour
             if (isWeaponHandLoaded && currentAmmoInMag < magazineSize)
             {
                 BeginReloading();
-            } else reloadState = ReloadState.Not_Reloading;
-            
+            }
+            else reloadState = ReloadState.Not_Reloading;
+
         } //reload
 
         currentRecoilSpread = Mathf.Lerp(currentRecoilSpread, 0, Time.deltaTime * 1.5f); //decrease spread over time
@@ -112,7 +124,7 @@ public class Weapon : MonoBehaviour
 
     //weapon actions
 
-        //shooting
+    //shooting
     public void Shoot(Transform shooterTransform)
     {
         switch (reloadState)
@@ -160,7 +172,7 @@ public class Weapon : MonoBehaviour
     }
 
 
-        //ammo
+    //ammo
     public void Reload()
     {
         switch (isWeaponHandLoaded)
@@ -207,13 +219,13 @@ public class Weapon : MonoBehaviour
     } //restores players ammo
 
 
-        //recoil
+    //recoil
     public void IncreaseSpread()
     {
         currentRecoilSpread = Mathf.Clamp(currentRecoilSpread + recoilRate, 0f, recoilSpread); //increases spread within set range
     } //recoil
 
-        //misc
+    //misc
     public void Drop()
     {
         Destroy(weaponModel);
@@ -222,24 +234,41 @@ public class Weapon : MonoBehaviour
 
     public void InstantiateWeapon(Transform parentT) //for when weapon gets picked up or spawned it has to be instantiated
     {
-        //weapon instantiation
-        weaponModel = Instantiate(weaponModelPrefab, parentT);
+        if (weaponModelPrefab != null)
+        {
+            //weapon instantiation
+            GameObject weaponModelInstance = Instantiate(weaponModelPrefab, parentT);
+            weaponModel = weaponModelInstance;
 
-        //set barrel tip
-        SetBarrelTip();
+            //attach scripts
+            Weapon weaponScript = weaponModel.AddComponent<Weapon>();
 
-        //reloads
-        currentTimer = 0;
+            //if (weaponModelPrefab.GetComponent<Weapon>() != null)
+            //{
+                //Weapon weaponPrefabScript = weaponModelPrefab.GetComponent<Weapon>();
+                weaponScript.CopyWeaponPropertiesFrom(this);
+            //}
+            //else Debug.Log("Weapon Script not found.");
+
+
+            //set barrel tip
+            SetBarrelTip();
+
+            //reloads
+            currentTimer = 0;
+        }
+        else Debug.Log("WeaponModelPrefab does not exist.");
+
     }
 
     public void SetBarrelTip()
     {
         if (weaponModel == null)
-            Debug.Log("kys why");
+            Debug.Log("Weapon Model null.");
 
-        if (weaponModel.GetComponent<BarrelTip>() != null)
+        if (weaponModel.GetComponentInChildren<BarrelTip>() != null)
         {
-            barrelTip = weaponModel.GetComponent<BarrelTip>();
+            barrelTip = weaponModel.GetComponentInChildren<BarrelTip>();
             Debug.Log("barrel tip set");
         }
         else Debug.Log("Weapon don't got no Barrel tip.");
