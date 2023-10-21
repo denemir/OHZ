@@ -218,16 +218,16 @@ public class Player : MonoBehaviour
 
         ModifyMovementState(horizontalInput, verticalInput);
 
-        //if (isCharacterHoldingWeapon())
-        //{
-        //firing
-        CheckShootCurrentWeapon();
+        if (GetCurrentWeapon() != null)
+        {
+            //firing
+            CheckShootCurrentWeapon();
 
-        CheckReloadCurrentWeapon();
+            CheckReloadCurrentWeapon();
 
-        //reload interrupt/cancel
-        CheckReloadCancel();
-        //}
+            //reload interrupt/cancel
+            CheckReloadCancel();
+        }
 
     }
     private void ModifyMovementState(float horizontalInput, float verticalInput)
@@ -315,7 +315,8 @@ public class Player : MonoBehaviour
                 if (Input.GetButtonDown("Fire1"))
                 {
                     weapon.Shoot(transform);
-                    Debug.Log("Shot");
+                    //Debug.Log("Shot");
+                    //Debug.Log(weapon.currentAmmoInMag);
                 }
                 break;
         }

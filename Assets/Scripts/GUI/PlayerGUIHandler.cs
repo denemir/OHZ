@@ -9,6 +9,7 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
 {
     //player
     public Player currentTargetedPlayer;
+    private PlayerInventory inventory;
     public Canvas playerCanvas;
     public Canvas canvasPrefab;
 
@@ -41,6 +42,7 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
         CreatePlayerCanvas();
 
         currentTargetedPlayer = GetComponent<Player>();
+        inventory = GetComponent<PlayerInventory>();
 
         currentWaveText = Instantiate(currentWaveTextPrefab, playerCanvas.transform);
         currentPointsText = Instantiate(currentPointsTextPrefab, playerCanvas.transform);
@@ -100,17 +102,17 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
 
     public void UpdateCurrentWeapon()
     {
-        if (doesPlayerHaveWeapon())
+        if (inventory.GetCurrentWeapon() != null)
         {
-            weaponNameText.text = currentTargetedPlayer.GetCurrentWeapon().name.ToString();
+            weaponNameText.text = inventory.GetCurrentWeapon().name.ToString();
         }
     }
 
     public void UpdateCurrentAmmoInWeapon()
     {
-        if (doesPlayerHaveWeapon())
+        if (inventory.GetCurrentWeapon() != null)
         {
-            ammoInMagText.text = currentTargetedPlayer.GetCurrentWeapon().currentAmmoInMag.ToString();
+            ammoInMagText.text = inventory.GetCurrentWeapon().currentAmmoInMag.ToString();
             ammoInMagText.color = Color.white;
         }
     }

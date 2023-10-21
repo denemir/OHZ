@@ -6,6 +6,7 @@ public class PlayerInventory : MonoBehaviour
 {
     //weapons
     private int numberOfWeaponSlots/* = 2*/; //can only be 3 with a perk
+    public GameObject[] weaponPrefabs;
     public Weapon[] weapons;
 
     public Weapon activeWeapon;
@@ -16,14 +17,9 @@ public class PlayerInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //weapons = new Weapon[numberOfWeaponSlots];
         currentWeaponSlot = 0;
-        //if( weapons != null )
-        //{
-        //    activeWeapon = weapons[0];
-        //}
-
-        SpawnWeapon(currentWeaponSlot);
+        if (weaponPrefabs[currentWeaponSlot] != null)
+            SpawnWeapon(currentWeaponSlot);
     }
 
     // Update is called once per frame
@@ -70,54 +66,47 @@ public class PlayerInventory : MonoBehaviour
         return false;
     }
 
-    public void AttachCurrentWeaponToHand()
+    //public void AttachCurrentWeaponToHand()
+    //{
+    //    if (GetComponent<Player>().doesCharacterHaveRightHand())
+    //    {
+    //        Transform rightHandTransform = GetComponent<Player>().GetRightHand().transform;
+
+    //        weapons[currentWeaponSlot].InstantiateWeapon(rightHandTransform);
+    //    }
+    //    else Debug.Log("Player right hand does not exist.");
+    //}
+    public void AttachCurrentWeaponToHand(GameObject weaponModel)
     {
         if (GetComponent<Player>().doesCharacterHaveRightHand())
         {
             Transform rightHandTransform = GetComponent<Player>().GetRightHand().transform;
-            //GameObject weaponModel = Instantiate(weapons[currentWeaponSlot].weaponModelPrefab, rightHandTransform);
-
-            weapons[currentWeaponSlot].InstantiateWeapon(rightHandTransform);
-            activeWeapon = weapons[currentWeaponSlot];
-
-            //if (weaponModel != null)
-            //{
-            //    // Get the Weapon script from the prefab
-            //    Weapon weaponPrefabScript = weapons[currentWeaponSlot].GetComponent<Weapon>();
-
-            //    // Add the Weapon script to the instantiated weapon model
-            //    Weapon weaponScript = weaponModel.AddComponent<Weapon>();
-
-            //    // Copy weapon properties from the prefab to the new weapon script
-            //    weaponScript.CopyWeaponPropertiesFrom(weaponPrefabScript);
-
-            //    weapons[currentWeaponSlot].SetWeaponModel(weaponModel);
-            //    weapons[currentWeaponSlot].SetBarrelTip();
-
-            //    // Copy weapon properties from the inventory weapon to the new weapon script
-            //    //weaponScript.CopyWeaponPropertiesFrom(weapons[currentWeaponSlot]);
-
-            //    //set to be active weapon
-            //    weapons[currentWeaponSlot] = activeWeapon;
-
-            //    hasWeaponSpawned = true;
-            //}
-            //else Debug.Log("Weapon model does not exist.");
-
+            weaponModel.transform.SetParent(rightHandTransform);
         }
         else Debug.Log("Player right hand does not exist.");
     }
 
     public void SpawnWeapon(int slot)
     {
-        if (weapons[slot] != null)
+        if (weaponPrefabs[slot] != null)
         {
-            //weapons[slot] = activeWeapon;
+            GameObject weaponInstance = Instantiate(weaponPrefabs[slot]);
+            Weapon weapon = /*weaponPrefabs[slot]*/weaponInstance.GetComponent<Weapon>();
+
             if (GetComponent<Player>().doesCharacterHaveRightHand())
             {
-                //weapons[slot].InstantiateWeapon(GetComponent<Player>().GetRightHand().transform);
-                AttachCurrentWeaponToHand();
+                //spawn
+                AttachCurrentWeaponToHand(/*Instantiate(weaponPrefabs[slot])*/weaponInstance);
                 hasWeaponSpawned = true;
+
+                //set activeWeapon
+                activeWeapon = weapon;
+
+                //set components
+                activeWeapon.SetBarrelTip(weaponInstance.GetComponentInChildren<BarrelTip>());
+
+                //add to weapons list
+                weapons[slot] = weapon;
             }
             else Debug.Log("Player right hand does not exist.");
 
@@ -140,6 +129,6 @@ public class PlayerInventory : MonoBehaviour
     public Weapon GetCurrentWeapon()
     {
         //Debug.Log("Returning");
-        return weapons[currentWeaponSlot];
+        return activeWeapon;
     }
 }

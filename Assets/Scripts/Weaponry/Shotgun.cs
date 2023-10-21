@@ -6,7 +6,7 @@ public class Shotgun : Weapon
 {   
     void Start()
     {
-        InstantiateWeapon(transform);
+        //InstantiateWeapon(transform);
         roundsReloadedPerInstance = 1;
 
         //if (playerGUIHandler == null)

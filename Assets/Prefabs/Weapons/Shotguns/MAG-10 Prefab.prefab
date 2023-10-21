@@ -56,13 +56,13 @@ MonoBehaviour:
   isActive: 0
   timeToReload: 2
   magazineSize: 8
-  currentAmmoInMag: 100
+  currentAmmoInMag: 8
   currentStockAmmo: 80
   maxStockAmmo: 80
   isWeaponHandLoaded: 1
   roundsReloadedPerInstance: 1
   recoilSpread: 50
-  currentRecoilSpread: 0
+  currentRecoilSpread: 24
   recoilRate: 3
   weaponType: 0
   weaponModelPrefab: {fileID: 2224583070869084832, guid: d17c028f2ffbd5d44a2f1162089a1a95, type: 3}

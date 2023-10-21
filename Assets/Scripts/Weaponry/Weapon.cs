@@ -79,9 +79,7 @@ public class Weapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //InstantiateWeapon(transform);
         roundsReloadedPerInstance = 1;
-        weaponModelPrefab = GetComponent<GameObject>();
     }
 
     // Update is called once per frame
@@ -90,12 +88,8 @@ public class Weapon : MonoBehaviour
         //backups
         if (weaponModel == null)
         {
-            SetWeaponModel(GetComponent<GameObject>());
+            SetWeaponModel();
         }
-        //if (barrelTip == null && weaponModel != null)
-        //{
-        //    SetBarrelTip();
-        //}
 
         if (currentTimer > 0)
             currentTimer -= 0.005f;
@@ -232,34 +226,37 @@ public class Weapon : MonoBehaviour
         Destroy(this.gameObject);
     } //weapon is no longer in existence after player drops
 
-    public void InstantiateWeapon(Transform parentT) //for when weapon gets picked up or spawned it has to be instantiated
-    {
-        if (weaponModelPrefab != null)
-        {
-            //weapon instantiation
-            GameObject weaponModelInstance = Instantiate(weaponModelPrefab, parentT);
-            weaponModel = weaponModelInstance;
+    //public void InstantiateWeapon(Transform parentT) //for when weapon gets picked up or spawned it has to be instantiated
+    //{
+    //    if (weaponModelPrefab != null)
+    //    {
+    //        GameObject weaponModelInstance = Instantiate(weaponModelPrefab, parentT);
+    //        weaponModelInstance.transform.SetParent(parentT);
 
-            //attach scripts
-            Weapon weaponScript = weaponModel.AddComponent<Weapon>();
+    //        // Add the Weapon script to the instantiated weapon model
+    //        Weapon weaponScript = weaponModelInstance.GetComponent<Weapon>();
+    //        if (weaponScript == null)
+    //        {
+    //            weaponScript = weaponModelInstance.AddComponent<Weapon>();
+    //            weaponScript.weaponModel = weaponModelInstance;
+    //            Debug.Log("Weapon script added to the weapon model.");
+    //        }
 
-            //if (weaponModelPrefab.GetComponent<Weapon>() != null)
-            //{
-                //Weapon weaponPrefabScript = weaponModelPrefab.GetComponent<Weapon>();
-                weaponScript.CopyWeaponPropertiesFrom(this);
-            //}
-            //else Debug.Log("Weapon Script not found.");
+    //        // Copy weapon properties from the current weapon to the instantiated weapon
+    //        weaponScript.CopyWeaponPropertiesFrom(this);
 
+    //        // Reset reload timers
+    //        weaponScript.currentTimer = 0;
 
-            //set barrel tip
-            SetBarrelTip();
-
-            //reloads
-            currentTimer = 0;
-        }
-        else Debug.Log("WeaponModelPrefab does not exist.");
-
-    }
+    //        // Set the spawned weapon as the active weapon in the player's inventory
+    //        PlayerInventory playerInventory = parentT.GetComponent<PlayerInventory>();
+    //        //playerInventory.activeWeapon = this;
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("WeaponModelPrefab does not exist.");
+    //    }
+    //}
 
     public void SetBarrelTip()
     {
@@ -273,9 +270,27 @@ public class Weapon : MonoBehaviour
         }
         else Debug.Log("Weapon don't got no Barrel tip.");
     }
+    public void SetBarrelTip(BarrelTip tip)
+    {
+        barrelTip = tip;
+    }
     public void SetWeaponModel(GameObject model)
     {
         weaponModel = model;
+    }
+    public void SetWeaponModel()
+    {
+        Transform childTransform = transform.GetChild(0); // Assuming the first child is the weapon model
+
+        if (childTransform != null)
+        {
+            weaponModel = childTransform.gameObject;
+        }
+        else
+        {
+            Debug.Log("Error locating weapon model.");
+        }
+
     }
 
     //for weapon spawning

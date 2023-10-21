@@ -82,11 +82,6 @@ public class WallBuy : MonoBehaviour
         foreach(Player player in interactable.getPlayersInRange())
         {
 
-            //switch (hasPlayerPurchasedWeapon)
-            //{ 
-                
-            //}
-
         }
         return 0;
     }
