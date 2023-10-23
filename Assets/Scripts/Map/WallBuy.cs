@@ -51,6 +51,9 @@ public class WallBuy : MonoBehaviour
 
         //check player states
         DeterminePlayerState();
+
+        //Updating states
+        UpdateInteractionStates();
     }
 
     //interactions
@@ -86,8 +89,22 @@ public class WallBuy : MonoBehaviour
 
         });
 
-        interactable.activeInteraction = interactable.interactions[0]; //set purchase weapon prompt to be active
+        UpdateInteractionStates();
+
         //Debug.Log("interaction set as active");
+    }
+
+    private void UpdateInteractionStates()
+    {
+        //determine player prompts
+        foreach (Player player in playerStates.Keys) //change per player
+        {
+            if (playerStates[player])
+            {
+                interactable.activeInteraction = interactable.interactions[1]; //set purchase ammo prompt to be active
+            }
+            else interactable.activeInteraction = interactable.interactions[0]; //set purchase weapon prompt to be active
+        }
     }
 
     //player states
@@ -100,11 +117,10 @@ public class WallBuy : MonoBehaviour
         foreach(Player player in interactable.getPlayersInRange())
         {
             //Debug.Log("Checking player " + player.playerName);
-            if(player.GetPlayerInventory().DoesPlayerHaveWeapon(weapon))
-            {
-                //Debug.Log("Player owns weapon.");
-                interactable.activeInteraction = interactable.interactions[1];
-            }
+
+            //Determine if player has weapon in their inventory already
+            bool hasWeapon = player.GetPlayerInventory().DoesPlayerHaveWeapon(weapon);
+            playerStates[player] = hasWeapon;
         }
         return 0;
     }
