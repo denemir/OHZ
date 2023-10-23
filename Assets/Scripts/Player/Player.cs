@@ -350,4 +350,10 @@ public class Player : MonoBehaviour
     {
 
     } //for manually initiated weapon swap in unity inspector
+
+    //getters
+    public PlayerInventory GetPlayerInventory()
+    {
+        return playerInventory;
+    }
 }

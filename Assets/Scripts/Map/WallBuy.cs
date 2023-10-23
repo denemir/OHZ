@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,6 +18,9 @@ public class WallBuy : MonoBehaviour
     //interaction 
     private Interactable interactable;
     private bool isInitialized = false;
+
+    //player states
+    private Dictionary<Player, bool> playerStates = new Dictionary<Player, bool>();
 
     // Start is called before the first frame update
     void Start()
@@ -44,19 +48,29 @@ public class WallBuy : MonoBehaviour
             InitializeInteractions();
             isInitialized = true;
         }
+
+        //check player states
+        DeterminePlayerState();
     }
 
+    //interactions
     public void PurchaseWeapon()
     {
 
     }
+
+    public void PurchaseAmmo()
+    {
+        
+    }
+
 
     private void InitializeInteractions()
     {
         //if weapon is not purchased
         interactable.interactions.Add(new Interactable.Interaction
         {
-            prompt = "Hold F to purchase " + weapon.name + " for $" + weapon.cost,
+            prompt = "Hold F to purchase " + weapon.weaponName + " for $" + weapon.cost,
             action = onPurchase,
             key = interactKey
 
@@ -66,7 +80,7 @@ public class WallBuy : MonoBehaviour
         //if weapon is already purchased
         interactable.interactions.Add(new Interactable.Interaction
         { 
-            prompt = "Hold F to purchase " + weapon.name + " ammunition for $500",
+            prompt = "Hold F to purchase " + weapon.weaponName + " ammunition for $500",
             action = onAmmoPurchase,
             key = interactKey
 
@@ -76,16 +90,24 @@ public class WallBuy : MonoBehaviour
         //Debug.Log("interaction set as active");
     }
 
+    //player states
     private int DeterminePlayerState()
     {
+        //reset values
+        playerStates.Clear();
+
         //bool hasPlayerPurchasedWeapon = false;
         foreach(Player player in interactable.getPlayersInRange())
         {
-
+            //Debug.Log("Checking player " + player.playerName);
+            if(player.GetPlayerInventory().DoesPlayerHaveWeapon(weapon))
+            {
+                //Debug.Log("Player owns weapon.");
+                interactable.activeInteraction = interactable.interactions[1];
+            }
         }
         return 0;
     }
-
     private int DeterminePlayerState(Player player)
     {
         return 0;

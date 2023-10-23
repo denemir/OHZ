@@ -60,7 +60,7 @@ public class PlayerInventory : MonoBehaviour
     {
         foreach (Weapon weapon in weapons)
         {
-            if (weapon == targetWeapon)
+            if (weapon.weaponName == targetWeapon.weaponName)
                 return true;
         }
         return false;
