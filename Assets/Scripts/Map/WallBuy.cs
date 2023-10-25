@@ -89,9 +89,8 @@ public class WallBuy : MonoBehaviour
 
         });
 
-        UpdateInteractionStates();
-
-        //Debug.Log("interaction set as active");
+        //default to purchase prompt
+        interactable.activeInteraction = interactable.interactions[0];
     }
 
     private void UpdateInteractionStates()
@@ -105,7 +104,7 @@ public class WallBuy : MonoBehaviour
             }
             else interactable.activeInteraction = interactable.interactions[0]; //set purchase weapon prompt to be active
         }
-    }
+    } //update which prompt shows
 
     //player states
     private int DeterminePlayerState()

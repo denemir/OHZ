@@ -141,7 +141,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPrefabs:
   - {fileID: 4039396094233068235, guid: ff5a09d5fed43a64eaac7959567a62b4, type: 3}
+  - {fileID: 1727071150036172477, guid: 7e6dcdc00eca95c439c26d895558b4d9, type: 3}
   weapons:
+  - {fileID: 0}
   - {fileID: 0}
   activeWeapon: {fileID: 0}
 --- !u!114 &405819474494968721
@@ -194,15 +196,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6941822685806563558, guid: 8e47608af878dc54baa0f56aa11c34bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.36
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 6941822685806563558, guid: 8e47608af878dc54baa0f56aa11c34bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.067
+      value: -0.07
       objectReference: {fileID: 0}
     - target: {fileID: 6941822685806563558, guid: 8e47608af878dc54baa0f56aa11c34bf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.652
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 6941822685806563558, guid: 8e47608af878dc54baa0f56aa11c34bf, type: 3}
       propertyPath: m_LocalRotation.w

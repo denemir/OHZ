@@ -6,25 +6,7 @@ public class Shotgun : Weapon
 {   
     void Start()
     {
-        //InstantiateWeapon(transform);
         roundsReloadedPerInstance = 1;
-
-        //if (playerGUIHandler == null)
-        //{
-        //    Transform currentTransform = transform; // Start from the Weapon's transform
-        //                                            // Keep moving up the hierarchy until we either find the PlayerGUIHandler
-        //                                            // or reach the top level (null parent).
-        //    while (currentTransform != null)
-        //    {
-        //        playerGUIHandler = currentTransform.GetComponent<PlayerGUIHandler>();
-        //        if (playerGUIHandler != null)
-        //        {
-        //            // We found the PlayerGUIHandler, so we can exit the loop.
-        //            break;
-        //        }
-        //        currentTransform = currentTransform.parent;
-        //    }
-        //} //gui
     }
 
     public int numberOfPellets; //number of pellets fired out of each shot

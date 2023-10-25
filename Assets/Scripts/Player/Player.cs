@@ -144,10 +144,6 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("PlayerInventory component not found on the player object. Please add the PlayerInventory component to the player object.");
         }
-
-        //if (GetComponent<PlayerInventory>() != null)
-        //    playerInventory = GetComponent<PlayerInventory>();
-        //else Debug.Log("Player inventory component does not exist. Please attach playerInventory script to Player.");
     }
     private void InitializeCharacterModel()
     {
@@ -159,11 +155,7 @@ public class Player : MonoBehaviour
         {
             currentCharacter = GetComponentInChildren<Character>();
             currentCharacter.transform.position = transform.position;
-            if (doesCharacterHaveRightHand())
-            {
-                currentCharacter.rightHand = GetComponentInChildren<MeshRenderer>()?.gameObject.GetComponentInChildren<RightHand>();
-            }
-            characterObject = currentCharacter.model;
+            CheckRightHand();
         }
         else Debug.Log("Character not found in prefab for player " + name + ".");
     }
@@ -229,6 +221,9 @@ public class Player : MonoBehaviour
             CheckReloadCancel();
         }
 
+        //weapon swapping
+        CheckSwapToPrimaryWeapon();
+        CheckSwapToSecondaryWeapon();
     }
     private void ModifyMovementState(float horizontalInput, float verticalInput)
     {
@@ -273,8 +268,6 @@ public class Player : MonoBehaviour
     }
 
     //character model methods
-
-
     public bool doesCharacterHaveRightHand()
     {
         if (currentCharacter == null)
@@ -288,13 +281,21 @@ public class Player : MonoBehaviour
     {
         return currentCharacter.rightHand;
     }
-    private bool isCharacterHoldingWeapon()
+    public void CheckRightHand()
     {
-        if (!currentCharacter.rightHand.holdingWeapon)
-            return false; //character is not holding a weapon
-        //Debug.Log("Character is already holding a weapon.");
-        return true;
+        if (doesCharacterHaveRightHand())
+        {
+            currentCharacter.rightHand = GetComponentInChildren<MeshRenderer>()?.gameObject.GetComponentInChildren<RightHand>();
+        }
+        characterObject = currentCharacter.model;
     }
+    //private bool isCharacterHoldingWeapon()
+    //{
+    //    if (!currentCharacter.rightHand.holdingWeapon)
+    //        return false; //character is not holding a weapon
+    //    //Debug.Log("Character is already holding a weapon.");
+    //    return true;
+    //}
 
     //checks (input checks)                      //////////////////////////////////////////////////////////////////////////////////////set to use methods in PlayerInventory component
     private void CheckShootCurrentWeapon()
@@ -328,7 +329,7 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Reload") && weapon.currentAmmoInMag < weapon.magazineSize && weapon.currentStockAmmo > 0)
         {
             weapon.BeginReloading();
-            Debug.Log("Reloading...");
+            //Debug.Log("Reloading...");
         }
     }
     private void CheckReloadCancel()
@@ -337,6 +338,20 @@ public class Player : MonoBehaviour
         if (playerInventory.GetCurrentWeapon().reloadState == Weapon.ReloadState.Reloading && Input.GetButton("Sprint"))
         {
             playerInventory.GetCurrentWeapon().CancelReload();
+        }
+    }
+    private void CheckSwapToPrimaryWeapon()
+    {
+        if(!Input.GetButton("Fire1") && playerInventory.isSwapWeaponTimerZero() && playerInventory.GetCurrentWeaponSlot() != 0 && Input.GetButtonDown("Primary Weapon"))
+        {
+            playerInventory.SwapCurrentWeapon(0);
+        }
+    }
+    private void CheckSwapToSecondaryWeapon()
+    {
+        if (!Input.GetButton("Fire1") && playerInventory.isSwapWeaponTimerZero() && playerInventory.GetCurrentWeaponSlot() != 1 && Input.GetButtonDown("Secondary Weapon"))
+        {
+            playerInventory.SwapCurrentWeapon(1);
         }
     }
 

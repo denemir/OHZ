@@ -64,6 +64,7 @@ MonoBehaviour:
   recoilSpread: 20
   currentRecoilSpread: 0
   recoilRate: 1.5
+  weaponSwapTime: 95
   weaponType: 0
   weaponModelPrefab: {fileID: 4128586013238518945, guid: b24081ce86c9a5243bdf1461b8204203, type: 3}
   weaponModel: {fileID: 4128586013238518945, guid: b24081ce86c9a5243bdf1461b8204203, type: 3}

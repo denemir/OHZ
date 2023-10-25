@@ -41,6 +41,14 @@ public class Weapon : MonoBehaviour
     public float currentRecoilSpread; /*{ get; private set; }*/ //current spread
     public float recoilRate; //how much each individual shot spreads the recoil
 
+    //handling
+    public float weaponSwapTime; 
+    //how much time is added to the weapon swap. weapon swap time works like this: when swapping
+                                 //between 2 weapons, the total time to swap accounts for both weapons. smaller weapons (such
+                                 //as smgs and pistols, have much faster swap times. the swap time accounts for both pulling
+                                 //out, and putting away. (ex., 1911 has swap value of 50. MAG-10 has swap value of 120. The
+                                 //total time to swap would be 170.)
+
     //weapon typing
     public enum WeaponType
     {
@@ -91,6 +99,7 @@ public class Weapon : MonoBehaviour
             SetWeaponModel();
         }
 
+        //swapping weapon timer
         if (currentTimer > 0)
             currentTimer -= 0.005f;
 
@@ -293,34 +302,34 @@ public class Weapon : MonoBehaviour
 
     }
 
-    //for weapon spawning
-    public void CopyWeaponPropertiesFrom(Weapon otherWeapon)
-    {
-        weaponName = otherWeapon.weaponName;
-        fireRate = otherWeapon.fireRate;
-        isFullAuto = otherWeapon.isFullAuto;
-        canToggleFullAuto = otherWeapon.canToggleFullAuto;
-        damage = otherWeapon.damage;
-        criticalDamage = otherWeapon.criticalDamage;
-        criticalChance = otherWeapon.criticalChance;
-        reloadState = otherWeapon.reloadState;
-        isActive = otherWeapon.isActive;
-        timeToReload = otherWeapon.timeToReload;
-        reloadTimer = otherWeapon.reloadTimer;
-        currentTimer = otherWeapon.currentTimer;
-        magazineSize = otherWeapon.magazineSize;
-        currentAmmoInMag = otherWeapon.currentAmmoInMag;
-        currentStockAmmo = otherWeapon.currentStockAmmo;
-        maxStockAmmo = otherWeapon.maxStockAmmo;
-        isWeaponHandLoaded = otherWeapon.isWeaponHandLoaded;
-        roundsReloadedPerInstance = otherWeapon.roundsReloadedPerInstance;
-        recoilSpread = otherWeapon.recoilSpread;
-        currentRecoilSpread = otherWeapon.currentRecoilSpread;
-        recoilRate = otherWeapon.recoilRate;
-        weaponType = otherWeapon.weaponType;
-        bulletModelPrefab = otherWeapon.bulletModelPrefab;
-        bulletVelocity = otherWeapon.bulletVelocity;
-        // Copy any other properties you may have added
-    }
+    ////for weapon spawning
+    //public void CopyWeaponPropertiesFrom(Weapon otherWeapon)
+    //{
+    //    weaponName = otherWeapon.weaponName;
+    //    fireRate = otherWeapon.fireRate;
+    //    isFullAuto = otherWeapon.isFullAuto;
+    //    canToggleFullAuto = otherWeapon.canToggleFullAuto;
+    //    damage = otherWeapon.damage;
+    //    criticalDamage = otherWeapon.criticalDamage;
+    //    criticalChance = otherWeapon.criticalChance;
+    //    reloadState = otherWeapon.reloadState;
+    //    isActive = otherWeapon.isActive;
+    //    timeToReload = otherWeapon.timeToReload;
+    //    reloadTimer = otherWeapon.reloadTimer;
+    //    currentTimer = otherWeapon.currentTimer;
+    //    magazineSize = otherWeapon.magazineSize;
+    //    currentAmmoInMag = otherWeapon.currentAmmoInMag;
+    //    currentStockAmmo = otherWeapon.currentStockAmmo;
+    //    maxStockAmmo = otherWeapon.maxStockAmmo;
+    //    isWeaponHandLoaded = otherWeapon.isWeaponHandLoaded;
+    //    roundsReloadedPerInstance = otherWeapon.roundsReloadedPerInstance;
+    //    recoilSpread = otherWeapon.recoilSpread;
+    //    currentRecoilSpread = otherWeapon.currentRecoilSpread;
+    //    recoilRate = otherWeapon.recoilRate;
+    //    weaponType = otherWeapon.weaponType;
+    //    bulletModelPrefab = otherWeapon.bulletModelPrefab;
+    //    bulletVelocity = otherWeapon.bulletVelocity;
+    //    // Copy any other properties you may have added
+    //}
 
 }
