@@ -71,7 +71,7 @@ MonoBehaviour:
   barrelTipTransform: {fileID: 0}
   barrelTip: {fileID: 0}
   bulletModelPrefab: {fileID: 5527745764002851422, guid: 3ec4e7cb42c193241999b9db7c1e4ce1, type: 3}
-  bulletVelocity: 60
+  bulletVelocity: 100
   player: {fileID: 0}
   character: {fileID: 0}
   rightHand: {fileID: 0}

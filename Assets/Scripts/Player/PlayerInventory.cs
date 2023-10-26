@@ -22,9 +22,8 @@ public class PlayerInventory : MonoBehaviour
     void Start()
     {
         currentWeaponSlot = 0;
-        if (weaponPrefabs[currentWeaponSlot] != null)
+        if (weaponPrefabs[currentWeaponSlot] != null) //spawn current weapon
             SpawnWeapon(currentWeaponSlot);
-        UpdateWeaponsArray();
     }
 
     // Update is called once per frame
@@ -38,7 +37,7 @@ public class PlayerInventory : MonoBehaviour
         if (!isSwapWeaponTimerZero())
             swapWeaponTimer--;
 
-        UpdateWeaponsArray();
+        //UpdateWeaponsArray();
     }
 
     //modifying weapons
@@ -74,53 +73,30 @@ public class PlayerInventory : MonoBehaviour
             return;
         }
 
+        //set current weapon to be inactive
         if(currentWeaponInstance != null)
         {
             currentWeaponInstance.SetActive(false);
-        }
-
-        ////Despawn current weapon
-        //DespawnCurrentWeapon(currentWeaponSlot);
-
-        //checking original weapon properties (if they exist)
-        Weapon stats = null;
-        if (weapons[slot] != null)
-        {
-            stats = weapons[slot];
+            //Debug.Log("" + currentWeaponInstance.name + " set inactive");
         }
 
         //setting new weapon
-        SpawnWeapon(slot);
-
-        if(stats != null)
+        if (weapons[slot] == null) //if weapon doesn't exist, spawn an instance of it.
+            SpawnWeapon(slot);
+        else
         {
-            weapons[currentWeaponSlot] = stats;
-            activeWeapon = stats;
+            weapons[currentWeaponSlot].gameObject.SetActive(false);
+            weapons[slot].gameObject.SetActive(true);
+            activeWeapon = weapons[slot];
+            //Debug.Log("Spawned wepaon from inventory, weapon slot " + slot);
         }
+
+        //set current weapon slot to selected slot
+        currentWeaponSlot = slot;
 
         //total swap time accounts for both weapons
         swapWeaponTimer += weapons[currentWeaponSlot].weaponSwapTime + weapons[slot].weaponSwapTime;
     } //swap current weapon based on inventory slots
-    public bool DoesPlayerHaveWeapon(Weapon targetWeapon)
-    {
-        foreach (Weapon weapon in weapons)
-        {
-            if (weapon.weaponName == targetWeapon.weaponName)
-                return true;
-        }
-        return false;
-    }
-
-    //public void AttachCurrentWeaponToHand()
-    //{
-    //    if (GetComponent<Player>().doesCharacterHaveRightHand())
-    //    {
-    //        Transform rightHandTransform = GetComponent<Player>().GetRightHand().transform;
-
-    //        weapons[currentWeaponSlot].InstantiateWeapon(rightHandTransform);
-    //    }
-    //    else Debug.Log("Player right hand does not exist.");
-    //}
     public void AttachCurrentWeaponToHand(GameObject weaponModel)
     {
         if (GetComponent<Player>().doesCharacterHaveRightHand())
@@ -137,22 +113,6 @@ public class PlayerInventory : MonoBehaviour
         else Debug.Log("Player right hand does not exist.");
     }
 
-    private void UpdateWeaponsArray()
-    {
-        int i = 0;
-        foreach(GameObject prefab in weaponPrefabs)
-        {
-            if (weapons[i] == null)
-            {
-                SpawnWeaponInstance(prefab, i);
-                //DespawnWeapon(prefab, i);
-                //weapons[i] = prefab.GetComponent<Weapon>();
-            }
-
-            //increment
-            i++;
-        }
-    }
 
     //spawning weapons
     public void SpawnWeapon(int slot)
@@ -185,8 +145,7 @@ public class PlayerInventory : MonoBehaviour
             else Debug.Log("Player right hand does not exist.");
 
         }
-    }
-
+    } //spawn weapon from slot
     public GameObject SpawnWeaponInstance(GameObject weapon, int slot)
     {
             GameObject tempWeaponInstance = Instantiate(weapon);
@@ -210,35 +169,7 @@ public class PlayerInventory : MonoBehaviour
             }
             else Debug.Log("Player right hand does not exist.");
         return null;
-    }
-    //public void DespawnCurrentWeapon(int currentSlot)
-    //{
-    //    if (weapons[currentSlot] != null && activeWeapon != null)
-    //    {
-    //        weapons[currentWeaponSlot] = activeWeapon;
-    //        ////copying properties to inventory
-    //        //Weapon wi = currentWeaponInstance.GetComponent<Weapon>();
-    //        //weapons[currentSlot] = Instantiate(wi);
-
-    //        //destroying the evidence
-    //        Destroy(currentWeaponInstance);
-    //        activeWeapon = null;
-    //    }
-    //}
-    //public void DespawnWeapon(GameObject weapon, int slot)
-    //{
-    //    if (weapons[slot] != null)
-    //    {
-    //        weapons[slot] = weapon.GetComponent<Weapon>();
-    //        ////copying properties to inventory
-    //        //Weapon wi = currentWeaponInstance.GetComponent<Weapon>();
-    //        //weapons[currentSlot] = Instantiate(wi);
-
-    //        //destroying the evidence
-    //        Destroy(weapon);
-    //    }
-    //}
-
+    }    
     private int checkForOpenWeaponSlot()
     {
         for (int i = 0; i < weapons.Length; i++)
@@ -251,6 +182,7 @@ public class PlayerInventory : MonoBehaviour
         return -1;
     } //if there is an open slot in players inventory, return slot id. return -1 any other case
 
+
     //use weapons
     public Weapon GetCurrentWeapon()
     {
@@ -261,15 +193,25 @@ public class PlayerInventory : MonoBehaviour
     {
         return currentWeaponSlot;
     }
+    public bool DoesPlayerHaveWeapon(Weapon targetWeapon)
+    {
+        foreach (GameObject weapon in weaponPrefabs)
+        {
+            if (weapon.GetComponent<Weapon>().weaponName == targetWeapon.weaponName)
+                return true;
+        }
+        return false;
+    }
+
 
     //swap weapon time
     public bool isSwapWeaponTimerZero()
     {
         return (swapWeaponTimer == 0);
     }
-
     public void addToSwapWeaponTimer(float time)
     {
         swapWeaponTimer += time;
     }
+
 }

@@ -46,9 +46,6 @@ public class Player : MonoBehaviour
     public float rotationAngle;
 
     //weapons & inventory
-    //public GameObject currentWeaponPrefab; //for spawn weapon
-    ////public GameObject secondaryWeaponPrefab;
-    ////public GameObject tertiaryWeaponPrefab;
     private PlayerInventory playerInventory;
 
 
@@ -120,12 +117,6 @@ public class Player : MonoBehaviour
         //player rotation manager
         RotationHandler();
 
-        ////check if hand dropped weapon
-        //if (currentCharacter.rightHand.droppedWeapon)
-        //{
-        //    DropWeapon();
-        //}
-
     }
 
     //player initialization
@@ -195,10 +186,6 @@ public class Player : MonoBehaviour
     {
         //do this later :D
     }
-    private void InitializeWeapon(Weapon newWeaponPrefab)
-    {
-
-    } //differs from primary weapon because this can be called by the SwapWeaponMethod
 
     //player input
     private void getInput()
@@ -257,15 +244,6 @@ public class Player : MonoBehaviour
         currentCharacter.RotateRightHand(rotationAngle);
     } //handles rotating the player (and children) to face either towards mouse or right thumbstick direction
 
-    //weapon methods
-    public Weapon GetCurrentWeapon()
-    {
-        if (playerInventory != null)
-        {
-            return playerInventory.GetCurrentWeapon();
-        }
-        return null;
-    }
 
     //character model methods
     public bool doesCharacterHaveRightHand()
@@ -289,15 +267,17 @@ public class Player : MonoBehaviour
         }
         characterObject = currentCharacter.model;
     }
-    //private bool isCharacterHoldingWeapon()
-    //{
-    //    if (!currentCharacter.rightHand.holdingWeapon)
-    //        return false; //character is not holding a weapon
-    //    //Debug.Log("Character is already holding a weapon.");
-    //    return true;
-    //}
 
-    //checks (input checks)                      //////////////////////////////////////////////////////////////////////////////////////set to use methods in PlayerInventory component
+
+    //weapon & inventory inputs
+    public Weapon GetCurrentWeapon()
+    {
+        if (playerInventory != null)
+        {
+            return playerInventory.GetCurrentWeapon();
+        }
+        return null;
+    }
     private void CheckShootCurrentWeapon()
     {
         Weapon weapon = GetComponent<PlayerInventory>().GetCurrentWeapon();
@@ -339,20 +319,25 @@ public class Player : MonoBehaviour
         {
             playerInventory.GetCurrentWeapon().CancelReload();
         }
-    }
+    } //if player presses Sprint key, cancel reload
     private void CheckSwapToPrimaryWeapon()
     {
-        if(!Input.GetButton("Fire1") && playerInventory.isSwapWeaponTimerZero() && playerInventory.GetCurrentWeaponSlot() != 0 && Input.GetButtonDown("Primary Weapon"))
+        if(!Input.GetButton("Fire1")/* && playerInventory.isSwapWeaponTimerZero()*/ && playerInventory.GetCurrentWeaponSlot() != 0 && Input.GetButtonDown("Primary Weapon"))
         {
             playerInventory.SwapCurrentWeapon(0);
+            //Debug.Log("0");
         }
     }
     private void CheckSwapToSecondaryWeapon()
     {
-        if (!Input.GetButton("Fire1") && playerInventory.isSwapWeaponTimerZero() && playerInventory.GetCurrentWeaponSlot() != 1 && Input.GetButtonDown("Secondary Weapon"))
+        if (!Input.GetButton("Fire1") /*&& playerInventory.isSwapWeaponTimerZero()*/ && playerInventory.GetCurrentWeaponSlot() != 1 && Input.GetButtonDown("Secondary Weapon"))
         {
             playerInventory.SwapCurrentWeapon(1);
         }
+    }
+    private void CheckCycleWeapons() //primarily for controller players, but can also be set for K&M players
+    {
+
     }
 
     private bool DoesPlayerInventoryComponentExist()
@@ -360,11 +345,6 @@ public class Player : MonoBehaviour
         return GetComponent<PlayerInventory>() != null;
     }
 
-    //debug methods (remove later)
-    private void hasWeaponChanged()
-    {
-
-    } //for manually initiated weapon swap in unity inspector
 
     //getters
     public PlayerInventory GetPlayerInventory()
