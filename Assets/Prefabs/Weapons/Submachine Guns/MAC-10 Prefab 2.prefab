@@ -89,6 +89,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TempMAC-10ModelPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 4128586013238518945, guid: b24081ce86c9a5243bdf1461b8204203, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4547159853659982239, guid: b24081ce86c9a5243bdf1461b8204203, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
