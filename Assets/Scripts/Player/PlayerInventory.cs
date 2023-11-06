@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -18,12 +19,20 @@ public class PlayerInventory : MonoBehaviour
 
     private float swapWeaponTimer = 0;
 
+    //debug
+    public DebugHandler debugHandler;
+    public bool isDebuggingOn;
+
     // Start is called before the first frame update
     void Start()
     {
         currentWeaponSlot = 0;
         if (weaponPrefabs[currentWeaponSlot] != null) //spawn current weapon
             SpawnWeapon(currentWeaponSlot);
+
+        //debug
+        if (debugHandler != null && debugHandler.IsDebuggingOn())
+            isDebuggingOn = true;
     }
 
     // Update is called once per frame
@@ -41,35 +50,60 @@ public class PlayerInventory : MonoBehaviour
     }
 
     //modifying weapons
-    public bool AddWeapon(Weapon newWeapon) //when caller is sending to add weapon, if AddWeapon returns false, try SwapWeapon
+    public bool AddWeapon(GameObject newWeaponPrefab) //when caller is sending to add weapon, if AddWeapon returns false, try SwapWeapon
     {
         int slot = checkForOpenWeaponSlot();
         if (slot != -1)
         {
-            weapons[slot] = newWeapon;
+            weaponPrefabs[slot] = newWeaponPrefab;
+            SwapCurrentWeapon(slot);
+
+            if (isDebuggingOn)
+                Debug.Log("Weapon added to slot " + slot);
             return true;
         }
+
+        if (isDebuggingOn)
+            Debug.Log("No open weapon slots found.");
+
         return false; //false means no weapon was added
     } //adds weapon in any open slot
+    public void HideWeapon(int slot)
+    {
+        if (isDebuggingOn)
+            Debug.Log("Hiding weapon slot " + slot);
+
+        if (weaponPrefabs[slot] != null)
+        {
+            weapons[slot].isActive = false;
+            weapons[slot] = null;
+        }
+    }
     public void DropWeapon(int slot)
     {
-        if (weapons[slot] != null)
+        if (isDebuggingOn)
+            Debug.Log("Dropping weapon slot " + slot);
+        if (weaponPrefabs[slot] != null)
         {
             weapons[slot].Drop();
             weapons[slot] = null;
         }
     }
-    public void SwapWeapon(Weapon newWeapon)
+    public void SwapWeapon(GameObject newWeapon)
     {
+        //replacing weapon with purchased weapon
         DropWeapon(currentWeaponSlot);
-        weapons[currentWeaponSlot] = newWeapon;
+        weaponPrefabs[currentWeaponSlot] = newWeapon;
+
+        //spawning & setting it to be active
         SpawnWeapon(currentWeaponSlot);
+
     } //swap weapons
     public void SwapCurrentWeapon(int slot)
     {
         if (weaponPrefabs[slot] == null) 
         {
-            Debug.LogError("Weapon slot does not contain a weapon.");
+            //Debug.LogError("Weapon slot does not contain a weapon.");
             return;
         }
 
@@ -170,17 +204,6 @@ public class PlayerInventory : MonoBehaviour
             else Debug.Log("Player right hand does not exist.");
         return null;
     }    
-    private int checkForOpenWeaponSlot()
-    {
-        for (int i = 0; i < weapons.Length; i++)
-        {
-            if (weapons[i] != null)
-            {
-                return i;
-            }
-        }
-        return -1;
-    } //if there is an open slot in players inventory, return slot id. return -1 any other case
 
 
     //use weapons
@@ -193,13 +216,31 @@ public class PlayerInventory : MonoBehaviour
     {
         return currentWeaponSlot;
     }
-    public bool DoesPlayerHaveWeapon(Weapon targetWeapon)
+    public int GetMatchingWeaponSlot(Weapon keyWeapon)
     {
-        foreach (GameObject weapon in weaponPrefabs)
+        int i = 0;
+        foreach(var weapon in weapons)
         {
-            if (weapon.GetComponent<Weapon>().weaponName == targetWeapon.weaponName)
-                return true;
+            if(weapon.weaponName == keyWeapon.weaponName)
+            {
+                return i;
+            }
+            i++;
         }
+        return -1;
+    } //for adding ammo
+    public bool DoesPlayerHaveWeapon(GameObject targetWeapon)
+    {
+        if(weaponPrefabs[0] != null)
+        {
+            return weaponPrefabs.Contains(targetWeapon);
+            //foreach (GameObject weapon in weaponPrefabs)
+            //{
+            //    if (weapon.GetComponent<Weapon>().weaponName == targetWeapon.weaponName)
+            //        return true;
+            //}
+        }
+        
         return false;
     }
 
@@ -213,5 +254,24 @@ public class PlayerInventory : MonoBehaviour
     {
         swapWeaponTimer += time;
     }
+
+    //inventory space
+    public bool doesPlayerHaveAnOpenSlot()
+    {
+        if (checkForOpenWeaponSlot() != -1)
+            return true;
+        return false;
+    } //returns if player has an open slot
+    private int checkForOpenWeaponSlot()
+    {
+        for (int i = 0; i < weaponPrefabs.Length; i++)
+        {
+            if (weapons[i] == null)
+            {
+                return i;
+            }
+        }
+        return -1;
+    } //if there is an open slot in players inventory, return slot id. return -1 any other case
 
 }

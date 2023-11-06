@@ -10,6 +10,7 @@ public class Interactable : MonoBehaviour
         public string prompt;
         public KeyCode key;
         public UnityEvent action;
+        public bool holdKeyDown; //if true, key must be held rather than just pressed.
 
         //keycode
         public KeyCode getKeyCode() { return key; }
@@ -23,6 +24,7 @@ public class Interactable : MonoBehaviour
 
     //player context
     private List<Player> playersInRange;
+    private List<bool> playersInteracting;
 
     public void Start()
     {

@@ -7,17 +7,22 @@ using UnityEngine.Events;
 public class WallBuy : MonoBehaviour
 {
     //purchasable weapons
-    public Weapon weapon;
+    public GameObject weaponObject;
+    private Weapon weapon;
+
+    //stats
+    public int ammoCost;
 
     //events
     public UnityEvent onPurchase; //purchase wall buy weapon
     public UnityEvent onAmmoPurchase; //gives player max stock ammo for wall buy weapon if owned
 
-    public KeyCode interactKey;
 
     //interaction 
+    public KeyCode interactKey;
     private Interactable interactable;
     private bool isInitialized = false;
+    public Player interactingPlayer;
 
     //player states
     private Dictionary<Player, bool> playerStates = new Dictionary<Player, bool>();
@@ -25,6 +30,8 @@ public class WallBuy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        weapon = weaponObject.GetComponent<Weapon>();
+
         if (GetComponent<Interactable>() != null)
         {
             interactable = GetComponent<Interactable>();
@@ -50,23 +57,64 @@ public class WallBuy : MonoBehaviour
         }
 
         //check player states
-        DeterminePlayerState();
+        DeterminePlayerStates();
+        if(interactable.getPlayersInRange().Count > 0)
+        {
+            interactingPlayer = arePlayersInteracting();
+
+            if(interactingPlayer != null)
+            {
+                InteractWithWallBuy(interactingPlayer);
+            }
+        }    
 
         //Updating states
         UpdateInteractionStates();
     }
 
     //interactions
+    private void InteractWithWallBuy(Player player)
+    {
+        switch (DeterminePlayerState(player))
+        {
+            case false: //player doesn't have weapon
+                interactable.interactions[0].action.Invoke();
+                break;
+            case true:
+                interactable.interactions[1].action.Invoke();
+                break;
+        }
+
+    }
     public void PurchaseWeapon()
     {
-
+        if (interactingPlayer.points >= weapon.cost)
+        {
+            interactingPlayer.points -= weapon.cost;
+            if(interactingPlayer.GetPlayerInventory().doesPlayerHaveAnOpenSlot())
+            {
+                interactingPlayer.GetPlayerInventory().AddWeapon(weaponObject);
+                //Debug.Log("Successfully purchased " + weapon.name);
+            }
+            else
+            {
+                interactingPlayer.GetPlayerInventory().SwapWeapon(weaponObject);
+                //Debug.Log("Successfully purchased & swapped to " + weapon.name);
+            }
+        }
     }
-
     public void PurchaseAmmo()
     {
-        
-    }
+        if(interactingPlayer.points >= ammoCost)
+        {
+            //deduct points
+            interactingPlayer.points -= ammoCost;
 
+            //add ammo
+            interactingPlayer.GetPlayerInventory().weapons[interactingPlayer.GetPlayerInventory().GetMatchingWeaponSlot(weapon)].currentAmmoInMag = weapon.magazineSize;
+            interactingPlayer.GetPlayerInventory().weapons[interactingPlayer.GetPlayerInventory().GetMatchingWeaponSlot(weapon)].currentStockAmmo = weapon.maxStockAmmo;
+        }
+    }
 
     private void InitializeInteractions()
     {
@@ -83,7 +131,7 @@ public class WallBuy : MonoBehaviour
         //if weapon is already purchased
         interactable.interactions.Add(new Interactable.Interaction
         { 
-            prompt = "Hold F to purchase " + weapon.weaponName + " ammunition for $500",
+            prompt = "Hold F to purchase " + weapon.weaponName + " ammunition for $" + ammoCost,
             action = onAmmoPurchase,
             key = interactKey
 
@@ -98,16 +146,26 @@ public class WallBuy : MonoBehaviour
         //determine player prompts
         foreach (Player player in playerStates.Keys) //change per player
         {
-            if (playerStates[player])
+            switch(playerStates[player])
             {
-                interactable.activeInteraction = interactable.interactions[1]; //set purchase ammo prompt to be active
+                case true:
+                    interactable.activeInteraction = interactable.interactions[1]; //set purchase ammo prompt to be active
+                    break;
+                case false:
+                    interactable.activeInteraction = interactable.interactions[0]; //set purchase weapon prompt to be active
+                    break;
             }
-            else interactable.activeInteraction = interactable.interactions[0]; //set purchase weapon prompt to be active
+
+            //if (playerStates[player])
+            //{
+            //    interactable.activeInteraction = interactable.interactions[1]; //set purchase ammo prompt to be active
+            //}
+            //else interactable.activeInteraction = interactable.interactions[0]; //set purchase weapon prompt to be active
         }
     } //update which prompt shows
 
     //player states
-    private int DeterminePlayerState()
+    private int DeterminePlayerStates()
     {
         //reset values
         playerStates.Clear();
@@ -118,14 +176,26 @@ public class WallBuy : MonoBehaviour
             //Debug.Log("Checking player " + player.playerName);
 
             //Determine if player has weapon in their inventory already
-            bool hasWeapon = player.GetPlayerInventory().DoesPlayerHaveWeapon(weapon);
+            bool hasWeapon = player.GetPlayerInventory().DoesPlayerHaveWeapon(weaponObject);
             playerStates[player] = hasWeapon;
         }
         return 0;
-    }
-    private int DeterminePlayerState(Player player)
+    } //determine if player is within range and has specified weapon
+    private bool DeterminePlayerState(Player player)
     {
-        return 0;
+        return player.GetComponent<PlayerInventory>().DoesPlayerHaveWeapon(weaponObject);
     }
+    private Player arePlayersInteracting()
+    {
+        foreach (Player player in  interactable.getPlayersInRange())
+        {
+            if(Input.GetKeyDown(interactKey))
+            {
+                return player;
+            }
+        }
+        return null;
+    } //determine if any players are interacting with the interactable
+
 
 }

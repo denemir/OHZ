@@ -231,8 +231,10 @@ public class Weapon : MonoBehaviour
     //misc
     public void Drop()
     {
-        Destroy(weaponModel);
-        Destroy(this.gameObject);
+        weaponModel.SetActive(false);
+        this.gameObject.SetActive(false);
+        //Destroy(weaponModel);
+        //Destroy(this.gameObject);
     } //weapon is no longer in existence after player drops
 
     //public void InstantiateWeapon(Transform parentT) //for when weapon gets picked up or spawned it has to be instantiated
