@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2654708301017111204}
   - component: {fileID: 4422963551661396218}
+  - component: {fileID: -331071688039827517}
   m_Layer: 0
   m_Name: MAG-10 Prefab
   m_TagString: Untagged
@@ -72,6 +73,7 @@ MonoBehaviour:
   barrelTip: {fileID: 8274567964915558837}
   bulletModelPrefab: {fileID: 5527745764002851422, guid: 3ec4e7cb42c193241999b9db7c1e4ce1, type: 3}
   bulletVelocity: 75
+  bulletPool: {fileID: 0}
   player: {fileID: 0}
   character: {fileID: 0}
   rightHand: {fileID: 0}
@@ -79,6 +81,21 @@ MonoBehaviour:
   cost: 0
   numberOfPellets: 5
   minimumSpread: 2
+--- !u!114 &-331071688039827517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727071150036172477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b815278ebe11e1e439d963cd527cfec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 5527745764002851422, guid: 3ec4e7cb42c193241999b9db7c1e4ce1, type: 3}
+  poolSize: 15
+  poolLimit: 30
 --- !u!1001 &7933977164040423264
 PrefabInstance:
   m_ObjectHideFlags: 0

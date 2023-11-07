@@ -42,12 +42,12 @@ public class Weapon : MonoBehaviour
     public float recoilRate; //how much each individual shot spreads the recoil
 
     //handling
-    public float weaponSwapTime; 
+    public float weaponSwapTime;
     //how much time is added to the weapon swap. weapon swap time works like this: when swapping
-                                 //between 2 weapons, the total time to swap accounts for both weapons. smaller weapons (such
-                                 //as smgs and pistols, have much faster swap times. the swap time accounts for both pulling
-                                 //out, and putting away. (ex., 1911 has swap value of 50. MAG-10 has swap value of 120. The
-                                 //total time to swap would be 170.)
+    //between 2 weapons, the total time to swap accounts for both weapons. smaller weapons (such
+    //as smgs and pistols, have much faster swap times. the swap time accounts for both pulling
+    //out, and putting away. (ex., 1911 has swap value of 50. MAG-10 has swap value of 120. The
+    //total time to swap would be 170.)
 
     //weapon typing
     public enum WeaponType
@@ -74,6 +74,7 @@ public class Weapon : MonoBehaviour
     //bullet
     public GameObject bulletModelPrefab;
     public float bulletVelocity;
+    public BulletPool bulletPool;
 
     //player & player gui
     public Player player;
@@ -98,6 +99,8 @@ public class Weapon : MonoBehaviour
         {
             SetWeaponModel();
         }
+        if(bulletPool == null)
+            bulletPool = GetComponent<BulletPool>();
 
         //swapping weapon timer
         if (currentTimer > 0)
@@ -158,20 +161,28 @@ public class Weapon : MonoBehaviour
     } //shoot action is performed
     public void Fire(Transform shooterTransform) //fires singular projectile
     {
+        if (bulletPool == null)
+            Debug.LogError("Bullet Pool null");
+        Bullet bullet = bulletPool.GetBullet();
 
-        float angle = Random.Range(-currentRecoilSpread, currentRecoilSpread);
+        if (bullet != null)
+        {
+            Debug.Log("Bullett");
+            float angle = Random.Range(-currentRecoilSpread, currentRecoilSpread);
 
-        if (barrelTip == null)
-            Debug.Log("FUCLK");
+            if (barrelTip == null)
+                Debug.Log("Barrel tip not set.");
 
-        Vector3 bulletDirection = Quaternion.Euler(0f, angle, 0f) * barrelTip.transform.forward;
+            Vector3 bulletDirection = Quaternion.Euler(0f, angle, 0f) * barrelTip.transform.forward;
 
-        GameObject bullet = Instantiate(bulletModelPrefab, barrelTip.transform.position, Quaternion.identity/*Quaternion.LookRotation(bulletDirection)*//*new Quaternion(barrelTip.transform.rotation.x, barrelTip.transform.rotation.y, barrelTip.transform.rotation.z, 0f)*/);
-        bullet.GetComponent<Bullet>().SetRotationValues(Quaternion.Euler(0f, shooterTransform.rotation.eulerAngles.y - 90f, 0f));
+            //setting bullet properties
+            bullet.SetRotationValues(Quaternion.Euler(0f, shooterTransform.rotation.eulerAngles.y - 90f, 0f));
+            bullet.SetInitialPosition(barrelTipTransform);
+            bullet.SetDirection(bulletDirection);
+            bullet.SetVelocity(bulletVelocity);
+            bullet.SetDamageAndCritValues(damage, criticalChance, criticalDamage);
+        }
 
-        bullet.GetComponent<Bullet>().SetDirection(bulletDirection);
-        bullet.GetComponent<Bullet>().SetVelocity(bulletVelocity);
-        bullet.GetComponent<Bullet>().SetDamageAndCritValues(damage, criticalChance, criticalDamage);
     }
 
 

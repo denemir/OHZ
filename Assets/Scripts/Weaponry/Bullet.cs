@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        despawnTime = Time.time + life;
+
     }
 
     // Update is called once per frame
@@ -31,6 +31,7 @@ public class Bullet : MonoBehaviour
         transform.rotation = rotation;
     }
 
+    //setting values
     public void SetDamageAndCritValues(float damage, float criticalChance, float criticalDamage)
     {
         this.damage = damage;
@@ -53,8 +54,19 @@ public class Bullet : MonoBehaviour
         this.rotation = rotation;
     }
 
+    public void SetInitialPosition(Transform position)
+    {
+        transform.position = position.position;
+    }
+
     public void Damage()
     {
 
+    }
+
+    //despawn timer
+    public void BeginDespawnTimer()
+    {
+        despawnTime = Time.time + life;
     }
 }

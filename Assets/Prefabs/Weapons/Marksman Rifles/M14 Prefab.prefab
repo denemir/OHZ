@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -7189287088426283325}
   - component: {fileID: 2945719776148091262}
   - component: {fileID: 3733514873923676207}
+  - component: {fileID: 6724443264028164953}
   m_Layer: 0
   m_Name: M14 Prefab
   m_TagString: Untagged
@@ -74,6 +75,7 @@ MonoBehaviour:
   barrelTip: {fileID: 9092342645017071949}
   bulletModelPrefab: {fileID: 5527745764002851422, guid: 3ec4e7cb42c193241999b9db7c1e4ce1, type: 3}
   bulletVelocity: 100
+  bulletPool: {fileID: 0}
   player: {fileID: 0}
   character: {fileID: 0}
   rightHand: {fileID: 0}
@@ -127,6 +129,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.15, y: 0.6, z: 3.5}
   m_Center: {x: 0, y: 0.05, z: 0}
+--- !u!114 &6724443264028164953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727071150036172477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b815278ebe11e1e439d963cd527cfec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 5527745764002851422, guid: 3ec4e7cb42c193241999b9db7c1e4ce1, type: 3}
+  poolSize: 40
+  poolLimit: 80
 --- !u!1001 &5706297607831819382
 PrefabInstance:
   m_ObjectHideFlags: 0

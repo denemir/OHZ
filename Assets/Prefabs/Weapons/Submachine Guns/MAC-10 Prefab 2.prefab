@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2469795305923678166}
   - component: {fileID: 849071670188823303}
+  - component: {fileID: 766758287307300295}
   m_Layer: 0
   m_Name: MAC-10 Prefab 2
   m_TagString: Untagged
@@ -72,11 +73,27 @@ MonoBehaviour:
   barrelTip: {fileID: 0}
   bulletModelPrefab: {fileID: 5527745764002851422, guid: 3ec4e7cb42c193241999b9db7c1e4ce1, type: 3}
   bulletVelocity: 100
+  bulletPool: {fileID: 0}
   player: {fileID: 0}
   character: {fileID: 0}
   rightHand: {fileID: 0}
   playerGUIHandler: {fileID: 0}
   cost: 0
+--- !u!114 &766758287307300295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4039396094233068235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b815278ebe11e1e439d963cd527cfec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 5527745764002851422, guid: 3ec4e7cb42c193241999b9db7c1e4ce1, type: 3}
+  poolSize: 70
+  poolLimit: 100
 --- !u!1001 &2419553472856114065
 PrefabInstance:
   m_ObjectHideFlags: 0
