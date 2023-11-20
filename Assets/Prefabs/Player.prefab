@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerProfile: {fileID: 0}
   playerName: Nutsack
-  nameTagPrefab: {fileID: 353889809262789484, guid: 5bf658f6e7c52864ebe0109e5e471ba2, type: 3}
+  nameTagPrefab: {fileID: 353889809262789484, guid: ca3e7ed996d7f6c479686c8e2ba48034, type: 3}
   points: 0
   kills: 0
   downs: 0
@@ -146,6 +146,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   activeWeapon: {fileID: 0}
+  debugHandler: {fileID: 0}
+  isDebuggingOn: 0
 --- !u!114 &405819474494968721
 MonoBehaviour:
   m_ObjectHideFlags: 0

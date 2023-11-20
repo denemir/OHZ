@@ -102,7 +102,7 @@ public class Weapon : MonoBehaviour
         if(bulletPool == null)
             bulletPool = GetComponent<BulletPool>();
 
-        //swapping weapon timer
+        //reloading weapon timer
         if (currentTimer > 0)
             currentTimer -= 0.005f;
 
@@ -165,9 +165,8 @@ public class Weapon : MonoBehaviour
             Debug.LogError("Bullet Pool null");
         Bullet bullet = bulletPool.GetBullet();
 
-        if (bullet != null)
+        if (bullet != null && !bullet.GetReadyToFire())
         {
-            Debug.Log("Bullett");
             float angle = Random.Range(-currentRecoilSpread, currentRecoilSpread);
 
             if (barrelTip == null)
@@ -181,6 +180,9 @@ public class Weapon : MonoBehaviour
             bullet.SetDirection(bulletDirection);
             bullet.SetVelocity(bulletVelocity);
             bullet.SetDamageAndCritValues(damage, criticalChance, criticalDamage);
+            bullet.SetBulletPool(bulletPool);
+            bullet.BeginDespawnTimer();
+            bullet.ToggleReadyToFire(); //setting it to false to let pool know that it can't be reused currently
         }
 
     }

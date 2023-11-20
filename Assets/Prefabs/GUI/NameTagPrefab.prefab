@@ -46,7 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: 
   clanTag: 
-  offset: 0
+  offsetX: 0
+  offsetY: 0
+  offsetZ: 0
   target: {fileID: 0}
   textMeshProPrefab: {fileID: 1499954759182642289, guid: 330c09341a3e6384f96a1618d69a2e71, type: 3}
   textMeshProComponent: {fileID: 0}
