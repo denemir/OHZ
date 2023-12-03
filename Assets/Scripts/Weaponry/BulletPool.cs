@@ -67,7 +67,7 @@ public class BulletPool : MonoBehaviour
         bullet.transform.position = transform.position;
         bullet.gameObject.SetActive(false);
 
-        Debug.Log("Bullet returned, available bullets: " + (bulletPool.Count() - bulletPool.Count(bullet => bullet.gameObject.activeInHierarchy)));
+        //Debug.Log("Bullet returned, available bullets: " + (bulletPool.Count() - bulletPool.Count(bullet => bullet.gameObject.activeInHierarchy)));
     }
 
     //in the case that fire rate is exceptional and requires more bullets, expand bulletPool up to limit
@@ -78,7 +78,7 @@ public class BulletPool : MonoBehaviour
 
         if (bulletPool.Count < poolLimit)
             AddBulletToPool();
-        Debug.Log("Expanding bullet pool to " + bulletPool.Count());
+        //Debug.Log("Expanding bullet pool to " + bulletPool.Count());
     }
 
     //add individual bullet to pool

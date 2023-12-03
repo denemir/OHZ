@@ -345,7 +345,6 @@ public class Player : MonoBehaviour
         return GetComponent<PlayerInventory>() != null;
     }
 
-
     //getters
     public PlayerInventory GetPlayerInventory()
     {

@@ -63,7 +63,7 @@ public class Bullet : MonoBehaviour
     public void SetBulletPool(BulletPool bulletPool)
     {
         this.bulletPool = bulletPool;
-        Debug.Log("Bullet pool set");
+        //Debug.Log("Bullet pool set");
     }
 
     //actions
