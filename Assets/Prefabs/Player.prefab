@@ -197,12 +197,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3601225831429618101}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dda16c7a548c5134ea7407667e669ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuCanvas: {fileID: 0}
+  pauseMenuCanvas: {fileID: 8156411981286223232}
 --- !u!1001 &3911254654547652037
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -365,6 +365,11 @@ PrefabInstance:
 --- !u!224 &2860542765000488621 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1881202636784895428, guid: 5fa5d94d98a3cf54fa97121d69ab3b28, type: 3}
+  m_PrefabInstance: {fileID: 4443346020410946409}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &8156411981286223232 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 5519313979684642537, guid: 5fa5d94d98a3cf54fa97121d69ab3b28, type: 3}
   m_PrefabInstance: {fileID: 4443346020410946409}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7691684386030446675
