@@ -39,7 +39,6 @@ public class PauseMenuHandler : MonoBehaviour
     public void Resume()
     {
         bool isPaused = pauseMenuCanvas.isActiveAndEnabled;
-        Debug.Log("Resume");
 
         if (isPaused)
         {
