@@ -74,6 +74,7 @@ MonoBehaviour:
   movementState: 0
   inputState: 0
   downState: 0
+  pauseMenuHandler: {fileID: 8505000825581095017}
 --- !u!114 &3987980454600772675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +204,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuCanvas: {fileID: 8156411981286223232}
+  isCurrentlyPaused: 0
+  player: {fileID: 6685732726722849603}
+  displaySlot1: {fileID: 6914406205913842953}
+  displaySlot2: {fileID: 4372098581382006329}
+  displaySlot3: {fileID: 4127713013922453891}
 --- !u!1001 &3911254654547652037
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -367,6 +373,39 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1881202636784895428, guid: 5fa5d94d98a3cf54fa97121d69ab3b28, type: 3}
   m_PrefabInstance: {fileID: 4443346020410946409}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4127713013922453891 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 351697160248994538, guid: 5fa5d94d98a3cf54fa97121d69ab3b28, type: 3}
+  m_PrefabInstance: {fileID: 4443346020410946409}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108d9e4b645b6204291cedfc2125b23f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4372098581382006329 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 73535162561787216, guid: 5fa5d94d98a3cf54fa97121d69ab3b28, type: 3}
+  m_PrefabInstance: {fileID: 4443346020410946409}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108d9e4b645b6204291cedfc2125b23f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6914406205913842953 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7087830624894793312, guid: 5fa5d94d98a3cf54fa97121d69ab3b28, type: 3}
+  m_PrefabInstance: {fileID: 4443346020410946409}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108d9e4b645b6204291cedfc2125b23f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!223 &8156411981286223232 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 5519313979684642537, guid: 5fa5d94d98a3cf54fa97121d69ab3b28, type: 3}

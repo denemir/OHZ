@@ -6,16 +6,15 @@ using UnityEngine.Events;
 
 public class Barricades : MonoBehaviour
 {
+    //stats
     public int maxNumberOfBarricades { get; set; }
     public int currentNumberOfBarricades;
-    
-    public GameObject barricadesRegion;
-    public GameObject[] barricadePieces;
-
     public float barricadeRepairTime; //how much time it takes to place back one piece
-    //barricade cube span, how much physical space does it take up
 
-
+    //barricade pieces
+    public GameObject barricadesRegion;
+    public BarricadePiece[] barricadePieces;
+    public int numOfPieces;
 
     //interaction
     private Interactable interactable;
@@ -35,18 +34,29 @@ public class Barricades : MonoBehaviour
         
     }
 
+    //zombie functions
     public void DestroyBarricadePiece() //enemy takes away a piece of the barricade
     {
 
     }
 
+    //player functions
     public void RestoreBarricade()
     {
         RewardPlayer();
     }
-
     public void RewardPlayer() //check if player can receive points first (max number of barricades repaired)
     {
 
+    }
+
+    //getters & setters (switch barricades.length for number of barricade pieces currently up ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public bool isBarricadeDestroyed()
+    {
+        return (barricadePieces.Length == 0);
+    } 
+    public bool isBarricadeRepaired()
+    {
+        return (barricadePieces.Length == numOfPieces);
     }
 }

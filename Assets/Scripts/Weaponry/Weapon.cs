@@ -3,7 +3,9 @@ using UnityEngine.UIElements;
 
 public class Weapon : MonoBehaviour
 {
+    //info
     public string weaponName;
+    public Sprite icon;
 
     //fire rate
     public float fireRate;

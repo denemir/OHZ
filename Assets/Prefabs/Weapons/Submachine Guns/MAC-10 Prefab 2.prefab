@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: MAC-10
+  icon: {fileID: 21300000, guid: 9fa9d77496ad674469eb3965f45c4d7d, type: 3}
   fireRate: 0.05
   isFullAuto: 1
   canToggleFullAuto: 0

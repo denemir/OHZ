@@ -48,15 +48,6 @@ public class Player : MonoBehaviour
     //weapons & inventory
     private PlayerInventory playerInventory;
 
-
-    //public Weapon currentWeapon;
-    //public int currentWeaponSlot { get; private set; }
-
-    //public Weapon primaryWeapon { get; private set; }
-    //public Weapon secondaryWeapon { get; private set; }
-    //public Weapon tertiaryWeapon { get; private set; }
-    //public bool isTertiaryWeaponActive = false; //false by default
-
     //input
     private float horizontalInput;
     private float verticalInput;
@@ -88,6 +79,9 @@ public class Player : MonoBehaviour
     }
     public DownState downState;
 
+    //pausing 
+    public PauseMenuHandler pauseMenuHandler;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -102,20 +96,25 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (characterObject == null)
-            characterObject = currentCharacter.model; //test
+            characterObject = currentCharacter.model;
 
-        if (playerInventory != null && playerInventory.GetCurrentWeapon() != null)
-        {
-            CheckShootCurrentWeapon();
-            CheckReloadCurrentWeapon();
-            CheckReloadCancel();
-        }
         //input
-        getInput();
-        MoveCharacter(horizontalInput, verticalInput);
+        if (!pauseMenuHandler.currentlyPaused())
+        {
+            if (playerInventory != null && playerInventory.GetCurrentWeapon() != null)
+            {
+                CheckShootCurrentWeapon();
+                CheckReloadCurrentWeapon();
+                CheckReloadCancel();
+            }
+            //input
+            getInput();
+            MoveCharacter(horizontalInput, verticalInput);
 
-        //player rotation manager
-        RotationHandler();
+            //player rotation manager
+            RotationHandler();
+        }
+
 
     }
 
@@ -322,7 +321,7 @@ public class Player : MonoBehaviour
     } //if player presses Sprint key, cancel reload
     private void CheckSwapToPrimaryWeapon()
     {
-        if(!Input.GetButton("Fire1")/* && playerInventory.isSwapWeaponTimerZero()*/ && playerInventory.GetCurrentWeaponSlot() != 0 && Input.GetButtonDown("Primary Weapon"))
+        if (!Input.GetButton("Fire1")/* && playerInventory.isSwapWeaponTimerZero()*/ && playerInventory.GetCurrentWeaponSlot() != 0 && Input.GetButtonDown("Primary Weapon"))
         {
             playerInventory.SwapCurrentWeapon(0);
             //Debug.Log("0");

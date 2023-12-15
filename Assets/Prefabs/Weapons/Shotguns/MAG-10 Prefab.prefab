@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: MAG-10
+  icon: {fileID: 21300000, guid: 5237ae17a79d36e40bfb1436d9795b05, type: 3}
   fireRate: 0.8
   isFullAuto: 0
   canToggleFullAuto: 0
