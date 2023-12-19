@@ -126,6 +126,9 @@ MonoBehaviour:
   visibilityLayer:
     serializedVersion: 2
     m_Bits: 64
+  invisibilityLayer:
+    serializedVersion: 2
+    m_Bits: 0
   maxTransparencyDistance: 8
 --- !u!114 &7767604054028007234
 MonoBehaviour:

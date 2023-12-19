@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 405819474494968721}
   - component: {fileID: 6059956736831921733}
   - component: {fileID: 8505000825581095017}
+  - component: {fileID: 6557901238429672984}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -214,6 +215,28 @@ MonoBehaviour:
   displaySlot1: {fileID: 6914406205913842953}
   displaySlot2: {fileID: 4372098581382006329}
   displaySlot3: {fileID: 4127713013922453891}
+--- !u!64 &6557901238429672984
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3601225831429618101}
+  m_Material: {fileID: 13400000, guid: 185010e5a5b1ccc49a31f2c7673b5d63, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1001 &3911254654547652037
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -736,6 +759,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5125691983005294132}
     m_Modifications:
+    - target: {fileID: 4490359155682300869, guid: de78699ed2cb3614e9cfae2f8f275ce0, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 185010e5a5b1ccc49a31f2c7673b5d63, type: 2}
     - target: {fileID: 5037158904475122261, guid: de78699ed2cb3614e9cfae2f8f275ce0, type: 3}
       propertyPath: m_Name
       value: TempModelprefab
