@@ -58,7 +58,7 @@ MonoBehaviour:
   criticalChance: 0.05
   reloadState: 0
   isActive: 0
-  timeToReload: 4
+  timeToReload: 0.45
   magazineSize: 20
   currentAmmoInMag: 20
   currentStockAmmo: 140
@@ -75,7 +75,7 @@ MonoBehaviour:
   barrelTipTransform: {fileID: 1537572720012868557}
   barrelTip: {fileID: 9092342645017071949}
   bulletModelPrefab: {fileID: 5527745764002851422, guid: 3ec4e7cb42c193241999b9db7c1e4ce1, type: 3}
-  bulletVelocity: 100
+  bulletVelocity: 160
   bulletPool: {fileID: 0}
   player: {fileID: 0}
   character: {fileID: 0}

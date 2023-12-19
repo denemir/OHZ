@@ -6,6 +6,8 @@ public class PauseMenuHandler : MonoBehaviour
 {
     //vars
     public Canvas pauseMenuCanvas;
+    public RectTransform pausePanel;
+    public RectTransform settingsPanel;
     public bool isCurrentlyPaused = false;
     public Player player;
 
@@ -46,6 +48,8 @@ public class PauseMenuHandler : MonoBehaviour
             Time.timeScale = 0; //pause
             pauseMenuCanvas.enabled = true;
             isCurrentlyPaused = true;
+            pausePanel.gameObject.SetActive(true);
+            settingsPanel.gameObject.SetActive(false);
         }
         else
         {
@@ -56,9 +60,15 @@ public class PauseMenuHandler : MonoBehaviour
     }
 
     //gui
-    public void Resume()
+    public void GoToSettingsPanel()
     {
-        TogglePause();
+        pausePanel.gameObject.SetActive(false);
+        settingsPanel.gameObject.SetActive(true);
+    }
+    public void GoToPausePanel()
+    {
+        settingsPanel.gameObject.SetActive(false);
+        pausePanel.gameObject.SetActive(true);
     }
 
     public void UpdateDisplays()

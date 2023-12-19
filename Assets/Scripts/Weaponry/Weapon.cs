@@ -104,10 +104,6 @@ public class Weapon : MonoBehaviour
         if(bulletPool == null)
             bulletPool = GetComponent<BulletPool>();
 
-        //reloading weapon timer
-        if (currentTimer > 0)
-            currentTimer -= 0.005f;
-
         if (barrelTip == null)
         {
             SetBarrelTip();
@@ -126,8 +122,15 @@ public class Weapon : MonoBehaviour
 
         } //reload
 
-        currentRecoilSpread = Mathf.Lerp(currentRecoilSpread, 0, Time.deltaTime * 1.5f); //decrease spread over time
+    }
 
+    void FixedUpdate()
+    {
+        //reloading weapon timer
+        if (currentTimer > 0)
+            currentTimer -= 0.005f;
+
+        currentRecoilSpread = Mathf.Lerp(currentRecoilSpread, 0, Time.deltaTime * 1.5f); //decrease spread over time
     }
 
     //weapon actions

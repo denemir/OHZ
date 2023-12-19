@@ -35,15 +35,12 @@ public class MysteryBox : MonoBehaviour
 
     //interaction
     private Interactable interactable;
+    private bool isInitialized = false;
 
-    public string spinPrompt;
     public UnityEvent spinBox;
-
+    public UnityEvent pickUpWeapon; //for player who bought the mystery box
     public string pickUpWeaponPrompt;
-    public UnityEvent pickUpWeapon;
-
-    public string giveUpWeaponPrompt;
-    public UnityEvent giveUpWeapon;
+    public UnityEvent acceptWeapon; //if the player who purchased the mystery box chose to give up their weapon
 
     // Start is called before the first frame update
     void Start()
@@ -54,10 +51,43 @@ public class MysteryBox : MonoBehaviour
         }
         else Debug.Log("Interactable component not found on Mysterybox. Please attach Interactable script to Mysterybox Prefab.");
 
+        if (GetComponent<Interactable>().interactions != null)
+        {
+            InitializeInteractions();
+            isInitialized = true;
+        }
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (isInitialized)
+        {
+            switch (fireSaleState)
+            {
+                case FireSaleState.Active:
+                    costToSpin = 10;
+                    interactable.interactions[0].prompt = "Hold F to spin the mystery box for " + costToSpin + " points";
+                    break;
+                case FireSaleState.Inactive:
+                    costToSpin = 950;
+                    interactable.interactions[0].prompt = "Hold F to spin the mystery box for " + costToSpin + " points";
+                    break;
+            }
+        }
+        else InitializeInteractions();
+
+
+    }
+
+    //initialization
+    private void InitializeInteractions()
+    {
         //purchase mystery box
         interactable.interactions.Add(new Interactable.Interaction
         {
-            prompt = spinPrompt,
+            prompt = "Hold " + interactKey + " to spin the mystery box for " + costToSpin + " points",
             key = interactKey,
             action = spinBox
         }); //Mysterybox Spin prompt
@@ -65,7 +95,7 @@ public class MysteryBox : MonoBehaviour
         //pick up weapon
         interactable.interactions.Add(new Interactable.Interaction
         {
-            prompt = pickUpWeaponPrompt,
+            prompt = "Hold F to pickup weapon or Hold E to let other players take it",
             key = interactKey,
             action = pickUpWeapon
         });
@@ -73,31 +103,18 @@ public class MysteryBox : MonoBehaviour
         //let other players take weapon
         interactable.interactions.Add(new Interactable.Interaction
         {
-            prompt = giveUpWeaponPrompt,
+            prompt = "Hold F to pickup weapon",
             key = giveUpWeaponKey,
-            action = giveUpWeapon
+            action = acceptWeapon
         });
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        switch (fireSaleState)
-        {
-            case FireSaleState.Active:
-                costToSpin = 10;
-                break;
-                case FireSaleState.Inactive:
-                costToSpin = 950;
-                break;
-        }
-
+        interactable.activeInteraction = interactable.interactions[0];
     }
 
     //pre-spin
     private void DeterminePromptOutput(Player.InputState inputState)
     {
-        switch(inputState)
+        switch (inputState)
         {
             case Player.InputState.KandM:
 
@@ -121,7 +138,7 @@ public class MysteryBox : MonoBehaviour
     private void DetermineWeapon()
     {
 
-        pickUpWeaponPrompt = "";
+        //pickUpWeaponPrompt = "";
     }
     private void PlaySpinAnimation() //cycles thru all possible weapons from mystery box
     {
@@ -143,8 +160,8 @@ public class MysteryBox : MonoBehaviour
 
     } //allow other players to pickup weapon
     private void PickUpWeapon()
-    { 
-    
+    {
+
     }
     private void CloseLid()
     {

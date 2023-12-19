@@ -95,27 +95,38 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (characterObject == null)
-            characterObject = currentCharacter.model;
-
         //input
         if (!pauseMenuHandler.currentlyPaused())
         {
+            //firing and reloading inputs
             if (playerInventory != null && playerInventory.GetCurrentWeapon() != null)
             {
                 CheckShootCurrentWeapon();
                 CheckReloadCurrentWeapon();
                 CheckReloadCancel();
+
+                //weapon swapping
+                CheckSwapToPrimaryWeapon();
+                CheckSwapToSecondaryWeapon();
             }
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (characterObject == null)
+            characterObject = currentCharacter.model;
+        //input
+        if (!pauseMenuHandler.currentlyPaused())
+        {
             //input
-            getInput();
+            getMovementInput();
             MoveCharacter(horizontalInput, verticalInput);
+
 
             //player rotation manager
             RotationHandler();
         }
-
-
     }
 
     //player initialization
@@ -145,6 +156,7 @@ public class Player : MonoBehaviour
         {
             currentCharacter = GetComponentInChildren<Character>();
             currentCharacter.transform.position = transform.position;
+            characterObject = currentCharacter.model;
             CheckRightHand();
         }
         else Debug.Log("Character not found in prefab for player " + name + ".");
@@ -179,6 +191,7 @@ public class Player : MonoBehaviour
         activeCamera = cameraInstance.GetComponent<Camera>();
         activeCamera.GetComponent<CameraFollow>().target = transform;
         activeCamera.GetComponent<AudioListener>().enabled = false;
+        activeCamera.GetComponent<VerticalVisibility>().SetTarget(this);
 
     }
     private void InitializeClanTag()
@@ -187,7 +200,7 @@ public class Player : MonoBehaviour
     }
 
     //player input
-    private void getInput()
+    private void getMovementInput()
     {
         //implement switch case to swap between controller & keyboard
 
@@ -195,6 +208,8 @@ public class Player : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
 
         ModifyMovementState(horizontalInput, verticalInput);
+
+        CheckJump();
 
         if (GetCurrentWeapon() != null)
         {
@@ -207,9 +222,9 @@ public class Player : MonoBehaviour
             CheckReloadCancel();
         }
 
-        //weapon swapping
-        CheckSwapToPrimaryWeapon();
-        CheckSwapToSecondaryWeapon();
+        ////weapon swapping
+        //CheckSwapToPrimaryWeapon();
+        //CheckSwapToSecondaryWeapon();
     }
     private void ModifyMovementState(float horizontalInput, float verticalInput)
     {
@@ -234,6 +249,25 @@ public class Player : MonoBehaviour
         GetComponent<NewMovementHandler>().Move(horizontalInput, verticalInput, /*moveSpeed,*/ (int)movementState); //calling for move function in movement handler component
         characterObject.transform.position = transform.position;
     } //move character based on input
+    private void CheckJump()
+    {
+        switch (inputState)
+        {
+            case InputState.KandM:
+                if (Input.GetKeyDown("space"))
+                {
+                    GetComponent<NewMovementHandler>().Jump();
+                }
+                break;
+            case InputState.Controller:
+                if (Input.GetButtonDown("Jump"))
+                {
+                    GetComponent<NewMovementHandler>().Jump();
+                }
+                break;
+        }
+
+    }
 
     //rotations
     private void RotationHandler()
@@ -264,7 +298,6 @@ public class Player : MonoBehaviour
         {
             currentCharacter.rightHand = GetComponentInChildren<MeshRenderer>()?.gameObject.GetComponentInChildren<RightHand>();
         }
-        characterObject = currentCharacter.model;
     }
 
 

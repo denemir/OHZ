@@ -10,8 +10,8 @@ public class WeaponInventoryDisplay : MonoBehaviour
     public Sprite icon;
     public string text;
 
-    private TextMeshProUGUI textMesh;
-    private Image image;
+    public TextMeshProUGUI textMesh;
+    public Image image;
 
     public Weapon weaponInstance;
 
@@ -54,8 +54,14 @@ public class WeaponInventoryDisplay : MonoBehaviour
         text = weaponInstance.weaponName;
         icon = weaponInstance.icon;
 
+        if (image == null)
+            image = GetComponent<Image>();
+
         image.sprite = icon;
         image.color = new Color(1f, 1f, 1f, 1f);
+
+        if(textMesh == null)
+            textMesh = GetComponent<TextMeshProUGUI>();
         textMesh.text = text;
     }
 }
