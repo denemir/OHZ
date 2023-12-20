@@ -9,7 +9,10 @@ public class Interactable : MonoBehaviour
     {
         public string prompt;
         public KeyCode key;
+        public KeyCode altKey;
         public UnityEvent action;
+        public UnityEvent altAction;
+        public Player player;
         public bool holdKeyDown; //if true, key must be held rather than just pressed.
 
         //keycode
@@ -48,6 +51,15 @@ public class Interactable : MonoBehaviour
     public void Interact(Interaction interaction)
     {
         interaction.action.Invoke();
+    }
+    public void Interact(Interaction interaction, Player player)
+    {
+        interaction.action.Invoke();
+        interaction.player = player;
+    }
+    public void InteractAlternate(Interaction interaction)
+    {
+        interaction.altAction.Invoke();
     }
 
     //player context

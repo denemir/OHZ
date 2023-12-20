@@ -155,12 +155,6 @@ public class WallBuy : MonoBehaviour
                     interactable.activeInteraction = interactable.interactions[0]; //set purchase weapon prompt to be active
                     break;
             }
-
-            //if (playerStates[player])
-            //{
-            //    interactable.activeInteraction = interactable.interactions[1]; //set purchase ammo prompt to be active
-            //}
-            //else interactable.activeInteraction = interactable.interactions[0]; //set purchase weapon prompt to be active
         }
     } //update which prompt shows
 
