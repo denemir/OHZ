@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,7 +9,7 @@ public class PlayerUnityEvent : UnityEvent<Player>
 {
 }
 
-    public class MysteryBox : MonoBehaviour
+public class MysteryBox : MonoBehaviour
 {
     //Mysterybox state
     public enum MysteryBoxState
@@ -42,7 +43,7 @@ public class PlayerUnityEvent : UnityEvent<Player>
     //interactions
     private Interactable interactable;
     private bool isInitialized = false;
-    public Player interactingPlayer;
+    private Player interactingPlayer;
     private Player playerWhoSpun;
     private bool isOccupied = false; //is occupied meaning while a player has spun the box and has yet to receive their weapon or let it expire
 
@@ -82,7 +83,6 @@ public class PlayerUnityEvent : UnityEvent<Player>
             InitializeInteractions();
             isInitialized = true;
         }
-
     }
 
     // Update is called once per frame
@@ -102,10 +102,10 @@ public class PlayerUnityEvent : UnityEvent<Player>
                 switch (fireSaleState)
                 {
                     case FireSaleState.Active:
-                        costToSpin = 10;
+                        //costToSpin = 10;
                         break;
                     case FireSaleState.Inactive:
-                        costToSpin = 950;
+                        //costToSpin = 950;
                         break;
                 }
 
@@ -117,7 +117,7 @@ public class PlayerUnityEvent : UnityEvent<Player>
                 {
                     InteractWithMysteryBox(interactingPlayer);
                 }
-            }           
+            }
         }
         else InitializeInteractions();
 
@@ -140,8 +140,8 @@ public class PlayerUnityEvent : UnityEvent<Player>
         interactable.interactions.Add(new Interactable.Interaction
         {
             prompt = "Hold " + interactKey + " to pickup weapon or Hold " + giveUpWeaponKey + " to let other players take it",
-            key = interactKey,
-            altKey = giveUpWeaponKey,
+            key = giveUpWeaponKey, //the keys to giveUpWeapon and interact are swapped intentionally. this is to prevent picking up and spinning the box at the same time.
+            altKey = interactKey,
             action = pickUpWeapon,
             altAction = giveUpWeapon
         });
@@ -157,18 +157,19 @@ public class PlayerUnityEvent : UnityEvent<Player>
         //empty interaction for players watching
         interactable.interactions.Add(new Interactable.Interaction());
 
+        //set initial interaction
         interactable.activeInteraction = interactable.interactions[0];
+        isInitialized = true;
     }
 
     //interacting
     private void InteractWithMysteryBox(Player player)
     {
-        if (!hasSpun || playerWhoSpun == null)
+        if (!hasSpun/* || playerWhoSpun == null*/)
         {
             SetPlayerWhoSpun(player);
-            interactable.Interact(interactable.interactions[0], player);//spin box
-            //interactable.interactions[0].action.Invoke(); //spin box
-            Debug.Log("money");
+            //interactable.Interact(interactable.interactions[0], player);//spin box
+            interactable.interactions[0].action.Invoke(); //spin box
             return;
         }
         else if (doneSpinning && playerStates[player] == interactKey && player == playerWhoSpun) //if player was who spun the box, decide
@@ -192,12 +193,11 @@ public class PlayerUnityEvent : UnityEvent<Player>
     {
         foreach (Player player in interactable.getPlayersInRange())
         {
-            Debug.Log("Nut");
             if (Input.GetKeyDown(interactKey) && !isOccupied)
             {
-                Debug.Log("Wtf");
                 interactingPlayer = player;
-                isOccupied = true;
+                //Debug.Log("interactingPlayer: " + player);
+                //isOccupied = true;
                 return player;
             }
             else if (Input.GetKeyDown(interactKey) && doneSpinning)
@@ -206,7 +206,7 @@ public class PlayerUnityEvent : UnityEvent<Player>
                 playerStates[player] = interactKey;
                 return player;
             }
-            else if( Input.GetKeyDown(giveUpWeaponKey) && doneSpinning)
+            else if (Input.GetKeyDown(giveUpWeaponKey) && doneSpinning)
             {
                 interactingPlayer = player;
                 playerStates[player] = giveUpWeaponKey;
@@ -219,18 +219,32 @@ public class PlayerUnityEvent : UnityEvent<Player>
     {
         foreach (Player player in playerStates.Keys)
         {
-            switch(player ==  playerWhoSpun)
+            //check if box has been spun
+            if(hasSpun)
             {
-                case true:
-                    //check thru states of box
-                    if(doneSpinning)
+                //if player is the one who spun the box
+                if(player == playerWhoSpun)
+                {
+                    if (doneSpinning && !weaponUpForGrabs)
                         interactable.activeInteraction = interactable.interactions[1]; //prompt to pick up
-                    break;
-                case false:
-                    if (doneSpinning)
-                        interactable.activeInteraction = interactable.interactions[3]; //blank
-                    break;
-            }
+                    else if(doneSpinning)
+                        interactable.activeInteraction = interactable.interactions[2]; //prompt to pick up
+                    else interactable.activeInteraction = interactable.interactions[3]; //blank
+                }
+                else
+                {
+                    switch(weaponUpForGrabs)
+                    {
+                        case true:
+                            interactable.activeInteraction = interactable.interactions[2]; //prompt to accept weapon
+                            break;
+                        case false:
+                            interactable.activeInteraction = interactable.interactions[3]; //blank
+                            break;
+                    }
+                }
+            } else interactable.activeInteraction = interactable.interactions[0]; //prompt to spin
+                       
         }
     }
     private int DeterminePlayerStates()
@@ -247,18 +261,6 @@ public class PlayerUnityEvent : UnityEvent<Player>
     } //determine if player is within range and has specified weapon
 
     //pre-spin
-    private void DeterminePromptOutput(Player.InputState inputState)
-    {
-        switch (inputState)
-        {
-            case Player.InputState.KandM:
-
-                break;
-            case Player.InputState.Controller:
-
-                break;
-        }
-    }
     private bool HasEnoughPoints(Player player)
     {
         if (player.points >= costToSpin)
@@ -273,36 +275,46 @@ public class PlayerUnityEvent : UnityEvent<Player>
     //spin
     public void CheckSpinConditions()
     {
-        if (playerWhoSpun == null && interactable.interactions[0].player == null)
-        {
-            Debug.Log("Fart");
-            playerWhoSpun = interactable.interactions[0].player;
-        }
-            
-
         if (playerWhoSpun != null && HasEnoughPoints(playerWhoSpun) && !isOccupied && !hasSpun)
         {
-            Debug.Log(playerWhoSpun);
             InitiateSpin();
-            interactable.interactions[0].player = null;
+            //interactable.interactions[0].player = null;
         }
         //reset interacting player
         //interactingPlayer = null;
     }
     private void InitiateSpin()
     {
+        hasSpun = true;
+        isOccupied = true;
         DeductPoints(playerWhoSpun);
         PlaySpinAnimation();
         DetermineWeapon();
+
+        //update interaction prompts
+        interactable.interactions[1].prompt = "Hold " + interactKey + " to pickup " + selectedWeaponPrefab.GetComponent<Weapon>().weaponName + " or Hold " + giveUpWeaponKey + " to let other players take it";
+        interactable.interactions[2].prompt = "Hold " + interactKey + " to pickup " + selectedWeaponPrefab.GetComponent<Weapon>().weaponName;
     }
     private void DeductPoints(Player player)
     {
         player.points -= costToSpin;
     }
     private void DetermineWeapon()
-    {
-        selectedWeaponPrefab = weaponPrefabs[Random.Range(0, weaponCount)];
-        //pickUpWeaponPrompt = "";
+    {        
+        //select weapon
+        GameObject selected = weaponPrefabs[Random.Range(0, weaponCount)];
+
+        //check to make sure player does not have weapon already several times
+        int attempts = 0;
+        while(playerWhoSpun.GetPlayerInventory().DoesPlayerHaveWeapon(selected) && attempts < 20)
+        {
+            //Debug.Log("Try " + attempts);
+            selected = weaponPrefabs[Random.Range(0, weaponCount)];
+            attempts++;
+        }
+
+        //assign weapon to prefab
+        selectedWeaponPrefab = selected;
     }
     private void PlaySpinAnimation() //cycles thru all possible weapons from mystery box
     {
@@ -321,20 +333,26 @@ public class PlayerUnityEvent : UnityEvent<Player>
     //post-spin
     public void GiveUpWeapon()
     {
+        //Debug.Log("Weapon has been given up");
         weaponUpForGrabs = true;
     } //allow other players to pickup weapon
     public void PickUpWeapon()
     {
-        if (interactingPlayer.GetPlayerInventory().doesPlayerHaveAnOpenSlot())
+        if (doneSpinning && selectedWeaponPrefab != null)
         {
-            interactingPlayer.GetPlayerInventory().AddWeapon(selectedWeaponPrefab);
-            ResetBoxStatus();
+            //Debug.Log("Player " + interactingPlayer.name + " picked up the " + selectedWeaponPrefab.GetComponent<Weapon>().weaponName + ".");
+            if (interactingPlayer.GetPlayerInventory().doesPlayerHaveAnOpenSlot())
+            {
+                interactingPlayer.GetPlayerInventory().AddWeapon(selectedWeaponPrefab);
+                ResetBoxStatus();
+            }
+            else
+            {
+                interactingPlayer.GetPlayerInventory().SwapWeapon(selectedWeaponPrefab);
+                ResetBoxStatus();
+            }
         }
-        else
-        {
-            interactingPlayer.GetPlayerInventory().SwapWeapon(selectedWeaponPrefab);
-            ResetBoxStatus();
-        }
+
     } //pick up weapon from box
     private void CloseLid()
     {
@@ -350,8 +368,16 @@ public class PlayerUnityEvent : UnityEvent<Player>
     } //set the player who spun the box
     private void ResetBoxStatus()
     {
+        //Debug.Log("box has been reset");
         weaponUpForGrabs = false;
         isOccupied = false;
+        hasSpun = false;
+        doneSpinning = false;
         selectedWeaponPrefab = null;
+        interactingPlayer = null;
+        playerWhoSpun = null;
+
+        //reset interactable
+        interactable.activeInteraction = interactable.interactions[0];
     } // for after picking up weapon
 }

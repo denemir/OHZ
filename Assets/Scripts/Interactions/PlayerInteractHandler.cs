@@ -9,6 +9,9 @@ public class PlayerInteractHandler : MonoBehaviour
     public float interactionRange;
     private Transform interactionZone; //boundary in front of the player in which determines if a player can interact with an interactable
 
+    //key detection
+    private bool oldKeyDown;
+
     private List<Interactable> previousInteractablesInRange = new List<Interactable>();
 
     void Start()
@@ -16,6 +19,8 @@ public class PlayerInteractHandler : MonoBehaviour
         interactionZone = new GameObject("InteractionZone").transform;
         interactionZone.SetParent(transform); //attach to player
         interactionZone.localPosition = new Vector3(0, 0, 1) * interactionRange; //push interaction zone in front of player
+
+        oldKeyDown = false;
     }
 
     // Update is called once per frame
@@ -57,13 +62,16 @@ public class PlayerInteractHandler : MonoBehaviour
                 else Debug.Log("Player GUI not active.");
 
                 //get interactable key
-                if (isInteractableKeyDown(interactable))
+                if (isInteractableKeyDown(interactable) && !oldKeyDown)
                 {
                     interactable.Interact(interactable.activeInteraction); //if the key is down then interact with the currect active interaction
                 }
 
                 //adds to list of interactables within the range
                 interactablesInRange.Add(interactable);
+
+                //update old key
+                oldKeyDown = isInteractableKeyDown(interactable);
             }
         }
 

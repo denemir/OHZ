@@ -1834,7 +1834,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4656904809614609940, guid: 7a3a30150a3a1ed41a03f1e34b8b0c45, type: 3}
       propertyPath: weaponPrefabs.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4656904809614609940, guid: 7a3a30150a3a1ed41a03f1e34b8b0c45, type: 3}
       propertyPath: weaponPrefabs.Array.data[0]
@@ -1844,6 +1844,10 @@ PrefabInstance:
       propertyPath: weaponPrefabs.Array.data[1]
       value: 
       objectReference: {fileID: 1727071150036172477, guid: e338ecd6a57862d47921b1a5dc016801, type: 3}
+    - target: {fileID: 4656904809614609940, guid: 7a3a30150a3a1ed41a03f1e34b8b0c45, type: 3}
+      propertyPath: weaponPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 4039396094233068235, guid: ff5a09d5fed43a64eaac7959567a62b4, type: 3}
     - target: {fileID: 4656904809614609940, guid: 7a3a30150a3a1ed41a03f1e34b8b0c45, type: 3}
       propertyPath: spinBox.m_PersistentCalls.m_Calls.Array.size
       value: 1
