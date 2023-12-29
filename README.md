@@ -1,6 +1,6 @@
 # Overhead Zombies
 ## Table of Contents
-- [About](https://github.com/denemir/OHZ/main/README.md#about-)
+- [About](#about)
 - [Repository Organization](#organization)
 - [Contributing](#contributing)
 - [Progress](#progress)
