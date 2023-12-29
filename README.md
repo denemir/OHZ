@@ -1,9 +1,10 @@
 # Overhead Zombies
 ## Table of Contents
-- [About](#about)
-- [Repository Organization](#repositoryorganization)
+- [About](https://github.com/denemir/OHZ/edit/main/README.md#about-)
+- [Repository Organization](#organization)
 - [Contributing](#contributing)
-# About
+- [Progress](#progress)
+# About <a name="about"></a>
 
 This project is a fanmade de-make of the Call of Duty: Zombies games. Currently, this is a hobby project of mine serving as
 the first project that I am working on within the Unity engine. Although the game is currently within a primitive state, I intend on
@@ -14,9 +15,14 @@ free to make any comments about the game and its progress. Please don't hesitate
 is my first proper project within Unity and 3D worlds as a whole.
 
 ( Please feel free to make some suggestions for a better temporary title too :,) )
-# Repository Organization
-- Assets:
-- Packages: Unity included packages
-- ProjectSettings: as the name implies, various project settings.
+# Organization <a name="organization"></a>
+- [Assets](https://github.com/denemir/OHZ/tree/main/Assets): Assets from the project, including scripts, models, maps, and other game essentials.
+- [Packages](https://github.com/denemir/OHZ/tree/main/Packages): Unity included packages
+- [ProjectSettings](https://github.com/denemir/OHZ/tree/main/ProjectSettings): as the name implies, various project settings.
 
-# Contributing
+# Contributing <a name="contributing"></a>
+## Daniel Nemirovskiy
+- Lead designer, programmer, and modeler.
+
+# Progress <a name="progress"></a>
+
