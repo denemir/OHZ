@@ -15,8 +15,8 @@ is my first proper project within Unity and 3D worlds as a whole.
 
 ( Please feel free to make some suggestions for a better temporary title too :,) )
 # Repository Organization
-- [Assets]:
-- [Packages]: Unity included packages
-- [ProjectSettings]: as the name implies, various project settings.
+- Assets:
+- Packages: Unity included packages
+- ProjectSettings: as the name implies, various project settings.
 
 # Contributing
