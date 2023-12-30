@@ -205,9 +205,13 @@ public class Weapon : MonoBehaviour
                     currentAmmoInMag = magazineSize;
                     currentStockAmmo -= temp;
                 }
-                else
+                else if((currentAmmoInMag + currentStockAmmo) >= magazineSize) //is the stock ammo remaining less than the mag size
                 {
                     currentAmmoInMag = currentStockAmmo;
+                    currentStockAmmo = 0;
+                } else
+                {
+                    currentAmmoInMag += currentStockAmmo;
                     currentStockAmmo = 0;
                 }
                 break;

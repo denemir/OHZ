@@ -26,6 +26,11 @@ public class PlayerInteractHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //DetectCollision();
+    }
+
+    private void FixedUpdate()
+    {
         DetectCollision();
     }
 
@@ -34,15 +39,32 @@ public class PlayerInteractHandler : MonoBehaviour
     {
         return interactable.activeInteraction != null;
     }
-    private bool isInteractableKeyDown(Interactable interactable) {
+    private bool doesInteractableHaveActiveInteractionWithAlt(Interactable interactable)
+    {
+        return interactable.activeInteraction.altAction != null;
+    }
+    private bool isInteractableKeyPressed(Interactable interactable)
+    {
         return Input.GetKeyDown(interactable.activeInteraction.key);
+    }
+    private bool isInteractableAltKeyPressed(Interactable interactable)
+    {
+        return Input.GetKeyDown(interactable.activeInteraction.altKey);
+    }
+    private bool isInteractableKeyDown(Interactable interactable)
+    {
+        return Input.GetKey(interactable.activeInteraction.key);
+    }
+    private bool isInteractableAltKeyDown(Interactable interactable)
+    {
+        return Input.GetKey(interactable.activeInteraction.altKey);
     }
 
     //collision
     private void DetectCollision() //handles collision and removal of prompts
     {
         Collider[] hitColliders = Physics.OverlapSphere(interactionZone.position, interactionRange); //detect objects within zone
-        List<Interactable> interactablesInRange = new List<Interactable>();                         
+        List<Interactable> interactablesInRange = new List<Interactable>();
 
         //items within range of player's interaction zone
         foreach (Collider collider in hitColliders)
@@ -61,14 +83,22 @@ public class PlayerInteractHandler : MonoBehaviour
                 }
                 else Debug.Log("Player GUI not active.");
 
-                //get interactable key
-                if (isInteractableKeyDown(interactable) && !oldKeyDown)
+                switch(interactable.activeInteraction.holdKeyDown)
                 {
-                    interactable.Interact(interactable.activeInteraction); //if the key is down then interact with the currect active interaction
+                    case false:
+                        if (!CheckKeyPress(interactable))
+                            if (!CheckAltKeyPress(interactable))
+                                interactable.ResetTimer(interactable.activeInteraction);
+                        break;
+                    case true:
+                        if (!CheckKeyHold(interactable))
+                            if (!CheckAltKeyHold(interactable))
+                                interactable.ResetTimer(interactable.activeInteraction);
+                        break;
                 }
 
-                //adds to list of interactables within the range
-                interactablesInRange.Add(interactable);
+                    //adds to list of interactables within the range
+                    interactablesInRange.Add(interactable);
 
                 //update old key
                 oldKeyDown = isInteractableKeyDown(interactable);
@@ -107,11 +137,68 @@ public class PlayerInteractHandler : MonoBehaviour
         return GetComponent<PlayerGUIHandler>() != null;
     }
 
-    //debug
-    public void OnDrawGizmosSelected()
+    ////debug
+    //public void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(interactionZone.position, interactionRange);
+    //}
+
+    //checks
+    private bool CheckKeyPress(Interactable interactable)
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(interactionZone.position, interactionRange);
+        //get interactable key
+        if (isInteractableKeyPressed(interactable)/* && !oldKeyDown*/)
+        {
+            interactable.Interact(interactable.activeInteraction); //if the key is down then interact with the current active interaction
+            return true;
+        }
+        return false;
     }
+    private bool CheckAltKeyPress(Interactable interactable)
+    {
+        //get alt key
+        if (isInteractableAltKeyPressed(interactable) /*&& !oldKeyDown*/ && doesInteractableHaveActiveInteractionWithAlt(interactable))
+        {
+            interactable.InteractAlternate(interactable.activeInteraction); //if the key is down then interact with the current active alternate interaction
+            return true;
+        }
+        return false;
+    }
+    private bool CheckKeyHold(Interactable interactable)
+    {
+        //is the key pressed and the time is less than threshold?
+        if (isInteractableKeyDown(interactable) && interactable.activeInteraction.currentHoldTime < interactable.activeInteraction.holdTime)
+        {
+            interactable.IncrementHoldTimer(interactable.activeInteraction);
+            return true;
+        }
+        //else interactable.ResetTimer(interactable.activeInteraction);
+
+        if (isInteractableKeyDown(interactable) && interactable.activeInteraction.currentHoldTime >= interactable.activeInteraction.holdTime)
+        {
+            interactable.Interact(interactable.activeInteraction); //if the key is down then interact with the current active interaction
+            return true;
+        }
+        return false;
+    }
+    private bool CheckAltKeyHold(Interactable interactable)
+    {
+        if (isInteractableAltKeyDown(interactable) && interactable.activeInteraction.currentHoldTime < interactable.activeInteraction.holdTime)
+        {
+            interactable.IncrementHoldTimer(interactable.activeInteraction);
+            return true;
+        }
+        //else interactable.ResetTimer(interactable.activeInteraction);
+
+        if (isInteractableAltKeyDown(interactable) && interactable.activeInteraction.currentHoldTime >= interactable.activeInteraction.holdTime)
+        {
+            interactable.InteractAlternate(interactable.activeInteraction); //if the key is down then interact with the current active interaction
+            return true;
+        }
+        return false;
+    }
+
+
 
 }

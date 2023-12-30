@@ -65,7 +65,7 @@ MonoBehaviour:
   clanTag: 620061006c007200
   playerHasClanTag: 0
   cameraPrefab: {fileID: 7989135982109516899}
-  activeCamera: {fileID: 0}
+  activeCamera: {fileID: 5809875719158083242}
   currentCharacter: {fileID: 0}
   characterPrefab: {fileID: 9097060641597270815, guid: c4ad43563aff9a640a2aa56bbb327d73, type: 3}
   rightHand: {fileID: 0}
@@ -363,6 +363,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCameraPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 6198966986247293035, guid: 07c649c5ba66e4e4b8b5999adfd3c777, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7528022236097970850, guid: 07c649c5ba66e4e4b8b5999adfd3c777, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -371,6 +379,11 @@ PrefabInstance:
 --- !u!4 &2496474185906573605 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1908815347737034029, guid: 07c649c5ba66e4e4b8b5999adfd3c777, type: 3}
+  m_PrefabInstance: {fileID: 4096089254491925512}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &5809875719158083242 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7528022236097970850, guid: 07c649c5ba66e4e4b8b5999adfd3c777, type: 3}
   m_PrefabInstance: {fileID: 4096089254491925512}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7989135982109516899 stripped

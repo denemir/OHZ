@@ -681,7 +681,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &963194226
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1964,6 +1964,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mystery Box
       objectReference: {fileID: 0}
+    - target: {fileID: 6083167228203039371, guid: 7a3a30150a3a1ed41a03f1e34b8b0c45, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6083167228203039371, guid: 7a3a30150a3a1ed41a03f1e34b8b0c45, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -5901602718213871164, guid: 8c77864abe57b4445a18af7f15ccec66, type: 3}
+    - target: {fileID: 6083167228203039371, guid: 7a3a30150a3a1ed41a03f1e34b8b0c45, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 8c77864abe57b4445a18af7f15ccec66, type: 3}
+    - target: {fileID: 6083167228203039371, guid: 7a3a30150a3a1ed41a03f1e34b8b0c45, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: -2813467912831258332, guid: 8c77864abe57b4445a18af7f15ccec66, type: 3}
+    - target: {fileID: 6083167228203039371, guid: 7a3a30150a3a1ed41a03f1e34b8b0c45, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: -4973734387028869240, guid: 8c77864abe57b4445a18af7f15ccec66, type: 3}
+    - target: {fileID: 6083167228203039371, guid: 7a3a30150a3a1ed41a03f1e34b8b0c45, type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4bef1814cf557014980ffc8fbb4f0dae, type: 2}
     - target: {fileID: 7946609742335595151, guid: 7a3a30150a3a1ed41a03f1e34b8b0c45, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.47019

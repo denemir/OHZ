@@ -61,6 +61,7 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
         }
     }
 
+    //initialization
     public void CreatePlayerCanvas()
     {
         if (canvasPrefab != null)
@@ -83,13 +84,13 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
  
     }
 
+    //updates to gui elements
     public void UpdatePlayerGUI()
     {
         UpdateCurrentWeapon();
         UpdateCurrentAmmoInWeapon();
         UpdateCurrentStockAmmo();
     }
-
     public void UpdateCurrentWave()
     {
         currentWave++;
@@ -99,7 +100,6 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
             currentWaveText.color = Color.red;
         }
     }
-
     public void UpdateCurrentWeapon()
     {
         if (inventory.GetCurrentWeapon() != null)
@@ -107,25 +107,26 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
             weaponNameText.text = inventory.GetCurrentWeapon().name.ToString();
         }
     }
-
     public void UpdateCurrentAmmoInWeapon()
     {
         if (inventory.GetCurrentWeapon() != null)
         {
             ammoInMagText.text = inventory.GetCurrentWeapon().currentAmmoInMag.ToString();
-            ammoInMagText.color = Color.white;
+            if(inventory.GetCurrentWeapon().currentAmmoInMag <= (inventory.GetCurrentWeapon().magazineSize * 0.25)) //if weapon is less than or equal to 25% of mag size, indicate low ammo
+                ammoInMagText.color = Color.red;
+            else ammoInMagText.color = Color.white;
         }
     }
-
     public void UpdateCurrentStockAmmo()
     {
         if (doesPlayerHaveWeapon())
         {
             stockAmmoText.text = currentTargetedPlayer.GetCurrentWeapon().currentStockAmmo.ToString();
-            stockAmmoText.color = Color.white;
+            if (currentTargetedPlayer.GetCurrentWeapon().currentStockAmmo < (inventory.GetCurrentWeapon().magazineSize)) //if stock ammo is less than a mag size, indiciate low overall ammo
+                stockAmmoText.color = Color.red;
+            else stockAmmoText.color = Color.white;            
         }
     }
-
     public void UpdateCurrentPoints()
     {
         if (currentPointsText != null)
@@ -135,16 +136,15 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
         }
     }
 
+    //display
     public void DisplayCurrentPerkIcons()
     {
 
     }
-
     public void DisplayCurrentCharacterIcon() //to be used for later
     {
 
     }
-
     public void DisplayEventPrompt(Interactable.Interaction interaction)
         {
             interactPromptText.text = interaction.prompt;
@@ -155,6 +155,7 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
         interactPromptText.text = "";
     }
 
+    //checks
     private bool doesPlayerHaveWeapon()
     {
         return currentTargetedPlayer.GetCurrentWeapon() != null;

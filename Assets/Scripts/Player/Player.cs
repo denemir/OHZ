@@ -187,10 +187,11 @@ public class Player : MonoBehaviour
     }
     private void InitializeCamera()
     {
-        GameObject cameraInstance = Instantiate(cameraPrefab);
-        activeCamera = cameraInstance.GetComponent<Camera>();
+        //GameObject cameraInstance = Instantiate(cameraPrefab);
+        //activeCamera = cameraInstance.GetComponent<Camera>();
         activeCamera.GetComponent<CameraFollow>().target = transform;
-        activeCamera.GetComponent<AudioListener>().enabled = false;
+        activeCamera.GetComponent<AudioListener>().enabled = true;
+        //cameraInstance.GetComponent<AudioListener>().enabled = true;
         activeCamera.GetComponent<VerticalVisibility>().SetTarget(this);
 
     }

@@ -73,19 +73,48 @@ public class WallBuy : MonoBehaviour
     }
 
     //interactions
+    private void InitializeInteractions()
+    {
+        //if weapon is not purchased
+        interactable.interactions.Add(new Interactable.Interaction
+        {
+            prompt = "Hold F to purchase " + weapon.weaponName + " for $" + weapon.cost,
+            action = onPurchase,
+            key = interactKey,
+            holdKeyDown = true,
+            holdTime = 1.0f
+        });
+        /*        Debug.Log("interaction added")*/
+        ;
+
+        //if weapon is already purchased
+        interactable.interactions.Add(new Interactable.Interaction
+        {
+            prompt = "Hold F to purchase " + weapon.weaponName + " ammunition for $" + ammoCost,
+            action = onAmmoPurchase,
+            key = interactKey,
+            holdKeyDown = true,
+            holdTime = 1.0f
+        });
+
+        //default to purchase prompt
+        interactable.activeInteraction = interactable.interactions[0];
+    }
     private void InteractWithWallBuy(Player player)
     {
         switch (DeterminePlayerState(player))
         {
             case false: //player doesn't have weapon
-                interactable.interactions[0].action.Invoke();
+                //interactable.interactions[0].action.Invoke();
                 break;
             case true:
-                interactable.interactions[1].action.Invoke();
+                //interactable.interactions[1].action.Invoke();
                 break;
         }
 
-    }
+    } /// <summary>
+    /// this code can be removed, it is unnecessary as it has been replaced with more modular code (PlayerInteractHandler)
+    /// </summary>
     public void PurchaseWeapon()
     {
         if (interactingPlayer.points >= weapon.cost)
@@ -115,32 +144,6 @@ public class WallBuy : MonoBehaviour
             interactingPlayer.GetPlayerInventory().weapons[interactingPlayer.GetPlayerInventory().GetMatchingWeaponSlot(weapon)].currentStockAmmo = weapon.maxStockAmmo;
         }
     }
-
-    private void InitializeInteractions()
-    {
-        //if weapon is not purchased
-        interactable.interactions.Add(new Interactable.Interaction
-        {
-            prompt = "Hold F to purchase " + weapon.weaponName + " for $" + weapon.cost,
-            action = onPurchase,
-            key = interactKey
-
-        });
-/*        Debug.Log("interaction added")*/;
-
-        //if weapon is already purchased
-        interactable.interactions.Add(new Interactable.Interaction
-        { 
-            prompt = "Hold F to purchase " + weapon.weaponName + " ammunition for $" + ammoCost,
-            action = onAmmoPurchase,
-            key = interactKey
-
-        });
-
-        //default to purchase prompt
-        interactable.activeInteraction = interactable.interactions[0];
-    }
-
     private void UpdateInteractionStates()
     {
         //determine player prompts
@@ -167,8 +170,6 @@ public class WallBuy : MonoBehaviour
         //bool hasPlayerPurchasedWeapon = false;
         foreach(Player player in interactable.getPlayersInRange())
         {
-            //Debug.Log("Checking player " + player.playerName);
-
             //Determine if player has weapon in their inventory already
             bool hasWeapon = player.GetPlayerInventory().DoesPlayerHaveWeapon(weaponObject);
             playerStates[player] = hasWeapon;
@@ -183,7 +184,7 @@ public class WallBuy : MonoBehaviour
     {
         foreach (Player player in  interactable.getPlayersInRange())
         {
-            if(Input.GetKeyDown(interactKey))
+            if(Input.GetKey(interactKey))
             {
                 return player;
             }

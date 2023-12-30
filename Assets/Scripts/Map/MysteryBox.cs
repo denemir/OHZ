@@ -4,11 +4,6 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
 
-[System.Serializable]
-public class PlayerUnityEvent : UnityEvent<Player>
-{
-}
-
 public class MysteryBox : MonoBehaviour
 {
     //Mysterybox state
@@ -31,10 +26,6 @@ public class MysteryBox : MonoBehaviour
     //stats
     public int costToSpin;
 
-    //keybinds
-    public KeyCode interactKey;
-    public KeyCode giveUpWeaponKey; //key specifically for allowing other players to pick up spun weapon
-
     //available weapons
     public List<GameObject> weaponPrefabs;
     public int weaponCount;
@@ -46,6 +37,10 @@ public class MysteryBox : MonoBehaviour
     private Player interactingPlayer;
     private Player playerWhoSpun;
     private bool isOccupied = false; //is occupied meaning while a player has spun the box and has yet to receive their weapon or let it expire
+
+    //keybinds
+    public KeyCode interactKey;
+    public KeyCode giveUpWeaponKey; //key specifically for allowing other players to pick up spun weapon
 
     //spinning the box
     private bool hasSpun = false;
@@ -67,7 +62,6 @@ public class MysteryBox : MonoBehaviour
 
     //player states
     private Dictionary<Player, KeyCode> playerStates = new Dictionary<Player, KeyCode>();
-
 
     // Start is called before the first frame update
     void Start()
@@ -133,17 +127,21 @@ public class MysteryBox : MonoBehaviour
         {
             prompt = "Hold " + interactKey + " to spin the mystery box for " + costToSpin + " points",
             key = interactKey,
-            action = spinBox
+            action = spinBox,
+            holdKeyDown = true,
+            holdTime = 1.0f
         }); //Mysterybox Spin prompt
 
         //pick up weapon
         interactable.interactions.Add(new Interactable.Interaction
         {
             prompt = "Hold " + interactKey + " to pickup weapon or Hold " + giveUpWeaponKey + " to let other players take it",
-            key = giveUpWeaponKey, //the keys to giveUpWeapon and interact are swapped intentionally. this is to prevent picking up and spinning the box at the same time.
-            altKey = interactKey,
+            key = interactKey, //the keys to giveUpWeapon and interact are swapped intentionally. this is to prevent picking up and spinning the box at the same time.
+            altKey = giveUpWeaponKey,
             action = pickUpWeapon,
-            altAction = giveUpWeapon
+            altAction = giveUpWeapon,
+            holdKeyDown = true,
+            holdTime = 0.8f
         });
 
         //let other players take weapon
@@ -151,7 +149,9 @@ public class MysteryBox : MonoBehaviour
         {
             prompt = "Hold " + interactKey + " to pickup weapon",
             key = interactKey,
-            action = acceptWeapon
+            action = acceptWeapon,
+            holdKeyDown = true,
+            holdTime = 0.8f
         });
 
         //empty interaction for players watching
@@ -169,23 +169,23 @@ public class MysteryBox : MonoBehaviour
         {
             SetPlayerWhoSpun(player);
             //interactable.Interact(interactable.interactions[0], player);//spin box
-            interactable.interactions[0].action.Invoke(); //spin box
+            //interactable.interactions[0].action.Invoke(); //spin box
             return;
         }
         else if (doneSpinning && playerStates[player] == interactKey && player == playerWhoSpun) //if player was who spun the box, decide
         {
-            interactable.interactions[1].action.Invoke(); //pick up weapon
+            //interactable.interactions[1].action.Invoke(); //pick up weapon
             return;
         }
         else if (doneSpinning && playerStates[player] == giveUpWeaponKey && player == playerWhoSpun)
         {
-            interactable.interactions[1].altAction.Invoke(); //give up weapon
+            //interactable.interactions[1].altAction.Invoke(); //give up weapon
             return;
         }
 
         if (weaponUpForGrabs && playerStates[player] == interactKey)
         {
-            interactable.interactions[2].action.Invoke(); //accept weapon
+            //interactable.interactions[2].action.Invoke(); //accept weapon
             return;
         }
     }
@@ -193,20 +193,20 @@ public class MysteryBox : MonoBehaviour
     {
         foreach (Player player in interactable.getPlayersInRange())
         {
-            if (Input.GetKeyDown(interactKey) && !isOccupied)
+            if (Input.GetKey(interactKey) && !isOccupied)
             {
                 interactingPlayer = player;
                 //Debug.Log("interactingPlayer: " + player);
                 //isOccupied = true;
                 return player;
             }
-            else if (Input.GetKeyDown(interactKey) && doneSpinning)
+            else if (Input.GetKey(interactKey) && doneSpinning)
             {
                 interactingPlayer = player;
                 playerStates[player] = interactKey;
                 return player;
             }
-            else if (Input.GetKeyDown(giveUpWeaponKey) && doneSpinning)
+            else if (Input.GetKey(giveUpWeaponKey) && doneSpinning)
             {
                 interactingPlayer = player;
                 playerStates[player] = giveUpWeaponKey;
