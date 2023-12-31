@@ -205,11 +205,12 @@ public class Weapon : MonoBehaviour
                     currentAmmoInMag = magazineSize;
                     currentStockAmmo -= temp;
                 }
-                else if((currentAmmoInMag + currentStockAmmo) >= magazineSize) //is the stock ammo remaining less than the mag size
+                else if((currentAmmoInMag + currentStockAmmo) >= magazineSize) //is the stock ammo remaining greater than the mag size
                 {
-                    currentAmmoInMag = currentStockAmmo;
-                    currentStockAmmo = 0;
-                } else
+                    int dif = magazineSize - currentAmmoInMag;
+                    currentAmmoInMag += dif; //add difference to ammo in magazine
+                    currentStockAmmo -= dif; //subtract difference from stock ammo remaining
+                } else //if not then use up remaining stock ammo
                 {
                     currentAmmoInMag += currentStockAmmo;
                     currentStockAmmo = 0;

@@ -44,7 +44,6 @@ public class PlayerRotation : MonoBehaviour
                 mousePosition = Input.mousePosition;
                 mouseDirection = mousePosition - screenPoint;
                 rotationAngle = Mathf.Atan2(mouseDirection.x, mouseDirection.y) * Mathf.Rad2Deg;
-                //Debug.Log("Rotate angle: " + rotationAngle);
                 break;
             case Player.InputState.Controller:
                 rightThumbStickDirection = new Vector3(Input.GetAxis("Horizontal Aim"), 0f, Input.GetAxis("Vertical Aim"));
@@ -57,7 +56,7 @@ public class PlayerRotation : MonoBehaviour
                 break;
         }
 
-        transform.rotation = Quaternion.Euler(0f, rotationAngle, 0f);
+        GetComponent<Rigidbody>().MoveRotation(Quaternion.Euler(0f, rotationAngle, 0f)); //this was in place of raw transform! don't use raw transform, rather use rigid body MoveRotation to prevent full path rotations
 
 
     }

@@ -121,6 +121,7 @@ public class Player : MonoBehaviour
         {
             //input
             getMovementInput();
+            CheckJump();
             MoveCharacter(horizontalInput, verticalInput);
 
 
@@ -203,14 +204,14 @@ public class Player : MonoBehaviour
     //player input
     private void getMovementInput()
     {
+        //CheckJump();
+
         //implement switch case to swap between controller & keyboard
 
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
 
         ModifyMovementState(horizontalInput, verticalInput);
-
-        CheckJump();
 
         if (GetCurrentWeapon() != null)
         {
@@ -252,16 +253,16 @@ public class Player : MonoBehaviour
     } //move character based on input
     private void CheckJump()
     {
-        switch (inputState)
+        switch (inputState) //////////////////fix later
         {
             case InputState.KandM:
-                if (Input.GetKeyDown("space"))
+                if (Input.GetAxisRaw("Jump") != 0)
                 {
                     GetComponent<NewMovementHandler>().Jump();
                 }
                 break;
             case InputState.Controller:
-                if (Input.GetButtonDown("Jump"))
+                if (Input.GetAxisRaw("Jump") != 0)
                 {
                     GetComponent<NewMovementHandler>().Jump();
                 }

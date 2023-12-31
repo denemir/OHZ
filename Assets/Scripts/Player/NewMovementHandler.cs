@@ -57,11 +57,10 @@ public class NewMovementHandler : MonoBehaviour
     }
     public void Jump()
     {
-        Vector3 direction = Vector3.up;
 
         //applying force to player
-        rb.AddForce(direction * jumpForce, ForceMode.Force);
-        Debug.Log("Jump!");
+        if(isGrounded())
+            rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
     }
 
     private void ApplyCustomGravity()
@@ -75,8 +74,8 @@ public class NewMovementHandler : MonoBehaviour
     }
 
     //checks
-    private void isGrounded()
+    private bool isGrounded()
     {
-
+        return GetComponent<Rigidbody>().velocity.y == 0; //checks if player is colliding with object by having no change in y velocity (does imply player cannot jump while going up ramps or stair cases)
     } //determine if player is currently standing on something
 }
