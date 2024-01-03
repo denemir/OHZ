@@ -20,6 +20,7 @@ public class WallBuy : MonoBehaviour
 
     //interaction 
     public KeyCode interactKey;
+    public string interactButton;
     private Interactable interactable;
     private bool isInitialized = false;
     public Player interactingPlayer;
@@ -31,6 +32,7 @@ public class WallBuy : MonoBehaviour
     void Start()
     {
         weapon = weaponObject.GetComponent<Weapon>();
+        interactButton = "Interact";
 
         if (GetComponent<Interactable>() != null)
         {
@@ -81,6 +83,7 @@ public class WallBuy : MonoBehaviour
             prompt = "Hold F to purchase " + weapon.weaponName + " for $" + weapon.cost,
             action = onPurchase,
             key = interactKey,
+            button = interactButton,
             holdKeyDown = true,
             holdTime = 1.0f
         });
@@ -93,6 +96,7 @@ public class WallBuy : MonoBehaviour
             prompt = "Hold F to purchase " + weapon.weaponName + " ammunition for $" + ammoCost,
             action = onAmmoPurchase,
             key = interactKey,
+            button = interactButton,
             holdKeyDown = true,
             holdTime = 1.0f
         });
@@ -184,7 +188,7 @@ public class WallBuy : MonoBehaviour
     {
         foreach (Player player in  interactable.getPlayersInRange())
         {
-            if(Input.GetKey(interactKey))
+            if(Input.GetKey(interactKey) || Input.GetButton(interactButton))
             {
                 return player;
             }

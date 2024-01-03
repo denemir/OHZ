@@ -26,7 +26,7 @@ public class PauseMenuHandler : MonoBehaviour
     void Update()
     {
         //check if pause key is pressed
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Pause"))
         {
             UpdateDisplays();
             TogglePause();

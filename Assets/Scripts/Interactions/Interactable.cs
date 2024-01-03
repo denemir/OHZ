@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class Interactable : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class Interactable : MonoBehaviour
         public string prompt;
         public KeyCode key;
         public KeyCode altKey;
+        public string button;
+        public string altButton;
+        public bool hasAltEvent;
         public UnityEvent action;
         public UnityEvent altAction;
         public Player player;

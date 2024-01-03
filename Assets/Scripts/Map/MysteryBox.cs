@@ -40,7 +40,9 @@ public class MysteryBox : MonoBehaviour
 
     //keybinds
     public KeyCode interactKey;
+    private string interactButton;
     public KeyCode giveUpWeaponKey; //key specifically for allowing other players to pick up spun weapon
+    private string giveUpWeaponButton;
 
     //spinning the box
     private bool hasSpun = false;
@@ -66,6 +68,10 @@ public class MysteryBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //buttons
+        interactButton = "Interact";
+        giveUpWeaponButton = "AltInteract";
+
         if (GetComponent<Interactable>() != null)
         {
             interactable = GetComponent<Interactable>();
@@ -127,6 +133,7 @@ public class MysteryBox : MonoBehaviour
         {
             prompt = "Hold " + interactKey + " to spin the mystery box for " + costToSpin + " points",
             key = interactKey,
+            button = interactButton,
             action = spinBox,
             holdKeyDown = true,
             holdTime = 1.0f
@@ -137,7 +144,10 @@ public class MysteryBox : MonoBehaviour
         {
             prompt = "Hold " + interactKey + " to pickup weapon or Hold " + giveUpWeaponKey + " to let other players take it",
             key = interactKey, //the keys to giveUpWeapon and interact are swapped intentionally. this is to prevent picking up and spinning the box at the same time.
+            button = interactButton,
+            hasAltEvent = true,
             altKey = giveUpWeaponKey,
+            altButton = giveUpWeaponButton,
             action = pickUpWeapon,
             altAction = giveUpWeapon,
             holdKeyDown = true,
@@ -149,6 +159,7 @@ public class MysteryBox : MonoBehaviour
         {
             prompt = "Hold " + interactKey + " to pickup weapon",
             key = interactKey,
+            button = interactButton,
             action = acceptWeapon,
             holdKeyDown = true,
             holdTime = 0.8f
@@ -172,46 +183,72 @@ public class MysteryBox : MonoBehaviour
             //interactable.interactions[0].action.Invoke(); //spin box
             return;
         }
-        else if (doneSpinning && playerStates[player] == interactKey && player == playerWhoSpun) //if player was who spun the box, decide
-        {
-            //interactable.interactions[1].action.Invoke(); //pick up weapon
-            return;
-        }
-        else if (doneSpinning && playerStates[player] == giveUpWeaponKey && player == playerWhoSpun)
-        {
-            //interactable.interactions[1].altAction.Invoke(); //give up weapon
-            return;
-        }
+        //else if (doneSpinning && playerStates[player] == interactKey && player == playerWhoSpun) //if player was who spun the box, decide
+        //{
+        //    //interactable.interactions[1].action.Invoke(); //pick up weapon
+        //    return;
+        //}
+        //else if (doneSpinning && playerStates[player] == giveUpWeaponKey && player == playerWhoSpun)
+        //{
+        //    //interactable.interactions[1].altAction.Invoke(); //give up weapon
+        //    return;
+        //}
 
-        if (weaponUpForGrabs && playerStates[player] == interactKey)
-        {
-            //interactable.interactions[2].action.Invoke(); //accept weapon
-            return;
-        }
+        //if (weaponUpForGrabs && playerStates[player] == interactKey)
+        //{
+        //    //interactable.interactions[2].action.Invoke(); //accept weapon
+        //    return;
+        //}
     }
     private Player ArePlayersInteracting()
     {
         foreach (Player player in interactable.getPlayersInRange())
         {
-            if (Input.GetKey(interactKey) && !isOccupied)
+            switch(player.inputState)
             {
-                interactingPlayer = player;
-                //Debug.Log("interactingPlayer: " + player);
-                //isOccupied = true;
-                return player;
+                case Player.InputState.KandM:
+                    if (Input.GetKey(interactKey) && !isOccupied)
+                    {
+                        interactingPlayer = player;
+
+                        return player;
+                    }
+                    else if (Input.GetKey(interactKey) && doneSpinning)
+                    {
+                        interactingPlayer = player;
+                        playerStates[player] = interactKey;
+                        return player;
+                    }
+                    else if (Input.GetKey(giveUpWeaponKey) && doneSpinning)
+                    {
+                        interactingPlayer = player;
+                        playerStates[player] = giveUpWeaponKey;
+                        return player;
+                    }
+                    break;
+
+                    case Player.InputState.Controller:
+                    if (Input.GetButton(interactButton) && !isOccupied)
+                    {
+                        interactingPlayer = player;
+
+                        return player;
+                    }
+                    else if (Input.GetButton(interactButton) && doneSpinning)
+                    {
+                        interactingPlayer = player;
+                        playerStates[player] = interactKey; // i just realized the dict takes keycodes... oops! dupe code
+                        return player;
+                    }
+                    else if (Input.GetButton(giveUpWeaponButton) && doneSpinning)
+                    {
+                        interactingPlayer = player;
+                        playerStates[player] = giveUpWeaponKey;
+                        return player;
+                    }
+                    break;
             }
-            else if (Input.GetKey(interactKey) && doneSpinning)
-            {
-                interactingPlayer = player;
-                playerStates[player] = interactKey;
-                return player;
-            }
-            else if (Input.GetKey(giveUpWeaponKey) && doneSpinning)
-            {
-                interactingPlayer = player;
-                playerStates[player] = giveUpWeaponKey;
-                return player;
-            }
+         
         }
         return null;
     } //determine if any players are interacting with the interactable

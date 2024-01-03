@@ -222,7 +222,7 @@ Transform:
   m_GameObject: {fileID: 43805296}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 10.04, z: 0}
+  m_LocalPosition: {x: 0, y: 10.04, z: 0.29999995}
   m_LocalScale: {x: 20, y: 10, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -990,7 +990,7 @@ Transform:
   m_GameObject: {fileID: 1263877829}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.3}
   m_LocalScale: {x: 20, y: 10, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1313,7 +1313,7 @@ GameObject:
   - component: {fileID: 1839724202}
   - component: {fileID: 1839724201}
   m_Layer: 9
-  m_Name: Cube
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

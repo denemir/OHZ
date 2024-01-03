@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
     //input
     private float horizontalInput;
     private float verticalInput;
+    private bool controllerRightTriggerPress;
 
     //movement states
     public enum MovementState
@@ -317,21 +318,42 @@ public class Player : MonoBehaviour
         Weapon weapon = GetComponent<PlayerInventory>().GetCurrentWeapon();
         switch (weapon.isFullAuto)
         {
-            case true:
-
-                if (Input.GetButton("Fire1"))
+            case true: //weapon is automatic
+                switch(inputState)
                 {
-                    weapon.Shoot(transform);                        //fix shotgun spread 
+                    case InputState.KandM:
+                        if (Input.GetButton("Fire1"))
+                        {
+                            weapon.Shoot(transform);                        //fix shotgun spread 
+                        }
+                        break;
+                    case InputState.Controller:
+                        if (Input.GetAxis("Fire1") == 1)
+                        {
+                            weapon.Shoot(transform);
+                        }
+                        break;
                 }
                 break;
+            case false: //weapon is semi auto
 
-            case false:
-
-                if (Input.GetButtonDown("Fire1"))
+                switch (inputState)
                 {
-                    weapon.Shoot(transform);
-                    //Debug.Log("Shot");
-                    //Debug.Log(weapon.currentAmmoInMag);
+                    case InputState.KandM:
+                        if (Input.GetButton("Fire1"))
+                        {
+                            weapon.Shoot(transform);                        //fix shotgun spread 
+                        }
+                        break;
+                    case InputState.Controller:
+                        if (Input.GetAxis("Fire1") == 1 && !controllerRightTriggerPress)
+                        {
+                            weapon.Shoot(transform);
+                            controllerRightTriggerPress = true;
+                        }
+                        else if (Input.GetAxis("Fire1") == 0)
+                            controllerRightTriggerPress = false;
+                        break;
                 }
                 break;
         }

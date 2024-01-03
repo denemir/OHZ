@@ -11,6 +11,7 @@ public class PlayerInteractHandler : MonoBehaviour
 
     //key detection
     private bool oldKeyDown;
+    private bool oldButtonDown;
 
     private List<Interactable> previousInteractablesInRange = new List<Interactable>();
 
@@ -45,19 +46,50 @@ public class PlayerInteractHandler : MonoBehaviour
     }
     private bool isInteractableKeyPressed(Interactable interactable)
     {
-        return Input.GetKeyDown(interactable.activeInteraction.key);
+        switch (GetComponent<Player>().inputState)
+        {
+            case Player.InputState.KandM:
+                return Input.GetKeyDown(interactable.activeInteraction.key);
+            case Player.InputState.Controller:
+                return Input.GetButtonDown("Interact");
+        }
+        return false;
     }
     private bool isInteractableAltKeyPressed(Interactable interactable)
     {
-        return Input.GetKeyDown(interactable.activeInteraction.altKey);
+        switch (GetComponent<Player>().inputState)
+        {
+            case Player.InputState.KandM:
+                return Input.GetKeyDown(interactable.activeInteraction.altKey);
+            case Player.InputState.Controller:
+                return Input.GetKeyDown(interactable.activeInteraction.altButton);
+        }
+        return false;
     }
     private bool isInteractableKeyDown(Interactable interactable)
     {
-        return Input.GetKey(interactable.activeInteraction.key);
+        switch(GetComponent<Player>().inputState)
+        {
+            case Player.InputState.KandM:
+                return Input.GetKey(interactable.activeInteraction.key);
+            case Player.InputState.Controller:
+                return Input.GetButton(interactable.activeInteraction.button);
+        }
+        return false;
     }
     private bool isInteractableAltKeyDown(Interactable interactable)
     {
-        return Input.GetKey(interactable.activeInteraction.altKey);
+        switch (GetComponent<Player>().inputState)
+        {
+            case Player.InputState.KandM:
+                return Input.GetKey(interactable.activeInteraction.altKey);
+            case Player.InputState.Controller:
+                //Debug.Log(interactable.activeInteraction.altButton);
+                if(Input.GetButton(interactable.activeInteraction.altButton))
+                    return Input.GetButton(interactable.activeInteraction.altButton);
+                return false;
+        }
+        return false;
     }
 
     //collision
@@ -92,7 +124,7 @@ public class PlayerInteractHandler : MonoBehaviour
                         break;
                     case true:
                         if (!CheckKeyHold(interactable))
-                            if (!CheckAltKeyHold(interactable))
+                            if (interactable.activeInteraction.hasAltEvent && !CheckAltKeyHold(interactable))
                                 interactable.ResetTimer(interactable.activeInteraction);
                         break;
                 }
@@ -184,17 +216,36 @@ public class PlayerInteractHandler : MonoBehaviour
     }
     private bool CheckAltKeyHold(Interactable interactable)
     {
-        if (isInteractableAltKeyDown(interactable) && interactable.activeInteraction.currentHoldTime < interactable.activeInteraction.holdTime)
+        switch(GetComponent<Player>().inputState)
         {
-            interactable.IncrementHoldTimer(interactable.activeInteraction);
-            return true;
-        }
-        //else interactable.ResetTimer(interactable.activeInteraction);
+            case Player.InputState.KandM:
+                if (isInteractableAltKeyDown(interactable) && interactable.activeInteraction.currentHoldTime < interactable.activeInteraction.holdTime)
+                {
+                    interactable.IncrementHoldTimer(interactable.activeInteraction);
+                    return true;
+                }
+                //else interactable.ResetTimer(interactable.activeInteraction);
 
-        if (isInteractableAltKeyDown(interactable) && interactable.activeInteraction.currentHoldTime >= interactable.activeInteraction.holdTime)
-        {
-            interactable.InteractAlternate(interactable.activeInteraction); //if the key is down then interact with the current active interaction
-            return true;
+                if (isInteractableAltKeyDown(interactable) && interactable.activeInteraction.currentHoldTime >= interactable.activeInteraction.holdTime)
+                {
+                    interactable.InteractAlternate(interactable.activeInteraction); //if the key is down then interact with the current active interaction
+                    return true;
+                }
+                break;
+            case Player.InputState.Controller:
+                if (isInteractableAltKeyDown(interactable) && interactable.activeInteraction.currentHoldTime < interactable.activeInteraction.holdTime)
+                {
+                    interactable.IncrementHoldTimer(interactable.activeInteraction);
+                    return true;
+                }
+                //else interactable.ResetTimer(interactable.activeInteraction);
+
+                if (isInteractableAltKeyDown(interactable) && interactable.activeInteraction.currentHoldTime >= interactable.activeInteraction.holdTime)
+                {
+                    interactable.InteractAlternate(interactable.activeInteraction); //if the key is down then interact with the current active interaction
+                    return true;
+                }
+                break;
         }
         return false;
     }
