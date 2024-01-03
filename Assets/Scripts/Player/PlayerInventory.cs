@@ -14,7 +14,7 @@ public class PlayerInventory : MonoBehaviour
     public Weapon activeWeapon;
     private GameObject currentWeaponInstance;
 
-    private int currentWeaponSlot;
+    public int currentWeaponSlot;
     private bool hasWeaponSpawned = false;
 
     private float swapWeaponTimer = 0;
@@ -43,7 +43,7 @@ public class PlayerInventory : MonoBehaviour
 
         }
 
-        if (!isSwapWeaponTimerZero())
+        if (!IsSwapWeaponTimerZero())
             swapWeaponTimer--;
 
         //UpdateWeaponsArray();
@@ -52,7 +52,7 @@ public class PlayerInventory : MonoBehaviour
     //modifying weapons
     public bool AddWeapon(GameObject newWeaponPrefab) //when caller is sending to add weapon, if AddWeapon returns false, try SwapWeapon
     {
-        int slot = checkForOpenWeaponSlot();
+        int slot = CheckForOpenWeaponSlot();
         if (slot != -1)
         {
             weaponPrefabs[slot] = newWeaponPrefab;
@@ -131,6 +131,18 @@ public class PlayerInventory : MonoBehaviour
         //total swap time accounts for both weapons
         swapWeaponTimer += weapons[currentWeaponSlot].weaponSwapTime + weapons[slot].weaponSwapTime;
     } //swap current weapon based on inventory slots
+    public void CycleCurrentWeapon() //for controllers to switch weapons!
+    {
+        //check if weapon is the last in the list, if not then increment weapon slot within list
+        if(currentWeaponSlot != weaponPrefabs.Length - 1 && weaponPrefabs[currentWeaponSlot + 1] != null)
+        {
+            SwapCurrentWeapon(currentWeaponSlot + 1);
+        } else
+        {
+            //otherwise, just set the weapon slot back to 0
+            SwapCurrentWeapon(0);
+        }
+    }
     public void AttachCurrentWeaponToHand(GameObject weaponModel)
     {
         if (GetComponent<Player>().doesCharacterHaveRightHand())
@@ -246,23 +258,23 @@ public class PlayerInventory : MonoBehaviour
 
 
     //swap weapon time
-    public bool isSwapWeaponTimerZero()
+    public bool IsSwapWeaponTimerZero()
     {
         return (swapWeaponTimer == 0);
     }
-    public void addToSwapWeaponTimer(float time)
+    public void AddToSwapWeaponTimer(float time)
     {
         swapWeaponTimer += time;
     }
 
     //inventory space
-    public bool doesPlayerHaveAnOpenSlot()
+    public bool DoesPlayerHaveAnOpenSlot()
     {
-        if (checkForOpenWeaponSlot() != -1)
+        if (CheckForOpenWeaponSlot() != -1)
             return true;
         return false;
     } //returns if player has an open slot
-    private int checkForOpenWeaponSlot()
+    private int CheckForOpenWeaponSlot()
     {
         for (int i = 0; i < weaponPrefabs.Length; i++)
         {

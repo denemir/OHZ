@@ -12,19 +12,30 @@ public class Door : MonoBehaviour
     //interaction vars
     private Interactable interactable;
     private bool isInitialized = false;
+    private string interactButton;
     private Player interactingPlayer;
-    private UnityEvent openDoor;
+    public UnityEvent openDoor;
 
     //player states
     private Dictionary<Player, bool> playerStates = new Dictionary<Player, bool>();
 
     //keybinds
-    private KeyCode interactKey;
+    public KeyCode interactKey;
 
     // Start is called before the first frame update
     void Start()
     {
-        InitializeInteractions();
+        if (GetComponent<Interactable>() != null)
+        {
+            interactable = GetComponent<Interactable>();
+        }
+        else Debug.Log("Interactable component not found on Door. Please attach Interactable script to Door Prefab.");
+
+        if (GetComponent<Interactable>().interactions != null)
+        {
+            InitializeInteractions();
+            isInitialized = true;
+        }
     }
 
     // Update is called once per frame
@@ -34,7 +45,12 @@ public class Door : MonoBehaviour
         {
             if(interactable.getPlayersInRange().Count > 0) //interactable has players within range
             {
+                Player temp;
+                temp = arePlayersInteracting();
 
+                //check if player has enough points (bitchass might be broke)
+                if (temp != null && DoesInteractingPlayerHaveEnough(temp))
+                    interactingPlayer = temp;
             }
         }
     }
@@ -42,11 +58,16 @@ public class Door : MonoBehaviour
     //object initialization
     private void InitializeInteractions()
     {
+        interactButton = "Interact";
+
         interactable.interactions.Add(new Interactable.Interaction
         {
             prompt = "Hold " + interactKey + " to open the door for " + cost + " points",
             key = interactKey,
-            action = openDoor
+            button = interactButton,
+            action = openDoor,
+            holdKeyDown = true,
+            holdTime = 1.0f
         }); //only interaction, prompt player to open the door
 
         //set interaction to be active
@@ -56,7 +77,8 @@ public class Door : MonoBehaviour
     //interactions
     public void OpenDoor()
     {
-        
+        OpenDoorAnimation();
+        DeactivateDoor();
     }
     private void DeactivateDoor()
     {
@@ -77,6 +99,17 @@ public class Door : MonoBehaviour
         }
         return 0;
     } //determine if player is within range and has specified weapon
+    private Player arePlayersInteracting()
+    {
+        foreach (Player player in interactable.getPlayersInRange())
+        {
+            if (Input.GetKey(interactKey) || Input.GetButton(interactButton))
+            {
+                return player;
+            }
+        }
+        return null;
+    } //determine if any players are interacting with the interactable
 
     //animation
     private void OpenDoorAnimation()

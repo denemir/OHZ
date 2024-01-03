@@ -378,7 +378,7 @@ public class MysteryBox : MonoBehaviour
         if (doneSpinning && selectedWeaponPrefab != null)
         {
             //Debug.Log("Player " + interactingPlayer.name + " picked up the " + selectedWeaponPrefab.GetComponent<Weapon>().weaponName + ".");
-            if (interactingPlayer.GetPlayerInventory().doesPlayerHaveAnOpenSlot())
+            if (interactingPlayer.GetPlayerInventory().DoesPlayerHaveAnOpenSlot())
             {
                 interactingPlayer.GetPlayerInventory().AddWeapon(selectedWeaponPrefab);
                 ResetBoxStatus();

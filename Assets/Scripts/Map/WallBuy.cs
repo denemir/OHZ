@@ -124,7 +124,7 @@ public class WallBuy : MonoBehaviour
         if (interactingPlayer.points >= weapon.cost)
         {
             interactingPlayer.points -= weapon.cost;
-            if(interactingPlayer.GetPlayerInventory().doesPlayerHaveAnOpenSlot())
+            if(interactingPlayer.GetPlayerInventory().DoesPlayerHaveAnOpenSlot())
             {
                 interactingPlayer.GetPlayerInventory().AddWeapon(weaponObject);
                 //Debug.Log("Successfully purchased " + weapon.name);

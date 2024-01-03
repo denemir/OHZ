@@ -107,8 +107,16 @@ public class Player : MonoBehaviour
                 CheckReloadCancel();
 
                 //weapon swapping
-                CheckSwapToPrimaryWeapon();
-                CheckSwapToSecondaryWeapon();
+                switch(inputState)
+                { 
+                    case InputState.KandM:
+                        CheckSwapToPrimaryWeapon();
+                        CheckSwapToSecondaryWeapon();
+                        break;
+                    case InputState.Controller:
+                        CheckCycleWeapons();
+                        break;
+                }
             }
         }
     }
@@ -393,7 +401,8 @@ public class Player : MonoBehaviour
     }
     private void CheckCycleWeapons() //primarily for controller players, but can also be set for K&M players
     {
-
+        if (!Input.GetButton("Fire1") && Input.GetButtonDown("Cycle Weapons (Controller)"))
+            playerInventory.CycleCurrentWeapon();
     }
 
     private bool DoesPlayerInventoryComponentExist()
