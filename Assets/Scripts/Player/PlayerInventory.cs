@@ -145,7 +145,7 @@ public class PlayerInventory : MonoBehaviour
     }
     public void AttachCurrentWeaponToHand(GameObject weaponModel)
     {
-        if (GetComponent<Player>().doesCharacterHaveRightHand())
+        if (GetComponent<Player>().DoesCharacterHaveRightHand())
         {
             //Transform rightHandTransform = GetComponent<Player>().GetRightHand().transform;
             //weaponModel.transform.SetParent(rightHandTransform);
@@ -173,7 +173,7 @@ public class PlayerInventory : MonoBehaviour
             currentWeaponInstance = Instantiate(weaponPrefabs[slot]);
             Weapon weapon = /*weaponPrefabs[slot]*/currentWeaponInstance.GetComponent<Weapon>();
 
-            if (GetComponent<Player>().doesCharacterHaveRightHand())
+            if (GetComponent<Player>().DoesCharacterHaveRightHand())
             {
                 //spawn
                 AttachCurrentWeaponToHand(/*Instantiate(weaponPrefabs[slot])*/currentWeaponInstance);
@@ -197,7 +197,7 @@ public class PlayerInventory : MonoBehaviour
             GameObject tempWeaponInstance = Instantiate(weapon);
             Weapon weaponScript = /*weaponPrefabs[slot]*/tempWeaponInstance.GetComponent<Weapon>();
 
-            if (GetComponent<Player>().doesCharacterHaveRightHand())
+            if (GetComponent<Player>().DoesCharacterHaveRightHand())
             {
                 //spawn
                 AttachCurrentWeaponToHand(/*Instantiate(weaponPrefabs[slot])*/currentWeaponInstance);

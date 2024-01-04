@@ -19,7 +19,7 @@ public class PlayerInteractHandler : MonoBehaviour
     {
         interactionZone = new GameObject("InteractionZone").transform;
         interactionZone.SetParent(transform); //attach to player
-        interactionZone.localPosition = new Vector3(0, 0, 1) * interactionRange; //push interaction zone in front of player
+        interactionZone.localPosition = new Vector3(0, 0.5f, 1f) * interactionRange; //push interaction zone in front of player
 
         oldKeyDown = false;
     }
@@ -169,12 +169,12 @@ public class PlayerInteractHandler : MonoBehaviour
         return GetComponent<PlayerGUIHandler>() != null;
     }
 
-    ////debug
-    //public void OnDrawGizmosSelected()
-    //{
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(interactionZone.position, interactionRange);
-    //}
+    //debug
+    public void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(interactionZone.position, interactionRange);
+    }
 
     //checks
     private bool CheckKeyPress(Interactable interactable)

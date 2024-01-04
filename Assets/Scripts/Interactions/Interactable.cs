@@ -47,10 +47,10 @@ public class Interactable : MonoBehaviour
         activeInteraction = null;
     }
 
-    public void FixedUpdate()
-    {
+    //public void FixedUpdate()
+    //{
         
-    }
+    //}
 
     //interacting
     public void Interact()

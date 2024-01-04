@@ -129,7 +129,7 @@ MonoBehaviour:
   invisibilityLayer:
     serializedVersion: 2
     m_Bits: 0
-  maxTransparencyDistance: 8
+  viewingAngle: 35
 --- !u!114 &7767604054028007234
 MonoBehaviour:
   m_ObjectHideFlags: 0

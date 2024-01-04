@@ -153,6 +153,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   activeWeapon: {fileID: 0}
+  currentWeaponSlot: 0
   debugHandler: {fileID: 0}
   isDebuggingOn: 0
 --- !u!114 &405819474494968721
@@ -359,6 +360,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 6685732726722849603}
+    - target: {fileID: 2782080794365987792, guid: 07c649c5ba66e4e4b8b5999adfd3c777, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782080794365987792, guid: 07c649c5ba66e4e4b8b5999adfd3c777, type: 3}
+      propertyPath: viewingAngle
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 6198966986247293035, guid: 07c649c5ba66e4e4b8b5999adfd3c777, type: 3}
       propertyPath: m_Name
       value: PlayerCameraPrefab
@@ -374,7 +383,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6198966986247293035, guid: 07c649c5ba66e4e4b8b5999adfd3c777, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4836264516943554185}
   m_SourcePrefab: {fileID: 100100000, guid: 07c649c5ba66e4e4b8b5999adfd3c777, type: 3}
 --- !u!4 &2496474185906573605 stripped
 Transform:
@@ -391,6 +403,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6198966986247293035, guid: 07c649c5ba66e4e4b8b5999adfd3c777, type: 3}
   m_PrefabInstance: {fileID: 4096089254491925512}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4836264516943554185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7989135982109516899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c888b3edf7da90b4eaf4441a41c47dfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 6685732726722849603}
+  visibilityLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1001 &4443346020410946409
 PrefabInstance:
   m_ObjectHideFlags: 0

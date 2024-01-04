@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class VerticalVisibility : MonoBehaviour
 {
@@ -9,9 +10,7 @@ public class VerticalVisibility : MonoBehaviour
     public Player player;
     public LayerMask visibilityLayer; //layer affecting visibility
     public LayerMask invisibilityLayer;
-
-    //distance
-    public float maxTransparencyDistance = 10f;
+    public float viewingAngle;
 
     // Update is called once per frame
     void Update()
@@ -36,39 +35,73 @@ public class VerticalVisibility : MonoBehaviour
         Vector3 direction = to - from;
         RaycastHit hit;
 
-        //check if there is an obstacle between the player and the camera
-        if (Physics.Raycast(from, direction.normalized, out hit, direction.magnitude, visibilityLayer))
+        // Calculate the step angle between rays in the cone
+        float stepAngle = viewingAngle / (4);
+        Physics.Raycast(from, direction.normalized, out hit, direction.magnitude, visibilityLayer);
+
+        for (int i = 0; i < 5; i++)
         {
-            if(hit.collider.gameObject == obj.gameObject)
+            Vector3 rayDirection = Quaternion.Euler(0, i * stepAngle - viewingAngle / 2, 0) * direction.normalized;
+            //check if there is an obstacle between the player and the camera
+            if (Physics.Raycast(from, rayDirection, out hit, direction.magnitude, visibilityLayer))
             {
-                obj.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-
-                //temporarily setting object to unviewed layer to check for second hit
-                obj.gameObject.layer = 2;
-
-                //check for second hit
-                Collider[] colliders = Physics.OverlapSphere(obj.transform.position, 15f, visibilityLayer);
-
-                foreach (Collider collider in colliders)
+                if (hit.collider.gameObject == obj.gameObject)
                 {
-                    IsVisible(transform.position, GetHeadPosition(), collider);
+                    obj.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+
+                    //temporarily setting object to unviewed layer to check for second hit
+                    obj.gameObject.layer = 2;
+
+                    //check for second hit
+                    Collider[] colliders = Physics.OverlapSphere(obj.transform.position, 15f, visibilityLayer);
+
+                    foreach (Collider collider in colliders)
+                    {
+                        IsVisible(transform.position, GetHeadPosition(), collider);
+                    }
+
+                    //set object back to original layer
+                    obj.gameObject.layer = 6;
+
+                    return hit;
                 }
-
-                //set object back to original layer
-                obj.gameObject.layer = 6;
-
-                return hit;
             }
         }
+
+        ////check if there is an obstacle between the player and the camera
+        //if (Physics.Raycast(from, direction.normalized, out hit, direction.magnitude, visibilityLayer))
+        //{
+        //    if(hit.collider.gameObject == obj.gameObject)
+        //    {
+        //        obj.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+
+        //        //temporarily setting object to unviewed layer to check for second hit
+        //        obj.gameObject.layer = 2;
+
+        //        //check for second hit
+        //        Collider[] colliders = Physics.OverlapSphere(obj.transform.position, 15f, visibilityLayer);
+
+        //        foreach (Collider collider in colliders)
+        //        {
+        //            IsVisible(transform.position, GetHeadPosition(), collider);
+        //        }
+
+        //        //set object back to original layer
+        //        obj.gameObject.layer = 6;
+
+        //        return hit;
+        //    }
+        //}
         obj.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
 
         //return otherwise
         return hit;
 
     } //is player currently visible in below object using raycasts
+
     Vector3 GetHeadPosition()
     {
-        return player.transform.position + Vector3.up * 1.5f; // Adjust the value based on your player's head position
+        return player.transform.position + Vector3.up /** 1.5f*/; // Adjust the value based on your player's head position
     }
 
     //getters & setters

@@ -44,6 +44,8 @@ public class Player : MonoBehaviour
     public float moveSpeed = 5f;
     private PlayerRotation playerRotation;
     public float rotationAngle;
+    public bool isSprintToggle;
+    public bool sprintToggled;
 
     //weapons & inventory
     private PlayerInventory playerInventory;
@@ -115,6 +117,7 @@ public class Player : MonoBehaviour
                         break;
                     case InputState.Controller:
                         CheckCycleWeapons();
+                        CheckSprintToggle();
                         break;
                 }
             }
@@ -233,6 +236,12 @@ public class Player : MonoBehaviour
             CheckReloadCancel();
         }
 
+        if(inputState == InputState.Controller/* || isSprintToggle*/)
+        {
+            isSprintToggle = true;
+            //CheckSprintToggle();
+        }
+
         ////weapon swapping
         //CheckSwapToPrimaryWeapon();
         //CheckSwapToSecondaryWeapon();
@@ -242,11 +251,15 @@ public class Player : MonoBehaviour
         switch (horizontalInput != 0f || verticalInput != 0f)
         {
             case true:
-                if (Input.GetButton("Sprint")) //hold
+                if (!isSprintToggle && Input.GetButton("Sprint")) //hold
                 {
 
                     movementState = MovementState.Sprinting;
 
+                }
+                else if(isSprintToggle && sprintToggled)
+                {
+                    movementState = MovementState.Sprinting;
                 }
                 else movementState = MovementState.Walking;
                 break;
@@ -260,25 +273,6 @@ public class Player : MonoBehaviour
         GetComponent<NewMovementHandler>().Move(horizontalInput, verticalInput, /*moveSpeed,*/ (int)movementState); //calling for move function in movement handler component
         characterObject.transform.position = transform.position;
     } //move character based on input
-    private void CheckJump()
-    {
-        switch (inputState) //////////////////fix later
-        {
-            case InputState.KandM:
-                if (Input.GetAxisRaw("Jump") != 0)
-                {
-                    GetComponent<NewMovementHandler>().Jump();
-                }
-                break;
-            case InputState.Controller:
-                if (Input.GetAxisRaw("Jump") != 0)
-                {
-                    GetComponent<NewMovementHandler>().Jump();
-                }
-                break;
-        }
-
-    }
 
     //rotations
     private void RotationHandler()
@@ -290,7 +284,7 @@ public class Player : MonoBehaviour
 
 
     //character model methods
-    public bool doesCharacterHaveRightHand()
+    public bool DoesCharacterHaveRightHand()
     {
         if (currentCharacter == null)
             Debug.Log("sacks");
@@ -305,7 +299,7 @@ public class Player : MonoBehaviour
     }
     public void CheckRightHand()
     {
-        if (doesCharacterHaveRightHand())
+        if (DoesCharacterHaveRightHand())
         {
             currentCharacter.rightHand = GetComponentInChildren<MeshRenderer>()?.gameObject.GetComponentInChildren<RightHand>();
         }
@@ -373,13 +367,15 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Reload") && weapon.currentAmmoInMag < weapon.magazineSize && weapon.currentStockAmmo > 0)
         {
             weapon.BeginReloading();
+            if(sprintToggled)
+                sprintToggled = false;
             //Debug.Log("Reloading...");
         }
     }
     private void CheckReloadCancel()
     {
         //reload interrupt/cancel
-        if (playerInventory.GetCurrentWeapon().reloadState == Weapon.ReloadState.Reloading && Input.GetButton("Sprint"))
+        if (playerInventory.GetCurrentWeapon().reloadState == Weapon.ReloadState.Reloading && Input.GetButton("Sprint") || sprintToggled)
         {
             playerInventory.GetCurrentWeapon().CancelReload();
         }
@@ -403,6 +399,37 @@ public class Player : MonoBehaviour
     {
         if (!Input.GetButton("Fire1") && Input.GetButtonDown("Cycle Weapons (Controller)"))
             playerInventory.CycleCurrentWeapon();
+    }
+    private void CheckSprintToggle()
+    {
+        switch(inputState)
+        {
+            case InputState.Controller:
+                if(Input.GetButtonDown("Sprint"))
+                {
+                    sprintToggled = !sprintToggled;
+                }                    
+                break;
+        }
+    }
+    private void CheckJump()
+    {
+        switch (inputState) //////////////////fix later
+        {
+            case InputState.KandM:
+                if (Input.GetAxisRaw("Jump") != 0)
+                {
+                    GetComponent<NewMovementHandler>().Jump();
+                }
+                break;
+            case InputState.Controller:
+                if (Input.GetAxisRaw("Jump") != 0)
+                {
+                    GetComponent<NewMovementHandler>().Jump();
+                }
+                break;
+        }
+
     }
 
     private bool DoesPlayerInventoryComponentExist()

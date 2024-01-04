@@ -23,7 +23,7 @@ public class WallBuy : MonoBehaviour
     public string interactButton;
     private Interactable interactable;
     private bool isInitialized = false;
-    public Player interactingPlayer;
+    private Player interactingPlayer;
 
     //player states
     private Dictionary<Player, bool> playerStates = new Dictionary<Player, bool>();

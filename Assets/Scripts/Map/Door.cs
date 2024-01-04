@@ -28,21 +28,25 @@ public class Door : MonoBehaviour
         if (GetComponent<Interactable>() != null)
         {
             interactable = GetComponent<Interactable>();
+            GetComponent<Interactable>().interactions = new List<Interactable.Interaction>();
+            InitializeInteractions();
         }
         else Debug.Log("Interactable component not found on Door. Please attach Interactable script to Door Prefab.");
 
         if (GetComponent<Interactable>().interactions != null)
         {
             InitializeInteractions();
-            isInitialized = true;
-        }
+        } 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(isInitialized)
+        if(isInitialized && interactable.interactions.Count != 0)
         {
+            if (interactable.activeInteraction == null)
+                interactable.activeInteraction = interactable.interactions[0];
+
             if(interactable.getPlayersInRange().Count > 0) //interactable has players within range
             {
                 Player temp;
@@ -52,6 +56,9 @@ public class Door : MonoBehaviour
                 if (temp != null && DoesInteractingPlayerHaveEnough(temp))
                     interactingPlayer = temp;
             }
+        } else
+        {
+            InitializeInteractions(); // i dont know why this refuses to work, but it takes 3 FUCKING INITIALIZATIONS for it to store the list of interactions. no idea why either.
         }
     }
 
@@ -59,6 +66,9 @@ public class Door : MonoBehaviour
     private void InitializeInteractions()
     {
         interactButton = "Interact";
+
+        if(interactable.interactions == null)
+            interactable.interactions = new List<Interactable.Interaction>();
 
         interactable.interactions.Add(new Interactable.Interaction
         {
@@ -72,6 +82,7 @@ public class Door : MonoBehaviour
 
         //set interaction to be active
         interactable.activeInteraction = interactable.interactions[0];
+        isInitialized = true;
     }
 
     //interactions
