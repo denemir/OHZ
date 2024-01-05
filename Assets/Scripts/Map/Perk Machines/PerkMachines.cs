@@ -21,6 +21,11 @@ public class PerkMachines : MonoBehaviour
     public UnityEvent purchasePerkForOthers;
     public UnityEvent acceptPerk;
 
+    //perk up for grabs
+    public bool isPerkUpForGrabs;
+
+    //player states
+    private Dictionary<Player, KeyCode> playerStates = new Dictionary<Player, KeyCode>();
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +46,21 @@ public class PerkMachines : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(isInitialized)
+        {
+            if (interactable.getPlayersInRange().Count > 0) //interactable has players within range
+            {
+                Player temp;
+                temp = ArePlayersInteracting();
+
+                //check if player has enough playerStats.points 
+                if (temp != null && DoesPlayerHaveEnoughPoints(temp))
+                    if(!isPerkUpForGrabs && DoesPlayerAlreadyHavePerk(temp))
+                        interactingPlayer = temp;
+                else if(isPerkUpForGrabs)
+                        interactingPlayer = temp;
+            }
+        }
     }
 
     //object initialization
@@ -52,7 +71,7 @@ public class PerkMachines : MonoBehaviour
 
         interactable.interactions.Add(new Interactable.Interaction
         {
-            prompt = "Hold " + interactKey + " to purchase a " + perk.perkName + " for " + cost + " points, or hold " + altKey + " to purchase a " + perk.perkName + " for others",
+            prompt = "Hold " + interactKey + " to purchase a " + perk.perkName + " for " + cost + " playerStats.points, or hold " + altKey + " to purchase a " + perk.perkName + " for others",
             key = interactKey,
             altKey = altKey,
             button = interactButton,
@@ -78,30 +97,90 @@ public class PerkMachines : MonoBehaviour
         interactable.activeInteraction = interactable.interactions[0];
     }
 
-    //mid-interaction
-    public void PurchasePerk()
-    {
-
-    }
+    //pre-interaction
     private void PerkMachineJingle()
     {
 
+    }
+
+    //mid-interaction
+    public void PurchaseAndTakePerk()
+    {
+        DeductPointsFromPlayer(interactingPlayer);
+    } //for the player who is purchasing the perk for themselves
+    public void PurchasePerk()
+    {
+
+    } //for the player who is purchasing the perk
+    public void TakePerk()
+    {
+
+    } //actually giving the perk to the player and having them drink it
+    private void PerkMachineBuyJingle()
+    {
+
+    }
+    private void DeductPointsFromPlayer(Player player)
+    {
+        player.playerStats.points -= cost;
     }
 
     //post-interaction
     private void ResetMachine()
     {
         interactingPlayer = null;
+        isPerkUpForGrabs = false;
         interactable.activeInteraction = interactable.interactions[0];
     }
 
     //checks
-    private bool DoesPlayerAlreadyHavePerk()
+    private bool DoesPlayerAlreadyHavePerk(Player player)
     {
         return false;
     }
-    private bool DoesPlayerHaveEnoughPoints()
+    private bool DoesPlayerHaveEnoughPoints(Player player)
     {
-        return false;
+        return player.playerStats.points >= cost;
+    }
+    private Player ArePlayersInteracting()
+    {
+        foreach (Player player in interactable.getPlayersInRange())
+        {
+            switch (player.inputState)
+            {
+                case Player.InputState.KandM:
+                    if (Input.GetKey(interactKey))
+                    {
+                        interactingPlayer = player;
+
+                        return player;
+                    }
+                    else if (!isPerkUpForGrabs && Input.GetKey(altKey)) //is the perk up for grabs already? if not, then set it to be up for grabs
+                    {
+                        interactingPlayer = player;
+                        playerStates[player] = altKey;
+                        isPerkUpForGrabs = true;
+                        return player;
+                    }
+                    break;
+
+                case Player.InputState.Controller:
+                    if (Input.GetButton(interactButton))
+                    {
+                        interactingPlayer = player;
+
+                        return player;
+                    }
+                    else if (!isPerkUpForGrabs && Input.GetButton(altInteractButton))
+                    {
+                        interactingPlayer = player;
+                        playerStates[player] = altKey;
+                        return player;
+                    }
+                    break;
+            }
+
+        }
+        return null;
     }
 }

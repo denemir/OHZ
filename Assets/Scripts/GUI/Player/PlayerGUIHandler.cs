@@ -131,7 +131,7 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
     {
         if (currentPointsText != null)
         {
-            currentPointsText.text = currentTargetedPlayer.points.ToString();
+            currentPointsText.text = currentTargetedPlayer.playerStats.points.ToString();
             currentPointsText.color = Color.white;
         }
     }

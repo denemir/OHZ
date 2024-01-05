@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 675424769149891204}
   - component: {fileID: 6685732726722849603}
   - component: {fileID: 3987980454600772675}
+  - component: {fileID: 6333962325034643284}
   - component: {fileID: 6802542301641481002}
   - component: {fileID: 7006765439140457937}
   - component: {fileID: 609120332788872518}
@@ -57,11 +58,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerProfile: {fileID: 0}
   playerName: Nutsack
+  playerStats: {fileID: 6333962325034643284}
   nameTagPrefab: {fileID: 353889809262789484, guid: ca3e7ed996d7f6c479686c8e2ba48034, type: 3}
-  points: 0
-  kills: 0
-  downs: 0
-  revives: 0
   clanTag: 620061006c007200
   playerHasClanTag: 0
   cameraPrefab: {fileID: 7989135982109516899}
@@ -73,6 +71,8 @@ MonoBehaviour:
   arrowObject: {fileID: 0}
   moveSpeed: 15
   rotationAngle: 0
+  isSprintToggle: 0
+  sprintToggled: 0
   movementState: 0
   inputState: 0
   downState: 0
@@ -89,6 +89,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f879276df3993944c9d0ec8486402347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6333962325034643284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3601225831429618101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84378a4cec1c5e94daf6e5cc9afe200f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  currentHealth: 0
+  points: 0
+  kills: 0
+  downs: 0
+  revives: 0
 --- !u!114 &6802542301641481002
 MonoBehaviour:
   m_ObjectHideFlags: 0

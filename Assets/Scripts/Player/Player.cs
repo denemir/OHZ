@@ -9,16 +9,11 @@ public class Player : MonoBehaviour
     public int id { get; private set; }
     public Profile playerProfile;
     public string playerName = "player"; //player chooses, player_id by default
+    public PlayerStats playerStats;
 
     //name tag
     private NameTag nameTag;
     public GameObject nameTagPrefab;
-
-    //leaderboard stats
-    public int points;
-    public int kills;
-    public int downs;
-    public int revives;
 
     //clan tag
     private int clanTagLength = 5;

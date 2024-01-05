@@ -52,7 +52,7 @@ public class Door : MonoBehaviour
                 Player temp;
                 temp = arePlayersInteracting();
 
-                //check if player has enough points (bitchass might be broke)
+                //check if player has enough playerStats.points (bitchass might be broke)
                 if (temp != null && DoesInteractingPlayerHaveEnough(temp))
                     interactingPlayer = temp;
             }
@@ -131,7 +131,7 @@ public class Door : MonoBehaviour
     //checks
     private bool DoesInteractingPlayerHaveEnough(Player player)
     {
-        if (player.points >= cost)
+        if (player.playerStats.points >= cost)
             return true;
         return false;
     } //does player have enough to open the door

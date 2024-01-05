@@ -121,9 +121,9 @@ public class WallBuy : MonoBehaviour
     /// </summary>
     public void PurchaseWeapon()
     {
-        if (interactingPlayer.points >= weapon.cost)
+        if (interactingPlayer.playerStats.points >= weapon.cost)
         {
-            interactingPlayer.points -= weapon.cost;
+            interactingPlayer.playerStats.points -= weapon.cost;
             if(interactingPlayer.GetPlayerInventory().DoesPlayerHaveAnOpenSlot())
             {
                 interactingPlayer.GetPlayerInventory().AddWeapon(weaponObject);
@@ -138,10 +138,10 @@ public class WallBuy : MonoBehaviour
     }
     public void PurchaseAmmo()
     {
-        if(interactingPlayer.points >= ammoCost)
+        if(interactingPlayer.playerStats.points >= ammoCost)
         {
-            //deduct points
-            interactingPlayer.points -= ammoCost;
+            //deduct playerStats.points
+            interactingPlayer.playerStats.points -= ammoCost;
 
             //add ammo
             interactingPlayer.GetPlayerInventory().weapons[interactingPlayer.GetPlayerInventory().GetMatchingWeaponSlot(weapon)].currentAmmoInMag = weapon.magazineSize;

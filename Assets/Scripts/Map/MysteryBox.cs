@@ -15,7 +15,7 @@ public class MysteryBox : MonoBehaviour
     public MysteryBoxState state;
 
     //fire sale activates all mystery boxes on map,
-    //and all cost 10 points.
+    //and all cost 10 playerStats.points.
     public enum FireSaleState
     {
         Active,
@@ -300,7 +300,7 @@ public class MysteryBox : MonoBehaviour
     //pre-spin
     private bool HasEnoughPoints(Player player)
     {
-        if (player.points >= costToSpin)
+        if (player.playerStats.points >= costToSpin)
             return true;
         return false;
     }
@@ -334,7 +334,7 @@ public class MysteryBox : MonoBehaviour
     }
     private void DeductPoints(Player player)
     {
-        player.points -= costToSpin;
+        player.playerStats.points -= costToSpin;
     }
     private void DetermineWeapon()
     {        
