@@ -24,12 +24,6 @@ public class PlayerInteractHandler : MonoBehaviour
         oldKeyDown = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //DetectCollision();
-    }
-
     private void FixedUpdate()
     {
         DetectCollision();
@@ -68,7 +62,7 @@ public class PlayerInteractHandler : MonoBehaviour
     }
     private bool isInteractableKeyDown(Interactable interactable)
     {
-        switch(GetComponent<Player>().inputState)
+        switch (GetComponent<Player>().inputState)
         {
             case Player.InputState.KandM:
                 return Input.GetKey(interactable.activeInteraction.key);
@@ -85,7 +79,7 @@ public class PlayerInteractHandler : MonoBehaviour
                 return Input.GetKey(interactable.activeInteraction.altKey);
             case Player.InputState.Controller:
                 //Debug.Log(interactable.activeInteraction.altButton);
-                if(Input.GetButton(interactable.activeInteraction.altButton))
+                if (Input.GetButton(interactable.activeInteraction.altButton))
                     return Input.GetButton(interactable.activeInteraction.altButton);
                 return false;
         }
@@ -93,7 +87,7 @@ public class PlayerInteractHandler : MonoBehaviour
     }
 
     //collision
-    private void DetectCollision() //handles collision and removal of prompts
+    private void DetectCollision() //handles collision and removal of prompts  /////////////////////////////////////////////////////// this could be optimized lil fella
     {
         Collider[] hitColliders = Physics.OverlapSphere(interactionZone.position, interactionRange); //detect objects within zone
         List<Interactable> interactablesInRange = new List<Interactable>();
@@ -111,11 +105,15 @@ public class PlayerInteractHandler : MonoBehaviour
                 {
                     if (doesInteractableHaveActiveInteraction(interactable))
                         GetComponent<PlayerGUIHandler>().DisplayEventPrompt(interactable.activeInteraction);
-                    else Debug.Log("Interactable does not have an active interaction event.");
+                    else
+                    {
+                        Debug.Log("Interactable does not have an active interaction event.");
+                        break;
+                    }
                 }
                 else Debug.Log("Player GUI not active.");
 
-                switch(interactable.activeInteraction.holdKeyDown)
+                switch (interactable.activeInteraction.holdKeyDown)
                 {
                     case false:
                         if (!CheckKeyPress(interactable))
@@ -129,8 +127,8 @@ public class PlayerInteractHandler : MonoBehaviour
                         break;
                 }
 
-                    //adds to list of interactables within the range
-                    interactablesInRange.Add(interactable);
+                //adds to list of interactables within the range
+                interactablesInRange.Add(interactable);
 
                 //update old key
                 oldKeyDown = isInteractableKeyDown(interactable);
@@ -172,8 +170,12 @@ public class PlayerInteractHandler : MonoBehaviour
     //debug
     public void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(interactionZone.position, interactionRange);
+        if (interactionZone != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(interactionZone.position, interactionRange);
+        }
+
     }
 
     //checks
@@ -216,7 +218,7 @@ public class PlayerInteractHandler : MonoBehaviour
     }
     private bool CheckAltKeyHold(Interactable interactable)
     {
-        switch(GetComponent<Player>().inputState)
+        switch (GetComponent<Player>().inputState)
         {
             case Player.InputState.KandM:
                 if (isInteractableAltKeyDown(interactable) && interactable.activeInteraction.currentHoldTime < interactable.activeInteraction.holdTime)
