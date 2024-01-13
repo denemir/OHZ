@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7820909048005344297}
   - component: {fileID: 6830112308986267903}
   - component: {fileID: 437575148173786840}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AK47 Wall Buy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,8 +97,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1048619cddc350b47a4c12be8d0df638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
+  weaponObject: {fileID: 0}
+  ammoCost: 0
   onPurchase:
     m_PersistentCalls:
       m_Calls: []
+  onAmmoPurchase:
+    m_PersistentCalls:
+      m_Calls: []
   interactKey: 0
+  interactButton: 

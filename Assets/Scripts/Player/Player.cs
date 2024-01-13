@@ -211,8 +211,6 @@ public class Player : MonoBehaviour
     //player input
     private void getMovementInput()
     {
-        //CheckJump();
-
         //implement switch case to swap between controller & keyboard
 
         horizontalInput = Input.GetAxis("Horizontal");
@@ -220,26 +218,10 @@ public class Player : MonoBehaviour
 
         ModifyMovementState(horizontalInput, verticalInput);
 
-        if (GetCurrentWeapon() != null)
-        {
-            //firing
-            CheckShootCurrentWeapon();
-
-            CheckReloadCurrentWeapon();
-
-            //reload interrupt/cancel
-            CheckReloadCancel();
-        }
-
-        if(inputState == InputState.Controller/* || isSprintToggle*/)
+        if(inputState == InputState.Controller)
         {
             isSprintToggle = true;
-            //CheckSprintToggle();
         }
-
-        ////weapon swapping
-        //CheckSwapToPrimaryWeapon();
-        //CheckSwapToSecondaryWeapon();
     }
     private void ModifyMovementState(float horizontalInput, float verticalInput)
     {

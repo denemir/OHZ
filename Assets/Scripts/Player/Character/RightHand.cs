@@ -16,13 +16,6 @@ public class RightHand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (weapon != null)
-        //{
-        //    if (!holdingWeapon)
-        //    {
-        //        holdingWeapon = true;
-        //    }
-        //} else holdingWeapon = false;
     }
 
     public void HoldWeapon(Weapon weapon)
@@ -46,9 +39,4 @@ public class RightHand : MonoBehaviour
     {
         droppedWeapon = !droppedWeapon;
     }
-
-    //public void PassWeaponDown(Weapon weapon) //for use between player and right hand, Player handshakes with RightHand to provide weapon
-    //{
-
-    //}
 }

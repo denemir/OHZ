@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7680730459949479569}
   - component: {fileID: 3469258950087036495}
   - component: {fileID: 645000945516532800}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ithaca Wall Buy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactKey: 102
-  interactingPlayer: {fileID: 0}
+  interactButton: 
 --- !u!114 &3469258950087036495
 MonoBehaviour:
   m_ObjectHideFlags: 0

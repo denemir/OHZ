@@ -53,7 +53,7 @@ public class NewMovementHandler : MonoBehaviour
         }
 
         rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
-        transform.position = rb.transform.position;
+        //transform.position = rb.transform.position;
     }
     public void Jump()
     {

@@ -187,6 +187,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionRange: 1.5
+  interactionLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!54 &6059956736831921733
 Rigidbody:
   m_ObjectHideFlags: 0

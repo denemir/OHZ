@@ -15,6 +15,7 @@ public class Barricades : MonoBehaviour
     public GameObject barricadesRegion;
     public BarricadePiece[] barricadePieces;
     public int numOfPieces;
+    public bool isDestroyed;
 
     //interaction 
     public KeyCode interactKey;
@@ -65,6 +66,7 @@ public class Barricades : MonoBehaviour
 
         //set interaction
         interactable.activeInteraction = interactable.interactions[0];
+        isInitialized = true;
     }
 
     //zombie functions

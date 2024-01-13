@@ -8,6 +8,7 @@ public class PlayerInteractHandler : MonoBehaviour
     // Start is called before the first frame update
     public float interactionRange;
     private Transform interactionZone; //boundary in front of the player in which determines if a player can interact with an interactable
+    public LayerMask interactionLayer;
 
     //key detection
     private bool oldKeyDown;
@@ -19,7 +20,7 @@ public class PlayerInteractHandler : MonoBehaviour
     {
         interactionZone = new GameObject("InteractionZone").transform;
         interactionZone.SetParent(transform); //attach to player
-        interactionZone.localPosition = new Vector3(0, 0.5f, 1f) * interactionRange; //push interaction zone in front of player
+        interactionZone.localPosition = new Vector3(0, 0.5f, 0.5f) * interactionRange; //push interaction zone in front of player
 
         oldKeyDown = false;
     }
@@ -89,7 +90,7 @@ public class PlayerInteractHandler : MonoBehaviour
     //collision
     private void DetectCollision() //handles collision and removal of prompts  /////////////////////////////////////////////////////// this could be optimized lil fella
     {
-        Collider[] hitColliders = Physics.OverlapSphere(interactionZone.position, interactionRange); //detect objects within zone
+        Collider[] hitColliders = Physics.OverlapSphere(interactionZone.position, interactionRange, interactionLayer); //detect objects within zone
         List<Interactable> interactablesInRange = new List<Interactable>();
 
         //items within range of player's interaction zone

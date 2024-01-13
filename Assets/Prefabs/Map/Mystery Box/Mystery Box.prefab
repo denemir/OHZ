@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2767082903365501593}
   - component: {fileID: 519277455469110354}
   - component: {fileID: 2510459939416657994}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 432163927071265465}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: PivotPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 3823230923489807494}
   - component: {fileID: 524013728563647275}
   - component: {fileID: 8645206049517424988}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Lid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 8553857725447857539}
   - component: {fileID: 8056760501471280170}
   - component: {fileID: 1134152218762157542}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Left Slab 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 5509216467713085431}
   - component: {fileID: 7781330312625695086}
   - component: {fileID: 5029582852495834957}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 4993625689117932116}
   - component: {fileID: 5124869797374394681}
   - component: {fileID: 3616121130942653961}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Question Mark 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,7 +462,7 @@ GameObject:
   - component: {fileID: 5318020841756516761}
   - component: {fileID: 6292448192033607483}
   - component: {fileID: 1722614856009930713}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Right Hinge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -545,7 +545,7 @@ GameObject:
   - component: {fileID: 1665600439032337608}
   - component: {fileID: 3265010813052515559}
   - component: {fileID: 6852944876879340977}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Left Hinge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -628,7 +628,7 @@ GameObject:
   - component: {fileID: 6746200544130309983}
   - component: {fileID: 5992955051313361066}
   - component: {fileID: 6620041729076258083}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -709,7 +709,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7293836989359501228}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -743,7 +743,7 @@ GameObject:
   - component: {fileID: 3101889553363166670}
   - component: {fileID: 7695182226936130533}
   - component: {fileID: 2642402409365027123}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -826,7 +826,7 @@ GameObject:
   - component: {fileID: 5666944172944162873}
   - component: {fileID: 7155283354690586547}
   - component: {fileID: 1830466325404322609}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -909,7 +909,7 @@ GameObject:
   - component: {fileID: 885317405436919592}
   - component: {fileID: 2332570449527708572}
   - component: {fileID: 7464930217832563039}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Lock Hinge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -992,7 +992,7 @@ GameObject:
   - component: {fileID: 2178967068699143265}
   - component: {fileID: 6261201657669787249}
   - component: {fileID: 8632393645964866548}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Question Mark 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1078,7 +1078,7 @@ GameObject:
   - component: {fileID: 8160398829084601916}
   - component: {fileID: 1978315144669731027}
   - component: {fileID: 8510013986054855760}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Mystery Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1308,7 +1308,7 @@ GameObject:
   - component: {fileID: 2287254266264675214}
   - component: {fileID: 3652519062340619340}
   - component: {fileID: 5640537285867078419}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Right Slab 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1390,7 +1390,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2079668076164918671}
   - component: {fileID: 976085754406471198}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1485,7 +1485,7 @@ GameObject:
   - component: {fileID: 5696050500382657810}
   - component: {fileID: 5527390637279461292}
   - component: {fileID: 6990355974274497687}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Torus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1568,7 +1568,7 @@ GameObject:
   - component: {fileID: 4639791051931282910}
   - component: {fileID: 8051466750189747024}
   - component: {fileID: 1412964101305027693}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Rear Hinge 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1651,7 +1651,7 @@ GameObject:
   - component: {fileID: 1541032012683160919}
   - component: {fileID: 829696960204836153}
   - component: {fileID: 5447637071718608828}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Right Slab 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1734,7 +1734,7 @@ GameObject:
   - component: {fileID: 141029182610048022}
   - component: {fileID: 3064175523038524378}
   - component: {fileID: 7331460268650783696}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Rear Hinge 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1817,7 +1817,7 @@ GameObject:
   - component: {fileID: 281792733247446672}
   - component: {fileID: 6018874050694846803}
   - component: {fileID: 135009150699457582}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Left Slab 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

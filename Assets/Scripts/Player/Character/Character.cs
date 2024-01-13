@@ -41,11 +41,7 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //model.transform.position = transform.position;
 
-        //Vector3 rightHandDirection = transform.forward;
-        //Vector3 rightHandPosition = transform.position - rightHandDirection * rightHandOffset;
-        //rightHand.transform.position = rightHandPosition;
     }
 
     public void RotateRightHand(float rotateAngle)

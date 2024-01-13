@@ -28,13 +28,13 @@ public class PlayerRotation : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if(player.inputState != inputState)
         {
             inputState = player.inputState;
         }
-        
+
 
         switch (inputState)
         {
@@ -58,4 +58,9 @@ public class PlayerRotation : MonoBehaviour
 
 
     }
+
+    //private void LateUpdate()
+    //{
+
+    //}
 }

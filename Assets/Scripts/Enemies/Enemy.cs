@@ -5,7 +5,9 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    //nav mesh
     public NavMeshAgent agent;
+    public Transform target;
 
     //stats
     public int maxHealth;
@@ -18,10 +20,12 @@ public class Enemy : MonoBehaviour
 
     //attack variables
     public float attackDistance;
+    private Player attackingPlayer;
 
     //interactions
     public void InflictDamage(int damage, Player player)
     {
+        attackingPlayer = player;
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
@@ -37,22 +41,27 @@ public class Enemy : MonoBehaviour
         SpawnAnimation();
     }
 
+    //movement
+    private void MoveTowardsTarget(float speed)
+    {
+        agent.speed = speed;
+        agent.SetDestination(target.position);
+    }
+
     //path finding
-    private void FindNearestPlayer()
+    public Transform FindNearestPlayer()
     {
-
+        return null;
     }
-    private void TargetNearestPlayer()
+    public Transform TargetNearestPlayer()
     {
-
+        return null;
     }
-    private void TargetAttackingPlayer()
+    public Transform TargetAttackingPlayer()
     {
-
-    }
-    private void TargetBarricade()
-    {
-
+        if(attackingPlayer != null)
+            return attackingPlayer.transform;
+        return null;
     }
 
     //attack player
@@ -66,6 +75,18 @@ public class Enemy : MonoBehaviour
     private void RewardPlayer(Player player, int amount)
     {
         player.playerStats.AddPoints(amount);
+    }
+    private void DropPowerup()
+    {
+
+    }
+    public void DropPowerup(GameObject powerupPrefab)
+    {
+
+    }
+    private void ResetStats()
+    {
+        currentHealth = maxHealth;
     }
 
     //animations

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2782080794365987792}
   - component: {fileID: 7767604054028007234}
   - component: {fileID: 5822077558280516725}
+  - component: {fileID: -6680443199780585391}
   m_Layer: 8
   m_Name: PlayerCameraPrefab
   m_TagString: Untagged
@@ -207,3 +208,15 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
+--- !u!114 &-6680443199780585391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6198966986247293035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eac9239be0ad9244aa7003d3ffc39f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

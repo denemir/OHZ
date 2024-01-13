@@ -5,7 +5,7 @@ using UnityEngine;
 public class Zombie : Enemy
 {
     //spawning
-    private bool spawnedOutsideBarricade;
+    private bool isTargetBarricadeBroken;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +26,10 @@ public class Zombie : Enemy
     }
 
     //getters & setters
-    public bool DidZombieSpawnOutsideBarricade()
-    { return spawnedOutsideBarricade; }
+
+    //post death
+    private void ResetStats()
+    {
+        
+    }
 }

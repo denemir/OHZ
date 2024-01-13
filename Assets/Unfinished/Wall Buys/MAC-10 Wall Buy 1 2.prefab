@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6331249312127516557}
   - component: {fileID: 6081303406658826054}
   - component: {fileID: 5965633329697625508}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MAC-10 Wall Buy 1 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactKey: 102
-  interactingPlayer: {fileID: 0}
+  interactButton: 
 --- !u!114 &6081303406658826054
 MonoBehaviour:
   m_ObjectHideFlags: 0
