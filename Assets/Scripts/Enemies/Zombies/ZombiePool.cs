@@ -15,4 +15,18 @@ public class ZombiePool : MonoBehaviour
     {
         
     }
+
+    //spawning
+    public Transform DetermineSpawnPoint()
+    {
+        return null;
+    }
+    private ZombieSpawnRegion FindNearestSpawnRegion()
+    {
+        return null;
+    }
+    private ZombieSpawnRegion FindRandomSpawnRegion()
+    {
+        return null;
+    }
 }

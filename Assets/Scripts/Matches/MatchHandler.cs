@@ -7,7 +7,7 @@ public class MatchHandler : MonoBehaviour
 {
     //players
     public Player[] players;
-
+    private CentralPoint centralPoint;
 
     //enemies - zombies
     private ZombiePool zombiePool;
@@ -60,6 +60,11 @@ public class MatchHandler : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void FixedUpdate()
+    {
+        centralPoint.UpdateCentralPoint();
     }
 
     //powerups
@@ -117,4 +122,10 @@ public class MatchHandler : MonoBehaviour
     {
 
     }
+
+    //current players
+    public void GetAlivePlayers()
+    {
+
+    } //returns list of players that are alive (used for spawning and perhaps spectating)
 }
