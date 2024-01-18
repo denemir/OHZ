@@ -6,7 +6,7 @@ using UnityEngine;
 public class ZombiePathfinding : MonoBehaviour, IPathfinding
 {
     //zombies grrrrrrrrrr
-    private Zombie zombieComponent;
+    public Zombie zombieComponent;
 
     //targeting
     private Transform currentTarget;

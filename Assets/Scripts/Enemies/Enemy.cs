@@ -14,7 +14,6 @@ public class Enemy : MonoBehaviour
     public int currentHealth;
     public int damage;
     public float attackRate; //time between attacks
-    public float moveSpeed;
     public int killPointReward;
     public int damagePointReward;
 
@@ -42,7 +41,7 @@ public class Enemy : MonoBehaviour
     }
 
     //movement
-    private void MoveTowardsTarget(float speed)
+    public void MoveTowardsTarget(float speed)
     {
         agent.speed = speed;
         agent.SetDestination(target.position);
