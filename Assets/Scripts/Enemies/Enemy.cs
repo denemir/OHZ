@@ -46,6 +46,14 @@ public class Enemy : MonoBehaviour
         agent.speed = speed;
         agent.SetDestination(target.position);
     }
+    public void RemainIdle()
+    {
+
+    }
+    public void Wander()
+    {
+
+    }
 
     //path finding
     public Transform FindNearestPlayer()

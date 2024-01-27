@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PAP : MonoBehaviour
+public class PAP : Interactable
 {
+    //pack a punching
+
+
     // Start is called before the first frame update
     void Start()
     {
