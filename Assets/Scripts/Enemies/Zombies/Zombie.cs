@@ -11,6 +11,10 @@ public class Zombie : Enemy
     public LayerMask targetLayer;
     public LayerMask barricadeLayer;
 
+    //attacking
+    public float attackRange;
+    private Transform attackZone;
+
     //movement
     public enum MovementState
     {
@@ -33,6 +37,10 @@ public class Zombie : Enemy
         targetZone = new GameObject("TargetZone").transform;
         targetZone.SetParent(transform); //attach to zombie
         targetZone.localPosition = new Vector3(0, 0f, 0f);
+
+        attackZone = new GameObject("AttackZone").transform;
+        attackZone.SetParent(transform); //attach to zombie
+        attackZone.localPosition = new Vector3(0, 0.5f, 0.5f);
     }
 
     // Update is called once per frame
@@ -61,6 +69,9 @@ public class Zombie : Enemy
 
     private void FixedUpdate()
     {
+        if (currentHealth <= 0)
+            Die();
+
         if(target == null)
             SearchForTarget();
     }
@@ -74,66 +85,38 @@ public class Zombie : Enemy
         List<Player> playersInRange = new List<Player>();
         List<Barricades> barricadesInRange = new List<Barricades>();
 
-        //Debug.Log(hitColliders.Length);
-
+        //check colliders
         foreach (Collider collider in hitColliders)
         {
-            Debug.Log(collider.name);
             if (collider.GetComponent<Player>() != null)
                 playersInRange.Add(collider.GetComponent<Player>());
             else if (collider.GetComponent<Barricades>() != null)
                 barricadesInRange.Add(collider.GetComponent<Barricades>());
         }
 
-        //Debug.Log(playersInRange.Count);
-        //Debug.Log(barricadesInRange.Count);
-
+        //check potential targets
         if (playersInRange.Count > 0)
             target = playersInRange[0].transform;
         else if(barricadesInRange.Count > 0)
             target = barricadesInRange[0].transform;
-
-        //Player potTarget = IsPlayerWithinTargetingRange(); //potential target
-        //if (potTarget == null)
-        //{
-        //    Barricades bar = IsBarricadeWithinTargetingRange();
-        //    if (bar == null)
-        //        RemainIdle();
-        //    else target = bar.transform;
-        //}
-        //else { target = potTarget.transform; Debug.Log("set"); }
-    }
-    private Player IsPlayerWithinTargetingRange()
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(targetZone.position, targetRange, targetLayer); //detect players or barricades within zone
-        List<Player> targetsInRange = new List<Player>();
-
-        Debug.Log(hitColliders.Length);
-        foreach (Collider collider in hitColliders)
-        {
-            Debug.Log(collider.GetComponent<Player>());
-            targetsInRange.Add(collider.GetComponent<Player>());
-        }
-
-        if (targetsInRange.Count > 0)
-        {
-            return targetsInRange[0];
-        }
-        return null;
-    }
-    private Barricades IsBarricadeWithinTargetingRange()
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(targetZone.position, targetRange, barricadeLayer); //detect players or barricades within zone
-        List<Barricades> targetsInRange = new List<Barricades>();
-
-        if (targetsInRange.Count > 0)
-        {
-            return targetsInRange[0];
-        }
-        return null;
     }
 
     //attacks
+    public void IsTargetWithinAttackingRange()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(attackZone.position, targetRange, targetLayer); //detect players or barricades within attack range
+        foreach(Collider collider in hitColliders)
+        {
+            if(collider.GetComponent<GameObject>() == target.gameObject)
+            {
+                
+            }
+        }
+    }
+    private void AttackTarget()
+    {
+        
+    }
     public void AttackBarricade()
     {
 

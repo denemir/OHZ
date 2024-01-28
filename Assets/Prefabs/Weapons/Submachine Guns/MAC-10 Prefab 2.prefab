@@ -51,9 +51,9 @@ MonoBehaviour:
   fireRate: 0.05
   isFullAuto: 1
   canToggleFullAuto: 0
-  damage: 0
-  criticalDamage: 0
-  criticalChance: 0
+  damage: 15
+  criticalDamage: 35
+  criticalChance: 0.02
   reloadState: 0
   isActive: 0
   timeToReload: 0.3
@@ -63,9 +63,9 @@ MonoBehaviour:
   maxStockAmmo: 280
   isWeaponHandLoaded: 0
   roundsReloadedPerInstance: 0
-  recoilSpread: 20
+  recoilSpread: 10
   currentRecoilSpread: 0
-  recoilRate: 1.5
+  recoilRate: 0.3
   weaponSwapTime: 95
   weaponType: 0
   weaponModelPrefab: {fileID: 4128586013238518945, guid: b24081ce86c9a5243bdf1461b8204203, type: 3}

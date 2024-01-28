@@ -90,6 +90,7 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
         UpdateCurrentWeapon();
         UpdateCurrentAmmoInWeapon();
         UpdateCurrentStockAmmo();
+        UpdateCurrentPoints();
     }
     public void UpdateCurrentWave()
     {

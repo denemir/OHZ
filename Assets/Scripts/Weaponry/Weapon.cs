@@ -14,8 +14,8 @@ public class Weapon : MonoBehaviour
     public bool canToggleFullAuto; //decides if weapon can fire full automatic
 
     //damage
-    public float damage;
-    public float criticalDamage;
+    public int damage;
+    public int criticalDamage;
     public float criticalChance;
 
     //reload && ammunition
@@ -186,6 +186,7 @@ public class Weapon : MonoBehaviour
             bullet.SetVelocity(bulletVelocity);
             bullet.SetDamageAndCritValues(damage, criticalChance, criticalDamage);
             bullet.SetBulletPool(bulletPool);
+            bullet.SetFiringPlayer(player);
             bullet.BeginDespawnTimer();
             bullet.ToggleReadyToFire(); //setting it to false to let pool know that it can't be reused currently
         }

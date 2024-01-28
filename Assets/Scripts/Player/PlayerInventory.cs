@@ -172,6 +172,7 @@ public class PlayerInventory : MonoBehaviour
 
             currentWeaponInstance = Instantiate(weaponPrefabs[slot]);
             Weapon weapon = /*weaponPrefabs[slot]*/currentWeaponInstance.GetComponent<Weapon>();
+            weapon.player = GetComponent<Player>();
 
             if (GetComponent<Player>().DoesCharacterHaveRightHand())
             {

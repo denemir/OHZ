@@ -93,6 +93,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPool: {fileID: 0}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  penetrationHealth: 100
+  collisionRadius: 0.2
 --- !u!96 &-1161441950584445212
 TrailRenderer:
   serializedVersion: 3

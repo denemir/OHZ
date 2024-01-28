@@ -16,9 +16,13 @@ public class Enemy : MonoBehaviour
     public float attackRate; //time between attacks
     public int killPointReward;
     public int damagePointReward;
+    public int stoppingPower; //how much a bullet can penetrate thru
+
+    //point awarding
+    public int pointAwardCounter;
+    public int pointAwardLimit;
 
     //attack variables
-    public float attackDistance;
     private Player attackingPlayer;
 
     //interactions
@@ -26,13 +30,27 @@ public class Enemy : MonoBehaviour
     {
         attackingPlayer = player;
         currentHealth -= damage;
+        RewardPlayer(player, damagePointReward);
         if (currentHealth <= 0)
         {
             Die();
-            RewardPlayer(player, killPointReward);
+            RewardPlayerForKill(player, killPointReward);
         }
-        RewardPlayer(player, damagePointReward);           
     }
+    //public void TakeDamage(int damage, Player player)
+    //{
+    //    currentHealth -= damage;
+    //    if (player != null)
+    //        RewardPlayer(player, damagePointReward);
+
+    //    //if enemy dies
+    //    if (currentHealth <= 0)
+    //    {
+    //        if (player != null)
+    //            RewardPlayer(player, killPointReward);
+    //        Die();
+    //    }
+    //}
 
     //spawn
     public void Spawn()
@@ -66,7 +84,7 @@ public class Enemy : MonoBehaviour
     }
     public Transform TargetAttackingPlayer()
     {
-        if(attackingPlayer != null)
+        if (attackingPlayer != null)
             return attackingPlayer.transform;
         return null;
     }
@@ -74,16 +92,24 @@ public class Enemy : MonoBehaviour
     //attack player
 
     //death
-    private void Die() //death is unfortunately inevitable. maybe not for the enemies tho
+    protected void Die() //death is unfortunately inevitable. maybe not for the enemies tho
     {
         DeathAnimation();
         gameObject.SetActive(false);
     }
-    private void RewardPlayer(Player player, int amount)
+    protected void RewardPlayer(Player player, int amount)
+    {
+        if (pointAwardCounter < pointAwardLimit)
+        {
+            player.playerStats.AddPoints(amount);
+            pointAwardCounter++;
+        }
+    }
+    protected void RewardPlayerForKill(Player player, int amount) //guaranteed award for kill
     {
         player.playerStats.AddPoints(amount);
     }
-    private void DropPowerup()
+    protected void DropPowerup()
     {
 
     }
@@ -91,7 +117,7 @@ public class Enemy : MonoBehaviour
     {
 
     }
-    private void ResetStats()
+    protected void ResetStats()
     {
         currentHealth = maxHealth;
     }

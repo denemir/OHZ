@@ -17,9 +17,9 @@ TagManager:
   - Camera
   - Ground
   - Interactable
-  - Barricade
+  - Barricade (target)
   - Player (target)
-  - 
+  - Enemy (target)
   - 
   - 
   - 
