@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BulletPool : MonoBehaviour
 {
-    //stats
+    //vars
     public GameObject bulletPrefab;
     public int poolSize;
     public int poolLimit;

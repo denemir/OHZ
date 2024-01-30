@@ -29,6 +29,7 @@ public class Zombie : Enemy
     public float crawlSpeed;
 
     //spawning
+    private ZombiePool zombiePool;
     private bool isTargetBarricadeBroken;
 
     // Start is called before the first frame update
@@ -77,6 +78,12 @@ public class Zombie : Enemy
     }
 
     //getters & setters
+
+    //spawning
+    public void Spawn()
+    {
+
+    }
 
     //targeting
     private void SearchForTarget()

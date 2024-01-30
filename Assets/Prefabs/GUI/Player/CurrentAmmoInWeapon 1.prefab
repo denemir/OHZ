@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5798152777296220530}
   - component: {fileID: 7467382423911549138}
   - component: {fileID: 8007728038444123500}
+  - component: {fileID: -2815187836577732614}
   m_Layer: 5
   m_Name: CurrentAmmoInWeapon 1
   m_TagString: Untagged
@@ -79,3 +80,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
+--- !u!114 &-2815187836577732614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5675671997316231782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 0.1, y: -0.1}
+  m_UseGraphicAlpha: 1
