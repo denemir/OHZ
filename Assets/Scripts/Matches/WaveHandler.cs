@@ -58,7 +58,7 @@ public class WaveHandler : MonoBehaviour
                 BeginWave();
             }
 
-            if (pool.IsPoolEmpty() && zombieCount == numberOfZombiesForRound)
+            if (pool.IsPoolFull() && zombieCount == numberOfZombiesForRound)
             {
                 areZombiesEliminated = true;
             }                
