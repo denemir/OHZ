@@ -84,11 +84,11 @@ public class WaveHandler : MonoBehaviour
     }
     private int CalculateNumberOfZombiesAboveRound20(int round)
     {
-        float zombieCount;
+        float zombieCount = 0f;
         switch (numberOfPlayersInMatch)
         {
-            case 0:
-                break;
+            //case 0:
+            //    break;
             case 1:
                 zombieCount = Mathf.Min((float)(0.09 * Mathf.Pow(round, 2) - 0.0029 * round + 23.9580), 100);
                 break;
@@ -99,7 +99,7 @@ public class WaveHandler : MonoBehaviour
                 zombieCount = Mathf.Min((float)(0.26370 * Mathf.Pow(round, 2) - 0.1802 * round + 35.015), 265);
                 break;
         }
-        return 0;
+        return (int)zombieCount;
     }
 
     //waves
