@@ -80,9 +80,12 @@ public class Zombie : Enemy
     //getters & setters
 
     //spawning
-    public void Spawn()
+    public void SpawnFromPool(Vector3 spawnPosition)
     {
-
+        gameObject.SetActive(true);
+        ResetStats();
+        transform.position = spawnPosition;
+        SpawnAnimation();
     }
 
     //targeting
@@ -152,10 +155,10 @@ public class Zombie : Enemy
     }
 
     //post death
-    private void ResetStats()
-    {
+    //private void ResetStats()
+    //{
 
-    }
+    //}
 
     public void OnDrawGizmosSelected()
     {

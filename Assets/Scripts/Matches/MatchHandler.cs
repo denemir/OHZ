@@ -64,7 +64,7 @@ public class MatchHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        centralPoint.UpdateCentralPoint();
+        //centralPoint.UpdateCentralPoint();
     }
 
     //powerups

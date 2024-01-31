@@ -120,6 +120,7 @@ public class Enemy : MonoBehaviour
     protected void ResetStats()
     {
         currentHealth = maxHealth;
+        //gameObject.SetActive(false);
     }
 
     //animations

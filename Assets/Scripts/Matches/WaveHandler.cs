@@ -8,27 +8,62 @@ public class WaveHandler : MonoBehaviour
 
     //wave details
     public int currentWave;
+    private bool isWaveActive;
 
     //zombies
-    public List<int> zombiesRemaining; //zombies remaining in every wave
-    public List<int> zombiesKilled; //zombies killed in every wave
+    public ZombiePool pool;
+    //public List<int> zombiesRemaining; //zombies remaining in every wave
+    //public List<int> zombiesKilled; //zombies killed in every wave
+
+    public int zombieCount;
+    public int numberOfZombiesForRound; //max number of zombies for this round
+    private bool areZombiesEliminated; //if zombiePool is full, all zombies are eliminated
 
     //dogs
+    private bool isDogRound;
     public List<int> hellHoundsRemaining;
     public List<int> hellHoundsKilled;
+
+    //spawn
+    public float spawnDelay;
+    public float delayTimer;
 
     //number of players
     private int numberOfPlayersInMatch; //should be passed down from match handler
 
     void Start()
     {
-        
+        currentWave = 0;
+        BeginWave();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        int temp = 0;
+        //if wave is currently going
+        if (isWaveActive)
+        {
+            if (delayTimer > 0)
+                delayTimer -= 0.005f;
+
+            if (zombieCount < numberOfZombiesForRound && delayTimer <= 0 && pool.GetNumberOfAvailableZombies() > 0) //prepare to spawn if timer is ready and zombies still have remaining units
+            {
+                SpawnZombie();
+                temp++;
+            }
+            else if (zombieCount >= numberOfZombiesForRound && areZombiesEliminated)
+            {
+                EndWave();
+                BeginWave();
+            }
+
+            if (pool.IsPoolEmpty() && zombieCount == numberOfZombiesForRound)
+            {
+                areZombiesEliminated = true;
+            }                
+            else areZombiesEliminated = false;
+        }
     }
 
     //spawning
@@ -42,12 +77,11 @@ public class WaveHandler : MonoBehaviour
         //float zombieCount;
         //switch (numberOfPlayersInMatch)
         //{
-            
+
         //}
 
         return 30;
     }
-
     private int CalculateNumberOfZombiesAboveRound20(int round)
     {
         float zombieCount;
@@ -67,4 +101,54 @@ public class WaveHandler : MonoBehaviour
         }
         return 0;
     }
+
+    //waves
+    private void BeginWave()
+    {
+        //increment wave counter
+        currentWave++;
+        isWaveActive = true;
+
+        //prepare for wave
+        switch (currentWave >= 20)
+        {
+            case true:
+                numberOfZombiesForRound = CalculateNumberOfZombiesAboveRound20(currentWave);
+                break;
+            case false:
+                numberOfZombiesForRound = CalculateNumberOfZombiesBelowRound20(currentWave);
+                break;
+        }
+    }
+    private void SpawnZombie()
+    {       
+        bool didSpawn = pool.SpawnZombie();
+        if (didSpawn)
+        {
+            zombieCount++;
+            delayTimer = spawnDelay;
+        }
+    }
+    private void EndWave()
+    {
+        //resetting
+        zombieCount = 0;
+
+        //dog rounds
+        if (currentWave % 5 == 0)
+        {
+            isDogRound = true;
+        }
+        else isDogRound = false;
+
+        isWaveActive = false;
+    }
+
+    //hellhound rounds
+    private void IsDogRound()
+    {
+
+    }
+
+    //rewarding
 }

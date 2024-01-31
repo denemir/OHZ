@@ -6,15 +6,16 @@ public class ZombiePool : MonoBehaviour
 {
     //vars
     public GameObject zombiePrefab;
-    public int poolSize;
-    public int poolLimit;
+    //public int poolSize; 
+    public int poolLimit; //24
 
     private List<Zombie> zombiePool;
+    public List<ZombieSpawnRegion> spawnRegion; //MAKE SURE WHEN A NEW REGION IS CREATED THAT IT IS ADDED TO THIS LIST, OTHERWISE IT WONT SPAWN POOP
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        InitializeZombiePool();
     }
 
     // Update is called once per frame
@@ -24,9 +25,9 @@ public class ZombiePool : MonoBehaviour
     }
 
     //spawning
-    public Transform DetermineSpawnPoint()
+    public Vector3 DetermineSpawnPoint(ZombieSpawnRegion spawnRegion)
     {
-        return null;
+        return spawnRegion.GetRandomSpawnPositionWithinBounds();
     }
     private ZombieSpawnRegion FindNearestSpawnRegion()
     {
@@ -34,11 +35,23 @@ public class ZombiePool : MonoBehaviour
     }
     private ZombieSpawnRegion FindRandomSpawnRegion()
     {
-        return null;
+        int randomNum = Random.Range(0, spawnRegion.Count - 1);
+        return spawnRegion[randomNum];
     }
-    public void SpawnZombie()
+    public bool SpawnZombie()
     {
+        Vector3 spawnPosition;
+        ZombieSpawnRegion spawnRegion = FindRandomSpawnRegion();
 
+        spawnPosition = DetermineSpawnPoint(spawnRegion);
+
+        Zombie chosenSubject = GetZombie();
+        if(chosenSubject != null)
+        {           
+            chosenSubject.SpawnFromPool(spawnPosition);
+            return true;
+        }
+        return false; //zombies are busy.
     }
 
     //pooling
@@ -47,32 +60,25 @@ public class ZombiePool : MonoBehaviour
     {
         zombiePool = new List<Zombie>();
 
-        for (int i = 0; i < poolSize; i++)
+        for (int i = 0; i < poolLimit; i++)
         {
             AddZombieToPool();
+            //Debug.Log("adding");
         }
-
-        poolLimit = 100; //for testing
     }
 
+    //pool functions
     //pull unused Zombie
     public Zombie GetZombie()
     {
 
         foreach (Zombie zombie in zombiePool)
         {
-            //if (zombiePool.Count(Zombie => Zombie.gameObject.activeInHierarchy) >= poolSize)
-            //{
-            //    ExpandZombiePool();
-            //    ZombiePool.Last().gameObject.SetActive(true);
-            //    return ZombiePool.Last(); //return most recently created Zombie
-            //}
             if (!zombie.gameObject.activeInHierarchy)
             {
-                zombie.gameObject.SetActive(true);
+                //zombie.gameObject.SetActive(true);
                 return zombie;
             }
-
         }
 
         //all zombies are currently in use
@@ -93,6 +99,33 @@ public class ZombiePool : MonoBehaviour
         Zombie zombie = zombieInstance.GetComponent<Zombie>();
         zombiePool.Add(zombie);
         zombie.gameObject.SetActive(false);
+    }
+    //returns if the pool is currently full (implying either all the zombies are eliminated or haven't spawned)
+    public bool IsPoolEmpty()
+    {
+        if (GetZombie() == null)
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool IsPoolFull()
+    {
+        if (GetNumberOfAvailableZombies() == poolLimit)
+            return true;
+        return false;
+    }
+    public int GetNumberOfAvailableZombies()
+    {
+        int count = 0;
+        foreach (Zombie zombie in zombiePool)
+        {
+            if (!zombie.gameObject.activeInHierarchy)
+            {
+                count++;
+            }
+        }
+        return count;
     }
 
 }
