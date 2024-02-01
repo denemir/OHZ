@@ -35,7 +35,7 @@ public class ZombiePool : MonoBehaviour
     }
     private ZombieSpawnRegion FindRandomSpawnRegion()
     {
-        int randomNum = Random.Range(0, spawnRegion.Count - 1);
+        int randomNum = Random.Range(0, spawnRegion.Count);
         return spawnRegion[randomNum];
     }
     public bool SpawnZombie()
