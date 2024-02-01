@@ -147,16 +147,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4619375543746509317}
   target: {fileID: 0}
-  maxHealth: 100
-  currentHealth: 100
-  damage: 0
+  maxHealth: 150
+  currentHealth: 150
+  damage: 45
   attackRate: 0
   killPointReward: 50
   damagePointReward: 10
   stoppingPower: 65
   pointAwardCounter: 0
   pointAwardLimit: 10
-  targetRange: 50
+  targetRange: 250
   targetLayer:
     serializedVersion: 2
     m_Bits: 6144

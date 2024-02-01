@@ -185,7 +185,7 @@ public class PlayerInteractHandler : MonoBehaviour
         //get interactable key
         if (IsInteractableKeyPressed(interactable)/* && !oldKeyDown*/)
         {
-            interactable.Interact(interactable.activeInteraction); //if the key is down then interact with the current active interaction
+            interactable.Interact(interactable.activeInteraction, GetComponent<Player>()); //if the key is down then interact with the current active interaction
             return true;
         }
         return false;
@@ -195,7 +195,7 @@ public class PlayerInteractHandler : MonoBehaviour
         //get alt key
         if (IsInteractableAltKeyPressed(interactable) /*&& !oldKeyDown*/ && DoesInteractableHaveActiveInteractionWithAlt(interactable))
         {
-            interactable.InteractAlternate(interactable.activeInteraction); //if the key is down then interact with the current active alternate interaction
+            interactable.InteractAlternate(interactable.activeInteraction/*, GetComponent<Player>()*/); //if the key is down then interact with the current active alternate interaction
             return true;
         }
         return false;
@@ -212,7 +212,7 @@ public class PlayerInteractHandler : MonoBehaviour
 
         if (IsInteractableKeyDown(interactable) && interactable.activeInteraction.currentHoldTime >= interactable.activeInteraction.holdTime)
         {
-            interactable.Interact(interactable.activeInteraction); //if the key is down then interact with the current active interaction
+            interactable.Interact(interactable.activeInteraction, GetComponent<Player>()); //if the key is down then interact with the current active interaction
             return true;
         }
         return false;

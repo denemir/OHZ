@@ -49,12 +49,7 @@ public class Door : MonoBehaviour
 
             if(interactable.getPlayersInRange().Count > 0) //interactable has players within range
             {
-                Player temp;
-                temp = arePlayersInteracting();
-
-                //check if player has enough playerStats.points (bitchass might be broke)
-                if (temp != null && DoesInteractingPlayerHaveEnough(temp))
-                    interactingPlayer = temp;
+                interactingPlayer = arePlayersInteracting();
             }
         } else
         {
@@ -89,7 +84,16 @@ public class Door : MonoBehaviour
     public void OpenDoor()
     {
         OpenDoorAnimation();
-        DeactivateDoor();
+
+        //check if player has enough playerStats.points (bitchass might be broke)
+        if (DoesInteractingPlayerHaveEnough(interactable.activeInteraction.player))
+        {
+            interactingPlayer.playerStats.points -= cost;
+            DeactivateDoor();
+        }
+
+        //reset
+        interactingPlayer = null;
     }
     private void DeactivateDoor()
     {
@@ -131,7 +135,7 @@ public class Door : MonoBehaviour
     //checks
     private bool DoesInteractingPlayerHaveEnough(Player player)
     {
-        if (player.playerStats.points >= cost)
+        if (player != null && player.playerStats.points >= cost)
             return true;
         return false;
     } //does player have enough to open the door
