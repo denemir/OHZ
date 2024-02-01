@@ -96,6 +96,7 @@ public class Enemy : MonoBehaviour
     {
         DeathAnimation();
         gameObject.SetActive(false);
+        pointAwardCounter = 0;
     }
     protected void RewardPlayer(Player player, int amount)
     {

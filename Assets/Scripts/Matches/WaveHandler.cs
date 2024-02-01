@@ -96,10 +96,42 @@ public class WaveHandler : MonoBehaviour
                 zombieCount = Mathf.Min((float)(0.18820 * Mathf.Pow(round, 2) - 0.4313 * round + 29.2120), 175);
                 break;
             default: //default accounts for 3-4 players or above
-                zombieCount = Mathf.Min((float)(0.26370 * Mathf.Pow(round, 2) - 0.1802 * round + 35.015), 265);
+                zombieCount = /*Mathf.Min(*/(float)(0.26370 * Mathf.Pow(round, 2) - 0.1802 * round + 35.015)/*, 265)*/; //teehee!
                 break;
         }
         return (int)zombieCount;
+    }
+    private float CalculateSpawnDelay(int round)
+    {
+        return Mathf.Max(2f * (Mathf.Pow(0.95f, round - 1)), 0.1f);
+    }
+    private int CalculateZombieHealth(int round)
+    {
+        int zombieHealth = 150; //150 from round 1
+        switch(round < 10)
+        {
+            case true: //if round is less than 10, zombieHealth is this formula, equivalating to about 1050 in the end
+                zombieHealth = 50 + 100 * round;
+                break;
+            case false: //otherwise its time to go gremlin mode
+                zombieHealth = (int)(950 * Mathf.Pow(1.1f, round - 9));
+                break;
+        }
+        return zombieHealth;
+    }
+    private float CalculateZombieMoveSpeed(int round)
+    {
+        float moveSpeed = 0f;
+        switch(round < 10)
+        {
+            case true:
+                moveSpeed = 6f + 0.5f * round;
+                break;
+                case false:
+                moveSpeed = 11f;
+                break;
+        }
+        return moveSpeed;
     }
 
     //waves
@@ -119,6 +151,12 @@ public class WaveHandler : MonoBehaviour
                 numberOfZombiesForRound = CalculateNumberOfZombiesBelowRound20(currentWave);
                 break;
         }
+
+        //calculate spawn delay
+        spawnDelay = CalculateSpawnDelay(currentWave);
+
+        //update player gui
+        UpdatePlayerGUI();
     }
     private void SpawnZombie()
     {       
@@ -142,6 +180,9 @@ public class WaveHandler : MonoBehaviour
         else isDogRound = false;
 
         isWaveActive = false;
+
+        //scale zombies
+        pool.ScaleZombies(CalculateZombieHealth(currentWave), CalculateZombieMoveSpeed(currentWave));
     }
 
     //hellhound rounds
@@ -151,4 +192,14 @@ public class WaveHandler : MonoBehaviour
     }
 
     //rewarding
+
+    //updating gui
+    private void UpdatePlayerGUI()
+    {
+        if(GetComponentInParent<MatchHandler>() != null)
+        {
+            GetComponentInParent<MatchHandler>().UpdatePlayerGUIWaveCounter(currentWave);
+        }
+        else Debug.Log("no");
+    }
 }

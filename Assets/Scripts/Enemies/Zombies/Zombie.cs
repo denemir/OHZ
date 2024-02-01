@@ -169,4 +169,13 @@ public class Zombie : Enemy
         }
 
     }
+
+    //scaling
+    public void Scale(int newHealth, float newMoveSpeed)
+    {
+        maxHealth = newHealth;
+        walkSpeed = newMoveSpeed;
+        runSpeed = newMoveSpeed * 1.5f;
+        crawlSpeed = newMoveSpeed * 0.5f;
+    }
 }

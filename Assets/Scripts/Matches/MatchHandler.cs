@@ -6,7 +6,7 @@ using UnityEngine;
 public class MatchHandler : MonoBehaviour
 {
     //players
-    public Player[] players;
+    public List<Player> players;
     private CentralPoint centralPoint;
 
     //enemies - zombies
@@ -65,6 +65,10 @@ public class MatchHandler : MonoBehaviour
     private void FixedUpdate()
     {
         //centralPoint.UpdateCentralPoint();
+        if(players.Count > 0)
+        {
+
+        }
     }
 
     //powerups
@@ -128,4 +132,11 @@ public class MatchHandler : MonoBehaviour
     {
 
     } //returns list of players that are alive (used for spawning and perhaps spectating)
+    public void UpdatePlayerGUIWaveCounter(int currentWave)
+    {
+        foreach(Player player in players)
+        {
+            player.GetComponent<PlayerGUIHandler>().UpdateCurrentWave(currentWave);
+        }
+    }
 }

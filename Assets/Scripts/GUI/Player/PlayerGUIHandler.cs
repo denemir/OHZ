@@ -92,12 +92,12 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
         UpdateCurrentStockAmmo();
         UpdateCurrentPoints();
     }
-    public void UpdateCurrentWave()
+    public void UpdateCurrentWave(int currentWave)
     {
-        currentWave++;
+        this.currentWave = currentWave;
         if (currentWaveText != null)
         {
-            currentWaveText.text = currentWave.ToString();
+            currentWaveText.text = this.currentWave.ToString();
             currentWaveText.color = Color.red;
         }
     }

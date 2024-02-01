@@ -128,4 +128,13 @@ public class ZombiePool : MonoBehaviour
         return count;
     }
 
+    //scaling
+    public void ScaleZombies(int health, float moveSpeed)
+    {
+        foreach (Zombie zombie in zombiePool)
+        {
+            zombie.Scale(health, moveSpeed);
+        }
+    } //should be called each new wave
+
 }
