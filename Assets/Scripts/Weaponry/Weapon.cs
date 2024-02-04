@@ -7,9 +7,11 @@ public class Weapon : MonoBehaviour
     public string weaponName;
     public Sprite icon;
 
+    [Header("Weapon Stats")]
     //fire rate
-    public float fireRate;
-    private float fireRateTimer; //if != 0, can't shoot :P
+    public float roundsPerMinute;
+    protected float timeBetweenShots;
+    private float roundsPerMinuteTimer; //if != 0, can't shoot :P
     public bool isFullAuto;
     public bool canToggleFullAuto; //decides if weapon can fire full automatic
 
@@ -51,6 +53,10 @@ public class Weapon : MonoBehaviour
     //out, and putting away. (ex., 1911 has swap value of 50. MAG-10 has swap value of 120. The
     //total time to swap would be 170.)
 
+
+    //interactions
+    public int cost; //if weapon is a wall buy, otherwise keep at 950
+
     //weapon typing
     public enum WeaponType
     {
@@ -63,9 +69,9 @@ public class Weapon : MonoBehaviour
         SniperRifle,
         Melee
     }
-
     public WeaponType weaponType;
 
+    [Header("Weapon Model")]
     //model
     public GameObject weaponModelPrefab;
     public GameObject weaponModel;
@@ -73,6 +79,7 @@ public class Weapon : MonoBehaviour
     public Transform barrelTipTransform;
     public BarrelTip barrelTip;
 
+    [Header("Bullet Model")]
     //bullet
     public GameObject bulletModelPrefab;
     public float bulletVelocity;
@@ -84,13 +91,11 @@ public class Weapon : MonoBehaviour
     public RightHand rightHand;
     public PlayerGUIHandler playerGUIHandler;
 
-    //interactions
-    public int cost; //if weapon is a wall buy, otherwise keep at 950
-
     // Start is called before the first frame update
     void Start()
     {
         roundsReloadedPerInstance = 1;
+        timeBetweenShots = 1 / (roundsPerMinute / 60f);
     }
 
     // Update is called once per frame
@@ -141,8 +146,9 @@ public class Weapon : MonoBehaviour
         switch (reloadState)
         {
             case ReloadState.Not_Reloading:
-                if (Time.time > fireRateTimer && currentAmmoInMag > 0)
+                if (Time.time > roundsPerMinuteTimer && currentAmmoInMag > 0)
                 {
+                    Debug.Log("true!");
                     switch (this is Shotgun)
                     {
                         case true:
@@ -153,7 +159,7 @@ public class Weapon : MonoBehaviour
                             break;
                     }
                     IncreaseSpread();
-                    fireRateTimer = Time.time + fireRate;
+                    roundsPerMinuteTimer = Time.time + timeBetweenShots;
                     currentAmmoInMag--;
                 }
                 else if (currentAmmoInMag == 0) //auto-reload if mag empty and player tries to fire
@@ -332,7 +338,7 @@ public class Weapon : MonoBehaviour
     //public void CopyWeaponPropertiesFrom(Weapon otherWeapon)
     //{
     //    weaponName = otherWeapon.weaponName;
-    //    fireRate = otherWeapon.fireRate;
+    //    roundsPerMinute = otherWeapon.roundsPerMinute;
     //    isFullAuto = otherWeapon.isFullAuto;
     //    canToggleFullAuto = otherWeapon.canToggleFullAuto;
     //    damage = otherWeapon.damage;

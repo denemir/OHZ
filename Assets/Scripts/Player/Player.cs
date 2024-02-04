@@ -319,7 +319,7 @@ public class Player : MonoBehaviour
                 switch (inputState)
                 {
                     case InputState.KandM:
-                        if (Input.GetButton("Fire1"))
+                        if (Input.GetButtonDown("Fire1"))
                         {
                             weapon.Shoot(transform);                        //fix shotgun spread 
                         }

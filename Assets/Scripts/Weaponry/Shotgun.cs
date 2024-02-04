@@ -7,6 +7,7 @@ public class Shotgun : Weapon
     void Start()
     {
         roundsReloadedPerInstance = 1;
+        timeBetweenShots = 1 / (roundsPerMinute / 60f);
     }
 
     public int numberOfPellets; //number of pellets fired out of each shot

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: MAC-10
   icon: {fileID: 21300000, guid: 9fa9d77496ad674469eb3965f45c4d7d, type: 3}
-  fireRate: 0.05
+  roundsPerMinute: 1200
   isFullAuto: 1
   canToggleFullAuto: 0
   damage: 15
@@ -57,16 +57,17 @@ MonoBehaviour:
   reloadState: 0
   isActive: 0
   timeToReload: 0.3
-  magazineSize: 35
-  currentAmmoInMag: 35
-  currentStockAmmo: 280
-  maxStockAmmo: 280
+  magazineSize: 32
+  currentAmmoInMag: 32
+  currentStockAmmo: 256
+  maxStockAmmo: 256
   isWeaponHandLoaded: 0
   roundsReloadedPerInstance: 0
   recoilSpread: 10
   currentRecoilSpread: 0
   recoilRate: 0.3
   weaponSwapTime: 95
+  cost: 0
   weaponType: 0
   weaponModelPrefab: {fileID: 4128586013238518945, guid: b24081ce86c9a5243bdf1461b8204203, type: 3}
   weaponModel: {fileID: 4128586013238518945, guid: b24081ce86c9a5243bdf1461b8204203, type: 3}
@@ -79,7 +80,6 @@ MonoBehaviour:
   character: {fileID: 0}
   rightHand: {fileID: 0}
   playerGUIHandler: {fileID: 0}
-  cost: 0
 --- !u!114 &766758287307300295
 MonoBehaviour:
   m_ObjectHideFlags: 0
