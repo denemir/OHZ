@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 5527745764002851422, guid: 3ec4e7cb42c193241999b9db7c1e4ce1, type: 3}
-  poolSize: 15
-  poolLimit: 30
+  poolSize: 45
+  poolLimit: 90
 --- !u!1001 &7933977164040423264
 PrefabInstance:
   m_ObjectHideFlags: 0

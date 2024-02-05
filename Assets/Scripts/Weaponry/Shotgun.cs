@@ -10,12 +10,23 @@ public class Shotgun : Weapon
         timeBetweenShots = 1 / (roundsPerMinute / 60f);
     }
 
+    private void FixedUpdate()
+    {
+        //reloading weapon timer
+        if (currentTimer > 0)
+            currentTimer -= 0.005f;
+
+        DecreaseSpread();
+    }
+
     public int numberOfPellets; //number of pellets fired out of each shot
 
     public float minimumSpread;//minimum spread for each shotgun: shotgun will never fire at perfect accuracy (at least in theory)
  
     //private bool interruptReload { get; set; } //can reload be interrupted by clicking
 
+
+    //firing
     public new void Fire(Transform shooterTransform) //override for fire in parent class as to accommodate the multiple pellets fired
     {
         for(int i = 0; i < numberOfPellets; i++)
@@ -58,4 +69,10 @@ public class Shotgun : Weapon
     //            break;
     //    }
     //}
+
+    //recoil
+    public new void DecreaseSpread()
+    {
+        currentRecoilSpread = Mathf.Lerp(currentRecoilSpread, minimumSpread, Time.deltaTime * 1.5f); //decrease spread over time
+    }
 }

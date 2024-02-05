@@ -30,7 +30,7 @@ public class Weapon : MonoBehaviour
     public bool isActive; //if isn't active, do not add to timer (rework timer to be incr. based rather than clock based
     public float timeToReload;
     private float reloadTimer; //tracks duration of reload
-    private float currentTimer; //current state of timer
+    protected float currentTimer; //current state of timer
 
     public int magazineSize;
     public int currentAmmoInMag;
@@ -135,7 +135,7 @@ public class Weapon : MonoBehaviour
         if (currentTimer > 0)
             currentTimer -= 0.005f;
 
-        currentRecoilSpread = Mathf.Lerp(currentRecoilSpread, 0, Time.deltaTime * 1.5f); //decrease spread over time
+        DecreaseSpread(); //decrease spread over time
     }
 
     //weapon actions
@@ -256,6 +256,10 @@ public class Weapon : MonoBehaviour
     {
         currentRecoilSpread = Mathf.Clamp(currentRecoilSpread + recoilRate, 0f, recoilSpread); //increases spread within set range
     } //recoil
+    public void DecreaseSpread()
+    {
+        currentRecoilSpread = Mathf.Lerp(currentRecoilSpread, 0, Time.deltaTime * 1.5f); //decrease spread over time
+    }
 
     //misc
     public void Drop()

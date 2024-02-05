@@ -74,13 +74,25 @@ public class WaveHandler : MonoBehaviour
     /// <returns></returns>
     private int CalculateNumberOfZombiesBelowRound20(int round)
     {
-        //float zombieCount;
-        //switch (numberOfPlayersInMatch)
-        //{
+        float zombieCount = 0f;
+        switch (numberOfPlayersInMatch)
+        {
+            case 1:
+                zombieCount = 10.6142f * Mathf.Pow(1.101f, round);
+                Debug.Log(zombieCount);
+                break;
+            case 2:
+                zombieCount = 0.1793f * Mathf.Pow(round, 2) + 0.0405f * round + 23.187f;
+                break;
+            case 3:
+                zombieCount = 0.262f * Mathf.Pow(round, 2) + 0.301f * round + 33.114f;
+                break;
+            default:
+                zombieCount = 6.1142f * Mathf.Pow(1.135f, round);
+                break;
+        }
 
-        //}
-
-        return 30;
+        return (int)zombieCount;
     }
     private int CalculateNumberOfZombiesAboveRound20(int round)
     {
