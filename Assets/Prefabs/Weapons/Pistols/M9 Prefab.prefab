@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: M9
-  fireRate: 0.08
+  icon: {fileID: 21300000, guid: 98c4c48df4a59344a9ce61c948194520, type: 3}
+  roundsPerMinute: 600
   isFullAuto: 0
   canToggleFullAuto: 0
   damage: 25
@@ -63,13 +64,16 @@ MonoBehaviour:
   recoilSpread: 12
   currentRecoilSpread: 0
   recoilRate: 3.2
-  type: 0
+  weaponSwapTime: 0
+  cost: 0
+  weaponType: 0
   weaponModelPrefab: {fileID: 6769273182854717929, guid: c6b1caf1eee3e9c4aa2a9bf45478ecec, type: 3}
   weaponModel: {fileID: 6769273182854717929, guid: c6b1caf1eee3e9c4aa2a9bf45478ecec, type: 3}
   barrelTipTransform: {fileID: 0}
   barrelTip: {fileID: 0}
   bulletModelPrefab: {fileID: 5527745764002851422, guid: 3ec4e7cb42c193241999b9db7c1e4ce1, type: 3}
   bulletVelocity: 50
+  bulletPool: {fileID: 0}
   player: {fileID: 0}
   character: {fileID: 0}
   rightHand: {fileID: 0}

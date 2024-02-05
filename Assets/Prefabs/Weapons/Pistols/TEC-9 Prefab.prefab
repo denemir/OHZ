@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4633108661520510955}
   - component: {fileID: 4648203228488470164}
-  - component: {fileID: 3506459925784927693}
+  - component: {fileID: 1212955206225561568}
   m_Layer: 0
-  m_Name: Five-Seven Prefab
+  m_Name: TEC-9 Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 939145188877225787}
+  - {fileID: 5981141693790962721}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4648203228488470164
@@ -46,24 +46,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4745d296255b3aa41a09746909b996e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: Five-Seven
-  icon: {fileID: 21300000, guid: 5e14e4af806da1a48a8f997dcc51232b, type: 3}
-  roundsPerMinute: 650
-  isFullAuto: 0
+  weaponName: TEC-9
+  icon: {fileID: 21300000, guid: 0b8368bfabf42fb4fa84a289511a7d19, type: 3}
+  roundsPerMinute: 1500
+  isFullAuto: 1
   canToggleFullAuto: 0
-  damage: 25
-  criticalDamage: 40
-  criticalChance: 0
+  damage: 15
+  criticalDamage: 21
+  criticalChance: 0.08
   reloadState: 0
   isActive: 0
-  timeToReload: 0.36
+  timeToReload: 0.34
   magazineSize: 20
   currentAmmoInMag: 20
   currentStockAmmo: 200
   maxStockAmmo: 200
   isWeaponHandLoaded: 0
   roundsReloadedPerInstance: 0
-  recoilSpread: 6
+  recoilSpread: 8
   currentRecoilSpread: 0
   recoilRate: 0.5
   weaponSwapTime: 0
@@ -71,16 +71,16 @@ MonoBehaviour:
   weaponType: 0
   weaponModelPrefab: {fileID: 6769273182854717929, guid: c6b1caf1eee3e9c4aa2a9bf45478ecec, type: 3}
   weaponModel: {fileID: 6769273182854717929, guid: c6b1caf1eee3e9c4aa2a9bf45478ecec, type: 3}
-  barrelTipTransform: {fileID: 939145188877225787}
-  barrelTip: {fileID: 2217245540567065758}
+  barrelTipTransform: {fileID: 5981141693790962721}
+  barrelTip: {fileID: 4669377594585165700}
   bulletModelPrefab: {fileID: 5527745764002851422, guid: 3ec4e7cb42c193241999b9db7c1e4ce1, type: 3}
-  bulletVelocity: 130
+  bulletVelocity: 110
   bulletPool: {fileID: 0}
   player: {fileID: 0}
   character: {fileID: 0}
   rightHand: {fileID: 0}
   playerGUIHandler: {fileID: 0}
---- !u!114 &3506459925784927693
+--- !u!114 &1212955206225561568
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,7 +95,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5527745764002851422, guid: 3ec4e7cb42c193241999b9db7c1e4ce1, type: 3}
   poolSize: 40
   poolLimit: 80
---- !u!1001 &8279023129544081638
+--- !u!1001 &3237301502469786620
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -156,15 +156,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6b1caf1eee3e9c4aa2a9bf45478ecec, type: 3}
---- !u!4 &939145188877225787 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9217879146745335773, guid: c6b1caf1eee3e9c4aa2a9bf45478ecec, type: 3}
-  m_PrefabInstance: {fileID: 8279023129544081638}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2217245540567065758 stripped
+--- !u!114 &4669377594585165700 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7791722952883856504, guid: c6b1caf1eee3e9c4aa2a9bf45478ecec, type: 3}
-  m_PrefabInstance: {fileID: 8279023129544081638}
+  m_PrefabInstance: {fileID: 3237301502469786620}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -172,3 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9a693e8267d4b45b8ab448bac108a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &5981141693790962721 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9217879146745335773, guid: c6b1caf1eee3e9c4aa2a9bf45478ecec, type: 3}
+  m_PrefabInstance: {fileID: 3237301502469786620}
+  m_PrefabAsset: {fileID: 0}

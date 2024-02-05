@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4633108661520510955}
   - component: {fileID: 4648203228488470164}
   m_Layer: 0
-  m_Name: 1911 Prefab (extended magazine)
+  m_Name: Mini DRACO Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,26 +44,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4745d296255b3aa41a09746909b996e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: 1911 (extended mag)
-  icon: {fileID: 0}
+  weaponName: Mini DRACO
+  icon: {fileID: 21300000, guid: 852187685df2dc54886e92d6475a729a, type: 3}
   roundsPerMinute: 600
   isFullAuto: 0
   canToggleFullAuto: 0
-  damage: 15
-  criticalDamage: 30
-  criticalChance: 0
+  damage: 35
+  criticalDamage: 45
+  criticalChance: 0.05
   reloadState: 0
   isActive: 0
-  timeToReload: 3
-  magazineSize: 8
-  currentAmmoInMag: 8
-  currentStockAmmo: 80
-  maxStockAmmo: 80
+  timeToReload: 3.9
+  magazineSize: 10
+  currentAmmoInMag: 10
+  currentStockAmmo: 100
+  maxStockAmmo: 100
   isWeaponHandLoaded: 0
   roundsReloadedPerInstance: 0
-  recoilSpread: 15
+  recoilSpread: 12
   currentRecoilSpread: 0
-  recoilRate: 3
+  recoilRate: 3.2
   weaponSwapTime: 0
   cost: 0
   weaponType: 0
@@ -72,7 +72,7 @@ MonoBehaviour:
   barrelTipTransform: {fileID: 0}
   barrelTip: {fileID: 0}
   bulletModelPrefab: {fileID: 5527745764002851422, guid: 3ec4e7cb42c193241999b9db7c1e4ce1, type: 3}
-  bulletVelocity: 50
+  bulletVelocity: 200
   bulletPool: {fileID: 0}
   player: {fileID: 0}
   character: {fileID: 0}

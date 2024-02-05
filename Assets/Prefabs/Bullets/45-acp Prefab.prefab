@@ -98,7 +98,7 @@ MonoBehaviour:
     m_Bits: 8192
   penetrationHealth: 200
   player: {fileID: 0}
-  collisionRadius: 0.6
+  collisionRadius: 0.8
 --- !u!96 &-1161441950584445212
 TrailRenderer:
   serializedVersion: 3

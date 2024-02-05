@@ -148,7 +148,6 @@ public class Weapon : MonoBehaviour
             case ReloadState.Not_Reloading:
                 if (Time.time > roundsPerMinuteTimer && currentAmmoInMag > 0)
                 {
-                    Debug.Log("true!");
                     switch (this is Shotgun)
                     {
                         case true:

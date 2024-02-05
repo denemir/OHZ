@@ -105,7 +105,7 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
     {
         if (inventory.GetCurrentWeapon() != null)
         {
-            weaponNameText.text = inventory.GetCurrentWeapon().name.ToString();
+            weaponNameText.text = inventory.GetCurrentWeapon().weaponName;
         }
     }
     public void UpdateCurrentAmmoInWeapon()
