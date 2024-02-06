@@ -4847,7 +4847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefabs:
-  - {fileID: 1727071150036172477, guid: 7e6dcdc00eca95c439c26d895558b4d9, type: 3}
+  - {fileID: 784094804540157870, guid: 9aef5288e1197674182ecb756887a117, type: 3}
   - {fileID: 0}
   weapons:
   - {fileID: 0}
@@ -7736,6 +7736,14 @@ PrefabInstance:
     - target: {fileID: 6873523835470414901, guid: 7a3a30150a3a1ed41a03f1e34b8b0c45, type: 3}
       propertyPath: m_Center.y
       value: 0.8295753
+      objectReference: {fileID: 0}
+    - target: {fileID: 8046464925511633285, guid: 7a3a30150a3a1ed41a03f1e34b8b0c45, type: 3}
+      propertyPath: costToSpin
+      value: 950
+      objectReference: {fileID: 0}
+    - target: {fileID: 8046464925511633285, guid: 7a3a30150a3a1ed41a03f1e34b8b0c45, type: 3}
+      propertyPath: timeToDespawn
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8046464925511633285, guid: 7a3a30150a3a1ed41a03f1e34b8b0c45, type: 3}
       propertyPath: weaponPrefabs.Array.size

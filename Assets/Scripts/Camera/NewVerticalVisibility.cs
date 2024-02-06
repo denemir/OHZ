@@ -23,15 +23,19 @@ public class NewVerticalVisibility : MonoBehaviour
 
             foreach (Collider collider in colliders)
             {
-                if (collider.gameObject.transform.position.y > GetHeadPosition().y + 3.5 && WithinXBounds(collider) && WithinZBounds(collider))
+                if (collider.gameObject.transform.position.y > GetHeadPosition().y + 3.5 && WithinXBounds(collider) && WithinZBounds(collider) || ((collider.gameObject.transform.position.y > player.transform.position.y && collider.bounds.size.y >= GetHeadPosition().y && WithinXBounds(collider) && WithinZBounds(collider) && collider.gameObject.transform.position.z < player.transform.position.z - 1)))
                     collider.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
                 else collider.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+
+                //if (collider.gameObject.transform.position.y > player.transform.position.y && collider.bounds.size.y >= GetHeadPosition().y && WithinXBounds(collider) && WithinZBounds(collider) && collider.gameObject.transform.position.z < player.transform.position.z)
+                //    collider.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                //else collider.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
             }
         }
     }
     Vector3 GetHeadPosition()
     {
-        return player.transform.position + Vector3.up /** 1.5f*/; // Adjust the value based on your player's head position
+        return player.transform.position + Vector3.up/** 1.5f*/; // Adjust the value based on your player's head position
     }
     bool WithinXBounds(Collider collider)
     {

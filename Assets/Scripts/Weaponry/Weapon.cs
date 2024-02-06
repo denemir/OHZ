@@ -31,7 +31,6 @@ public class Weapon : MonoBehaviour
     public float timeToReload;
     private float reloadTimer; //tracks duration of reload
     protected float currentTimer; //current state of timer
-
     public int magazineSize;
     public int currentAmmoInMag;
     public int currentStockAmmo; //ammo in stockpile by default (starting ammo)
@@ -47,11 +46,34 @@ public class Weapon : MonoBehaviour
 
     //handling
     public float weaponSwapTime;
-    //how much time is added to the weapon swap. weapon swap time works like this: when swapping
-    //between 2 weapons, the total time to swap accounts for both weapons. smaller weapons (such
-    //as smgs and pistols, have much faster swap times. the swap time accounts for both pulling
-    //out, and putting away. (ex., 1911 has swap value of 50. MAG-10 has swap value of 120. The
-    //total time to swap would be 170.)
+    /// <summary>
+    ///how much time is added to the weapon swap.weapon swap time works like this: when swapping between 2 weapons, the total time to swap accounts for both weapons.smaller weapons (such as smgs and pistols, have much faster swap times.the swap time accounts for both pulling out, and putting away. (ex., 1911 has swap value of 50. MAG-10 has swap value of 120. The total time to swap would be 170.)
+    /// </summary>
+
+    //pack a punching
+
+    [Header("Pack-A-Punch Variant")]
+    public bool canBePackAPunched;
+
+    //fire rate
+    public float papRoundsPerMinute;
+
+    //damage
+    public int papDamage;
+    public int papCriticalDamage;
+    public float papCriticalChance;
+
+    //reload && ammunition
+    public float papTimeToReload;
+    public int papMagazineSize;
+    public int papCurrentAmmoInMag;
+    public int papCurrentStockAmmo; //ammo in stockpile by default (starting ammo)
+    public int papMaxStockAmmo;
+    public int papRoundsReloadedPerInstance; //in case weapon is hand loaded, how many rounds are loaded each time?
+
+    //recoil
+    public float papRecoilSpread; //max spread (positive goes one way from the guns barrel, negative goes the other way)
+    public float papRecoilRate; //how much each individual shot spreads the recoil
 
 
     //interactions
@@ -106,7 +128,7 @@ public class Weapon : MonoBehaviour
         {
             SetWeaponModel();
         }
-        if(bulletPool == null)
+        if (bulletPool == null)
             bulletPool = GetComponent<BulletPool>();
 
         if (barrelTip == null)
@@ -211,12 +233,13 @@ public class Weapon : MonoBehaviour
                     currentAmmoInMag = magazineSize;
                     currentStockAmmo -= temp;
                 }
-                else if((currentAmmoInMag + currentStockAmmo) >= magazineSize) //is the stock ammo remaining greater than the mag size
+                else if ((currentAmmoInMag + currentStockAmmo) >= magazineSize) //is the stock ammo remaining greater than the mag size
                 {
                     int dif = magazineSize - currentAmmoInMag;
                     currentAmmoInMag += dif; //add difference to ammo in magazine
                     currentStockAmmo -= dif; //subtract difference from stock ammo remaining
-                } else //if not then use up remaining stock ammo
+                }
+                else //if not then use up remaining stock ammo
                 {
                     currentAmmoInMag += currentStockAmmo;
                     currentStockAmmo = 0;
@@ -250,7 +273,6 @@ public class Weapon : MonoBehaviour
         currentStockAmmo = maxStockAmmo;
     } //restores players ammo
 
-
     //recoil
     public void IncreaseSpread()
     {
@@ -261,6 +283,25 @@ public class Weapon : MonoBehaviour
         currentRecoilSpread = Mathf.Lerp(currentRecoilSpread, 0, Time.deltaTime * 1.5f); //decrease spread over time
     }
 
+    //pack-er-punching
+    public void PackAPunch()
+    {
+        //set stats
+        roundsPerMinute = papRoundsPerMinute;
+        timeBetweenShots = 1 / (roundsPerMinute / 60f);
+        damage = papDamage;
+        criticalDamage = papCriticalDamage;
+        criticalChance = papCriticalChance;
+        timeToReload = papTimeToReload;
+        magazineSize = papMagazineSize;
+        maxStockAmmo = papMaxStockAmmo;
+        roundsReloadedPerInstance = papRoundsReloadedPerInstance; //in case weapon is hand loaded, how many rounds are loaded each time?
+        recoilSpread = papRecoilSpread; //max spread (positive goes one way from the guns barrel, negative goes the other way)
+        recoilRate = papRecoilRate;
+
+        //somehow instantiate the p-a-p variant of the model
+    }
+
     //misc
     public void Drop()
     {
@@ -269,39 +310,6 @@ public class Weapon : MonoBehaviour
         //Destroy(weaponModel);
         //Destroy(this.gameObject);
     } //weapon is no longer in existence after player drops
-
-    //public void InstantiateWeapon(Transform parentT) //for when weapon gets picked up or spawned it has to be instantiated
-    //{
-    //    if (weaponModelPrefab != null)
-    //    {
-    //        GameObject weaponModelInstance = Instantiate(weaponModelPrefab, parentT);
-    //        weaponModelInstance.transform.SetParent(parentT);
-
-    //        // Add the Weapon script to the instantiated weapon model
-    //        Weapon weaponScript = weaponModelInstance.GetComponent<Weapon>();
-    //        if (weaponScript == null)
-    //        {
-    //            weaponScript = weaponModelInstance.AddComponent<Weapon>();
-    //            weaponScript.weaponModel = weaponModelInstance;
-    //            Debug.Log("Weapon script added to the weapon model.");
-    //        }
-
-    //        // Copy weapon properties from the current weapon to the instantiated weapon
-    //        weaponScript.CopyWeaponPropertiesFrom(this);
-
-    //        // Reset reload timers
-    //        weaponScript.currentTimer = 0;
-
-    //        // Set the spawned weapon as the active weapon in the player's inventory
-    //        PlayerInventory playerInventory = parentT.GetComponent<PlayerInventory>();
-    //        //playerInventory.activeWeapon = this;
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("WeaponModelPrefab does not exist.");
-    //    }
-    //}
-
     public void SetBarrelTip()
     {
         if (weaponModel == null)
@@ -336,35 +344,5 @@ public class Weapon : MonoBehaviour
         }
 
     }
-
-    ////for weapon spawning
-    //public void CopyWeaponPropertiesFrom(Weapon otherWeapon)
-    //{
-    //    weaponName = otherWeapon.weaponName;
-    //    roundsPerMinute = otherWeapon.roundsPerMinute;
-    //    isFullAuto = otherWeapon.isFullAuto;
-    //    canToggleFullAuto = otherWeapon.canToggleFullAuto;
-    //    damage = otherWeapon.damage;
-    //    criticalDamage = otherWeapon.criticalDamage;
-    //    criticalChance = otherWeapon.criticalChance;
-    //    reloadState = otherWeapon.reloadState;
-    //    isActive = otherWeapon.isActive;
-    //    timeToReload = otherWeapon.timeToReload;
-    //    reloadTimer = otherWeapon.reloadTimer;
-    //    currentTimer = otherWeapon.currentTimer;
-    //    magazineSize = otherWeapon.magazineSize;
-    //    currentAmmoInMag = otherWeapon.currentAmmoInMag;
-    //    currentStockAmmo = otherWeapon.currentStockAmmo;
-    //    maxStockAmmo = otherWeapon.maxStockAmmo;
-    //    isWeaponHandLoaded = otherWeapon.isWeaponHandLoaded;
-    //    roundsReloadedPerInstance = otherWeapon.roundsReloadedPerInstance;
-    //    recoilSpread = otherWeapon.recoilSpread;
-    //    currentRecoilSpread = otherWeapon.currentRecoilSpread;
-    //    recoilRate = otherWeapon.recoilRate;
-    //    weaponType = otherWeapon.weaponType;
-    //    bulletModelPrefab = otherWeapon.bulletModelPrefab;
-    //    bulletVelocity = otherWeapon.bulletVelocity;
-    //    // Copy any other properties you may have added
-    //}
 
 }

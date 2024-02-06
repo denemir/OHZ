@@ -65,6 +65,11 @@ public class MysteryBox : MonoBehaviour
     //player states
     private Dictionary<Player, KeyCode> playerStates = new Dictionary<Player, KeyCode>();
 
+    //despawning
+    private bool weaponReady = false;
+    private float despawnTime; //actual time at which weapon will despawn
+    public float timeToDespawn;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -90,6 +95,17 @@ public class MysteryBox : MonoBehaviour
     {
         //update count to match
         weaponCount = weaponPrefabs.Count;
+
+        if(weaponReady)
+        {
+            //lower weapon
+
+            if (Time.time > despawnTime)
+            {
+                CloseLid();
+                ResetBoxStatus();
+            }
+        }
 
         if (isInitialized)
         {
@@ -328,6 +344,9 @@ public class MysteryBox : MonoBehaviour
         PlaySpinAnimation();
         DetermineWeapon();
 
+        weaponReady = true;
+        despawnTime = Time.time + timeToDespawn;
+
         //update interaction prompts
         interactable.interactions[1].prompt = "Hold " + interactKey + " to pickup " + selectedWeaponPrefab.GetComponent<Weapon>().weaponName + " or Hold " + giveUpWeaponKey + " to let other players take it";
         interactable.interactions[2].prompt = "Hold " + interactKey + " to pickup " + selectedWeaponPrefab.GetComponent<Weapon>().weaponName;
@@ -413,6 +432,7 @@ public class MysteryBox : MonoBehaviour
         selectedWeaponPrefab = null;
         interactingPlayer = null;
         playerWhoSpun = null;
+        weaponReady = false;
 
         //reset interactable
         interactable.activeInteraction = interactable.interactions[0];
