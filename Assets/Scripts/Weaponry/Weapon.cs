@@ -141,7 +141,7 @@ public class Weapon : MonoBehaviour
             Reload();
 
             //in case of hand load
-            if (isWeaponHandLoaded && currentAmmoInMag < magazineSize)
+            if (isWeaponHandLoaded && (currentAmmoInMag < magazineSize && currentStockAmmo > 0))
             {
                 BeginReloading();
             }
@@ -248,10 +248,16 @@ public class Weapon : MonoBehaviour
 
             case true: //reload single round
 
-                if (currentStockAmmo > roundsReloadedPerInstance && currentAmmoInMag - roundsReloadedPerInstance < magazineSize)
+                if (currentStockAmmo >= roundsReloadedPerInstance && currentAmmoInMag - roundsReloadedPerInstance < magazineSize)
                 {
                     currentStockAmmo -= roundsReloadedPerInstance;
                     currentAmmoInMag += roundsReloadedPerInstance;
+                }
+                else if(currentStockAmmo < roundsReloadedPerInstance && currentStockAmmo > 0 && currentAmmoInMag - roundsReloadedPerInstance < magazineSize)
+                {
+                    currentAmmoInMag += currentStockAmmo;
+                    currentStockAmmo = 0;
+                    
                 }
                 break;
         }

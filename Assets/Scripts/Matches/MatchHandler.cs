@@ -30,6 +30,9 @@ public class MatchHandler : MonoBehaviour
     public MapData mapData;
     public Map map;
 
+    //barricades
+    private int barricadesCurrentlyOpen;
+
     //states
     public enum DoublePointsState
     { 

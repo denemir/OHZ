@@ -56,7 +56,7 @@ MonoBehaviour:
   criticalChance: 0
   reloadState: 0
   isActive: 0
-  timeToReload: 2.5
+  timeToReload: 0.25
   magazineSize: 8
   currentAmmoInMag: 8
   currentStockAmmo: 80

@@ -24,6 +24,9 @@ public class WaveHandler : MonoBehaviour
     public List<int> hellHoundsRemaining;
     public List<int> hellHoundsKilled;
 
+    //powerups
+    private int powerupsDroppedThisRound = 0; //max of 4
+
     //spawn
     public float spawnDelay;
     public float delayTimer;
@@ -183,6 +186,7 @@ public class WaveHandler : MonoBehaviour
     {
         //resetting
         zombieCount = 0;
+        powerupsDroppedThisRound = 0;
 
         //dog rounds
         if (currentWave % 5 == 0)
@@ -198,12 +202,18 @@ public class WaveHandler : MonoBehaviour
     }
 
     //hellhound rounds
-    private void IsDogRound()
+    private bool IsDogRound()
     {
-
+        if (currentWave == 5)
+            return true;
+        return false;
     }
 
     //rewarding
+    public void IncrementPowerupCounter()
+    {
+
+    }
 
     //updating gui
     private void UpdatePlayerGUI()

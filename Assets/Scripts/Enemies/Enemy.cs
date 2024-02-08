@@ -110,6 +110,10 @@ public class Enemy : MonoBehaviour
     {
         player.playerStats.AddPoints(amount);
     }
+    protected void DeterminePowerupDrop()
+    {
+
+    }
     protected void DropPowerup()
     {
 

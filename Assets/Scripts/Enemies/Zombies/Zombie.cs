@@ -155,10 +155,6 @@ public class Zombie : Enemy
     }
 
     //post death
-    //private void ResetStats()
-    //{
-
-    //}
 
     public void OnDrawGizmosSelected()
     {
