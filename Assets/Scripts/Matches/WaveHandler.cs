@@ -25,6 +25,7 @@ public class WaveHandler : MonoBehaviour
     public List<int> hellHoundsKilled;
 
     //powerups
+    public List<Powerup> powerups;
     private int powerupsDroppedThisRound = 0; //max of 4
 
     //spawn
@@ -33,6 +34,8 @@ public class WaveHandler : MonoBehaviour
 
     //number of players
     private int numberOfPlayersInMatch; //should be passed down from match handler
+
+    //vars
 
     void Start()
     {
@@ -208,11 +211,37 @@ public class WaveHandler : MonoBehaviour
             return true;
         return false;
     }
+    private bool AreDogsEliminated()
+    {
+        return false;
+    }
 
     //rewarding
     public void IncrementPowerupCounter()
     {
 
+    }
+    public void DeterminePowerupDropForZombie(Zombie zombie)
+    {
+        if(powerupsDroppedThisRound < 4)
+        {
+
+            float odds = Random.Range(0, 100);
+            if(odds <= 2)
+            {
+                zombie.DropPowerup(GetRandomPowerup());
+            }
+
+        }
+    }
+    public void DropRewardForFinalHellHound(HellHounds hellhound)
+    { } //max ammo
+
+    //powerups
+    private Powerup GetRandomPowerup()
+    {
+        int num = Random.Range(0, powerups.Count);
+        return powerups[num];
     }
 
     //updating gui

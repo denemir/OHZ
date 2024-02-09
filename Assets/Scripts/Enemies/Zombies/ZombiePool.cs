@@ -47,8 +47,10 @@ public class ZombiePool : MonoBehaviour
 
         Zombie chosenSubject = GetZombie();
         if(chosenSubject != null)
-        {           
+        {
             chosenSubject.SpawnFromPool(spawnPosition);
+            if(chosenSubject.transform.position != spawnPosition)
+                chosenSubject.transform.position = spawnPosition;
             return true;
         }
         return false; //zombies are busy.
@@ -68,7 +70,6 @@ public class ZombiePool : MonoBehaviour
     }
 
     //pool functions
-    //pull unused Zombie
     public Zombie GetZombie()
     {
 
@@ -83,15 +84,12 @@ public class ZombiePool : MonoBehaviour
 
         //all zombies are currently in use
         return null;
-    }
-
-    //return zombie that is no longer in use
+    } //pull unused Zombie
     public void ReturnZombie(Zombie zombie)
     {
         zombie.transform.position = transform.position;
         zombie.gameObject.SetActive(false);
-    }
-    //add individual bullet to pool
+    }     //return zombie that is no longer in use
     private void AddZombieToPool()
     {
         //adding bullets to pool
@@ -99,7 +97,7 @@ public class ZombiePool : MonoBehaviour
         Zombie zombie = zombieInstance.GetComponent<Zombie>();
         zombiePool.Add(zombie);
         zombie.gameObject.SetActive(false);
-    }
+    } //add individual zombie to pool
     //returns if the pool is currently full (implying either all the zombies are eliminated or haven't spawned)
     public bool IsPoolEmpty()
     {
@@ -136,5 +134,10 @@ public class ZombiePool : MonoBehaviour
             zombie.Scale(health, moveSpeed);
         }
     } //should be called each new wave
+
+    public void DeterminePowerupDrop()
+    {
+        GetComponent<WaveHandler>();
+    }
 
 }

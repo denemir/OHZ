@@ -25,6 +25,9 @@ public class Enemy : MonoBehaviour
     //attack variables
     private Player attackingPlayer;
 
+    //death
+    private Vector3 deathPostiion;
+
     //interactions
     public void InflictDamage(int damage, Player player)
     {
@@ -97,6 +100,8 @@ public class Enemy : MonoBehaviour
         DeathAnimation();
         gameObject.SetActive(false);
         pointAwardCounter = 0;
+        deathPostiion = transform.position;
+        transform.position = Vector3.zero;
     }
     protected void RewardPlayer(Player player, int amount)
     {
@@ -118,7 +123,7 @@ public class Enemy : MonoBehaviour
     {
 
     }
-    public void DropPowerup(GameObject powerupPrefab)
+    public void DropPowerup(Powerup powerup)
     {
 
     }
