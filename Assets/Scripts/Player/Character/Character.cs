@@ -7,9 +7,9 @@ public class Character : MonoBehaviour
 
     //public double acceleration; //rate at which player accelerates at
 
-    public Perks[] activePerks;
-    public int maxPerkCount = 4; //default is 4
-    public int currentPerkCount;
+    //public Perks[] activePerks;
+    //public int maxPerkCount = 4; //default is 4
+    //public int currentPerkCount;
 
     //model
     public GameObject model; /*{ get; private set; }*/

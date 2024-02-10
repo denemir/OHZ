@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
 
     //weapons & inventory
     private PlayerInventory playerInventory;
+    private PlayerPerks playerPerks;
 
     //input
     private float horizontalInput;
@@ -141,6 +142,7 @@ public class Player : MonoBehaviour
     private void InitializePlayer()
     {
         InitializePlayerInventory();
+        InitializePlayerPerks();
         InitializeCharacterModel();
         InitializeArrowIndicator();
         InitializeCamera();
@@ -152,6 +154,14 @@ public class Player : MonoBehaviour
         if (playerInventory == null)
         {
             Debug.LogError("PlayerInventory component not found on the player object. Please add the PlayerInventory component to the player object.");
+        }
+    }
+    private void InitializePlayerPerks()
+    {
+        playerPerks = GetComponent<PlayerPerks>();
+        if (playerPerks == null)
+        {
+            Debug.LogError("PlayerPerks component not found on the player object. Please add the PlayerPerks component to the player object.");
         }
     }
     private void InitializeCharacterModel()
@@ -418,5 +428,9 @@ public class Player : MonoBehaviour
     public PlayerInventory GetPlayerInventory()
     {
         return playerInventory;
+    }
+    public PlayerPerks GetPlayerPerks()
+    {
+        return playerPerks;
     }
 }

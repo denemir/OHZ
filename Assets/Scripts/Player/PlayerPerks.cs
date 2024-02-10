@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Perks : MonoBehaviour
+public class PlayerPerks : MonoBehaviour
 {
     private List<Perk> activePerks = new List<Perk>();
     public int perkMaximum;
@@ -49,5 +49,11 @@ public class Perks : MonoBehaviour
     public void DrinkPerkSodaAnimation()
     {
 
+    }
+
+    //checks
+    public bool DoesPlayerHavePerk(Perk perk)
+    {
+        return activePerks.Contains(perk);
     }
 }

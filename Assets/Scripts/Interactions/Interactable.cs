@@ -60,6 +60,7 @@ public class Interactable : MonoBehaviour
             if(Input.GetKeyDown(interaction.key))
             {
                 interaction.action.Invoke();
+                ResetTimer(interaction);
                 return;
             }
         }
@@ -78,6 +79,7 @@ public class Interactable : MonoBehaviour
     public void InteractAlternate(Interaction interaction)
     {
         interaction.altAction.Invoke();
+        ResetTimer(interaction);
     }
     private void IsAnyoneInteracting()
     {

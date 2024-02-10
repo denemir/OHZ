@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6685732726722849603}
   - component: {fileID: 3987980454600772675}
   - component: {fileID: 6333962325034643284}
+  - component: {fileID: 2066530150667904901}
   - component: {fileID: 6802542301641481002}
   - component: {fileID: 7006765439140457937}
   - component: {fileID: 609120332788872518}
@@ -108,6 +109,20 @@ MonoBehaviour:
   kills: 0
   downs: 0
   revives: 0
+--- !u!114 &2066530150667904901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3601225831429618101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7d8781e555440844bdde07f4d67e271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  perkMaximum: 5
+  player: {fileID: 6685732726722849603}
 --- !u!114 &6802542301641481002
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -167,7 +167,7 @@ public class MysteryBox : MonoBehaviour
             action = pickUpWeapon,
             altAction = giveUpWeapon,
             holdKeyDown = true,
-            holdTime = 0.8f
+            holdTime = 1.0f
         });
 
         //let other players take weapon
@@ -178,7 +178,7 @@ public class MysteryBox : MonoBehaviour
             button = interactButton,
             action = acceptWeapon,
             holdKeyDown = true,
-            holdTime = 0.8f
+            holdTime = 1.0f
         });
 
         //empty interaction for players watching
@@ -311,8 +311,7 @@ public class MysteryBox : MonoBehaviour
             playerStates[player] = 0;
         }
         return 0;
-    } //determine if player is within range and has specified weapon
-
+    } //determine if player is pressing button
     //pre-spin
     private bool HasEnoughPoints(Player player)
     {

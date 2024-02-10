@@ -18,6 +18,6 @@ public class Juggernog : Perk
 
     public override void ApplyPerkEffect(Player player)
     {
-        player.playerStats.Add100Points();
+        player.playerStats.AddHealth(100);
     }
 }
