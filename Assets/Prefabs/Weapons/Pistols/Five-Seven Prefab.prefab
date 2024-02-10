@@ -51,8 +51,8 @@ MonoBehaviour:
   roundsPerMinute: 650
   isFullAuto: 0
   canToggleFullAuto: 0
-  damage: 25
-  criticalDamage: 40
+  damage: 40
+  criticalDamage: 50
   criticalChance: 0
   reloadState: 0
   isActive: 0
@@ -67,6 +67,19 @@ MonoBehaviour:
   currentRecoilSpread: 0
   recoilRate: 0.5
   weaponSwapTime: 0
+  canBePackAPunched: 0
+  papRoundsPerMinute: 0
+  papDamage: 0
+  papCriticalDamage: 0
+  papCriticalChance: 0
+  papTimeToReload: 0
+  papMagazineSize: 0
+  papCurrentAmmoInMag: 0
+  papCurrentStockAmmo: 0
+  papMaxStockAmmo: 0
+  papRoundsReloadedPerInstance: 0
+  papRecoilSpread: 0
+  papRecoilRate: 0
   cost: 0
   weaponType: 0
   weaponModelPrefab: {fileID: 6769273182854717929, guid: c6b1caf1eee3e9c4aa2a9bf45478ecec, type: 3}

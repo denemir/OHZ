@@ -51,8 +51,8 @@ MonoBehaviour:
   roundsPerMinute: 600
   isFullAuto: 0
   canToggleFullAuto: 0
-  damage: 15
-  criticalDamage: 30
+  damage: 32
+  criticalDamage: 40
   criticalChance: 0
   reloadState: 0
   isActive: 0
