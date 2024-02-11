@@ -21,16 +21,16 @@ public class Weapon : MonoBehaviour
     public float criticalChance;
 
     //reload && ammunition
-    public enum ReloadState
-    {
-        Not_Reloading,
-        Reloading
-    }
-    public ReloadState reloadState;
-    public bool isActive; //if isn't active, do not add to timer (rework timer to be incr. based rather than clock based
+    //public enum ReloadState
+    //{
+    //    Not_Reloading,
+    //    Reloading
+    //}
+    //public ReloadState reloadState;
+    //public bool isActive; //if isn't active, do not add to timer (rework timer to be incr. based rather than clock based
     public float timeToReload;
-    private float reloadTimer; //tracks duration of reload
-    protected float currentTimer; //current state of timer
+    //private float reloadTimer; //tracks duration of reload
+    //protected float currentTimer; //current state of timer
     public int magazineSize;
     public int currentAmmoInMag;
     public int currentStockAmmo; //ammo in stockpile by default (starting ammo)
@@ -136,27 +136,10 @@ public class Weapon : MonoBehaviour
             SetBarrelTip();
         }
 
-        if (currentTimer <= 0 && reloadState == ReloadState.Reloading)
-        {
-            Reload();
-
-            //in case of hand load
-            if (isWeaponHandLoaded && (currentAmmoInMag < magazineSize && currentStockAmmo > 0))
-            {
-                BeginReloading();
-            }
-            else reloadState = ReloadState.Not_Reloading;
-
-        } //reload
-
     }
 
     void FixedUpdate()
     {
-        //reloading weapon timer
-        if (currentTimer > 0)
-            currentTimer -= 0.005f;
-
         DecreaseSpread(); //decrease spread over time
     }
 
@@ -165,29 +148,20 @@ public class Weapon : MonoBehaviour
     //shooting
     public void Shoot(Transform shooterTransform)
     {
-        switch (reloadState)
+        if (Time.time > roundsPerMinuteTimer && currentAmmoInMag > 0)
         {
-            case ReloadState.Not_Reloading:
-                if (Time.time > roundsPerMinuteTimer && currentAmmoInMag > 0)
-                {
-                    switch (this is Shotgun)
-                    {
-                        case true:
-                            GetComponent<Shotgun>().Fire(shooterTransform);
-                            break;
-                        default:
-                            Fire(shooterTransform);
-                            break;
-                    }
-                    IncreaseSpread();
-                    roundsPerMinuteTimer = Time.time + timeBetweenShots;
-                    currentAmmoInMag--;
-                }
-                else if (currentAmmoInMag == 0) //auto-reload if mag empty and player tries to fire
-                {
-                    BeginReloading();
-                }
-                break;
+            switch (this is Shotgun)
+            {
+                case true:
+                    GetComponent<Shotgun>().Fire(shooterTransform);
+                    break;
+                default:
+                    Fire(shooterTransform);
+                    break;
+            }
+            IncreaseSpread();
+            roundsPerMinuteTimer = Time.time + timeBetweenShots;
+            currentAmmoInMag--;
         }
 
     } //shoot action is performed
@@ -253,26 +227,15 @@ public class Weapon : MonoBehaviour
                     currentStockAmmo -= roundsReloadedPerInstance;
                     currentAmmoInMag += roundsReloadedPerInstance;
                 }
-                else if(currentStockAmmo < roundsReloadedPerInstance && currentStockAmmo > 0 && currentAmmoInMag - roundsReloadedPerInstance < magazineSize)
+                else if (currentStockAmmo < roundsReloadedPerInstance && currentStockAmmo > 0 && currentAmmoInMag - roundsReloadedPerInstance < magazineSize)
                 {
                     currentAmmoInMag += currentStockAmmo;
                     currentStockAmmo = 0;
-                    
+
                 }
                 break;
         }
     } //reloads ammunition in magazine
-    public void BeginReloading()
-    {
-        reloadState = ReloadState.Reloading;
-
-        currentTimer = timeToReload;
-    } //starts reloading timer
-    public void CancelReload()
-    {
-        currentTimer = 0;
-        reloadState = ReloadState.Not_Reloading;
-    } //stops the reload
     public void MaxAmmo()
     {
         currentAmmoInMag = magazineSize;

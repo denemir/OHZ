@@ -12,9 +12,9 @@ public class Shotgun : Weapon
 
     private void FixedUpdate()
     {
-        //reloading weapon timer
-        if (currentTimer > 0)
-            currentTimer -= 0.005f;
+        ////reloading weapon timer
+        //if (currentTimer > 0)
+        //    currentTimer -= 0.005f;
 
         DecreaseSpread();
     }

@@ -311,15 +311,19 @@ public class Player : MonoBehaviour
                 switch(inputState)
                 {
                     case InputState.KandM:
-                        if (Input.GetButton("Fire1"))
+                        if (Input.GetButton("Fire1") && playerInventory.reloadState != PlayerInventory.ReloadState.Reloading)
                         {
-                            weapon.Shoot(transform);                        //fix shotgun spread 
+                            if (weapon.currentAmmoInMag == 0)
+                                playerInventory.BeginReloading();
+                            else weapon.Shoot(transform);                        
                         }
                         break;
                     case InputState.Controller:
                         if (Input.GetAxis("Fire1") == 1)
                         {
-                            weapon.Shoot(transform);
+                            if (weapon.currentAmmoInMag == 0)
+                                playerInventory.BeginReloading();
+                            else weapon.Shoot(transform);
                         }
                         break;
                 }
@@ -331,13 +335,17 @@ public class Player : MonoBehaviour
                     case InputState.KandM:
                         if (Input.GetButtonDown("Fire1"))
                         {
-                            weapon.Shoot(transform);                        //fix shotgun spread 
+                            if (weapon.currentAmmoInMag == 0)
+                                playerInventory.BeginReloading();
+                            else weapon.Shoot(transform);
                         }
                         break;
                     case InputState.Controller:
                         if (Input.GetAxis("Fire1") == 1 && !controllerRightTriggerPress)
                         {
-                            weapon.Shoot(transform);
+                            if (weapon.currentAmmoInMag == 0)
+                                playerInventory.BeginReloading();
+                            else weapon.Shoot(transform);
                             controllerRightTriggerPress = true;
                         }
                         else if (Input.GetAxis("Fire1") == 0)
@@ -353,7 +361,7 @@ public class Player : MonoBehaviour
         //reload
         if (Input.GetButtonDown("Reload") && weapon.currentAmmoInMag < weapon.magazineSize && weapon.currentStockAmmo > 0)
         {
-            weapon.BeginReloading();
+            playerInventory.BeginReloading();
             if(sprintToggled)
                 sprintToggled = false;
             //Debug.Log("Reloading...");
@@ -362,9 +370,9 @@ public class Player : MonoBehaviour
     private void CheckReloadCancel()
     {
         //reload interrupt/cancel
-        if (playerInventory.GetCurrentWeapon().reloadState == Weapon.ReloadState.Reloading && Input.GetButton("Sprint") || sprintToggled)
+        if (playerInventory.reloadState == PlayerInventory.ReloadState.Reloading && Input.GetButton("Sprint") || sprintToggled)
         {
-            playerInventory.GetCurrentWeapon().CancelReload();
+            playerInventory.CancelReload();
         }
     } //if player presses Sprint key, cancel reload
     private void CheckSwapToPrimaryWeapon()

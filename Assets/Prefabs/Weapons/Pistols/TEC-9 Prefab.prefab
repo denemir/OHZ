@@ -54,8 +54,6 @@ MonoBehaviour:
   damage: 30
   criticalDamage: 38
   criticalChance: 0.08
-  reloadState: 0
-  isActive: 0
   timeToReload: 0.34
   magazineSize: 20
   currentAmmoInMag: 20
@@ -106,8 +104,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 5527745764002851422, guid: 3ec4e7cb42c193241999b9db7c1e4ce1, type: 3}
-  poolSize: 40
-  poolLimit: 80
+  poolSize: 60
+  poolLimit: 100
 --- !u!1001 &3237301502469786620
 PrefabInstance:
   m_ObjectHideFlags: 0

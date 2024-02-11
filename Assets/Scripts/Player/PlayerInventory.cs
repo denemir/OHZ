@@ -10,18 +10,29 @@ public class PlayerInventory : MonoBehaviour
     private int numberOfWeaponSlots/* = 2*/; //can only be 3 with a perk
     public GameObject[] weaponPrefabs;
     public Weapon[] weapons;
-
     public Weapon activeWeapon;
     private GameObject currentWeaponInstance;
-
     public int currentWeaponSlot;
     private bool hasWeaponSpawned = false;
-
     private float swapWeaponTimer = 0;
+
+    //reloading
+    public enum ReloadState
+    {
+        Not_Reloading,
+        Reloading
+    }
+    public ReloadState reloadState;
+    protected float currentTimer; //current state of timer
+    public float timeToReload;
 
     //debug
     public DebugHandler debugHandler;
     public bool isDebuggingOn;
+
+    //perks
+    private bool isSpeedColaActive;
+    private bool isDoubleTapRootbeerActive;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +60,27 @@ public class PlayerInventory : MonoBehaviour
         //UpdateWeaponsArray();
     }
 
+    void FixedUpdate()
+    {
+        //reloading weapon timer
+        if (currentTimer > 0)
+            currentTimer -= 0.005f;
+
+        if (currentTimer <= 0 && reloadState == ReloadState.Reloading)
+        {
+            activeWeapon.Reload();
+
+            //in case of hand load
+            if (activeWeapon.isWeaponHandLoaded && (activeWeapon.currentAmmoInMag < activeWeapon.magazineSize && activeWeapon.currentStockAmmo > 0))
+            {
+                BeginReloading();
+            }
+            else reloadState = ReloadState.Not_Reloading;
+
+        } //reload
+
+    }
+
     //modifying weapons
     public bool AddWeapon(GameObject newWeaponPrefab) //when caller is sending to add weapon, if AddWeapon returns false, try SwapWeapon
     {
@@ -68,17 +100,17 @@ public class PlayerInventory : MonoBehaviour
 
         return false; //false means no weapon was added
     } //adds weapon in any open slot
-    public void HideWeapon(int slot)
-    {
-        if (isDebuggingOn)
-            Debug.Log("Hiding weapon slot " + slot);
+    //public void HideWeapon(int slot)
+    //{
+    //    if (isDebuggingOn)
+    //        Debug.Log("Hiding weapon slot " + slot);
 
-        if (weaponPrefabs[slot] != null)
-        {
-            weapons[slot].isActive = false;
-            weapons[slot] = null;
-        }
-    }
+    //    if (weaponPrefabs[slot] != null)
+    //    {
+    //        weapons[slot].isActive = false;
+    //        weapons[slot] = null;
+    //    }
+    //}
     public void DropWeapon(int slot)
     {
         if (isDebuggingOn)
@@ -286,5 +318,46 @@ public class PlayerInventory : MonoBehaviour
         }
         return -1;
     } //if there is an open slot in players inventory, return slot id. return -1 any other case
+
+    //perks
+    public void SetSpeedColaActive()
+    {
+        isSpeedColaActive = true;
+    }
+    public void SetSpeedColaInactive()
+    {
+        isSpeedColaActive = false;
+    }
+    public bool IsSpeedColaActive()
+    {
+        return isSpeedColaActive;
+    }
+    public void SetDoubleTapRootbeerActive()
+    {
+        isDoubleTapRootbeerActive = true;
+    }
+    public void SetDoubleTapRootbeerInactive()
+    {
+        isDoubleTapRootbeerActive = false;
+    }
+    public bool IsDoubleTapRootBeerActive()
+    {
+        return isDoubleTapRootbeerActive;
+    }
+
+    //reloading
+    public void BeginReloading()
+    {
+        reloadState = ReloadState.Reloading;
+
+        if(isSpeedColaActive)
+            currentTimer = (activeWeapon.timeToReload/2);
+        else currentTimer = activeWeapon.timeToReload;
+    } //starts reloading timer
+    public void CancelReload()
+    {
+        currentTimer = 0;
+        reloadState = ReloadState.Not_Reloading;
+    } //stops the reload
 
 }

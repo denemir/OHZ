@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6055000013297426019
+--- !u!1 &1236186154575853549
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8133772842563786556}
-  - component: {fileID: 8624055307903042897}
+  - component: {fileID: 1562561245932786194}
+  - component: {fileID: -8034902520795491436}
   m_Layer: 0
-  m_Name: Juggernog
+  m_Name: Speed Cola
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8133772842563786556
+--- !u!4 &1562561245932786194
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6055000013297426019}
+  m_GameObject: {fileID: 1236186154575853549}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,18 +32,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8624055307903042897
+--- !u!114 &-8034902520795491436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6055000013297426019}
+  m_GameObject: {fileID: 1236186154575853549}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e98bb9637f0c09940b40ed68be02fb80, type: 3}
+  m_Script: {fileID: 11500000, guid: d8687fea05329d7448d38de99f7dde5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perkName: Juggernog
-  perkDescription: +100 HP
-  icon: {fileID: 21300000, guid: 8742105d8af25a44a91834a2604575c9, type: 3}
+  perkName: Speed Cola
+  perkDescription: 50% increased reload speed
+  icon: {fileID: 21300000, guid: c0091e1f3fc0aab4eb53fcb79a3ef0f8, type: 3}
