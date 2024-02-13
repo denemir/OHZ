@@ -33,6 +33,19 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
     public Text weaponNameText;
     public Text interactPromptText;
 
+    //perk (30s)
+    public PerkGUIDisplay pg1prefab;
+    public PerkGUIDisplay pg2prefab;
+    public PerkGUIDisplay pg3prefab;        
+    public PerkGUIDisplay pg4prefab;
+
+    public PerkGUIDisplay pg1;
+    public PerkGUIDisplay pg2;
+    public PerkGUIDisplay pg3;
+    public PerkGUIDisplay pg4;
+    //public PerkGUIDisplay pg5; //stinky hackers, normal people are limited to 4 :D
+
+
     ////target camera
     //public Camera targetCamera;
 
@@ -50,6 +63,16 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
         stockAmmoText = Instantiate(stockAmmoTextPrefab, playerCanvas.transform);
         weaponNameText = Instantiate(weaponNameTextPrefab, playerCanvas.transform);
         interactPromptText = Instantiate(interactionPromptTextPrefab, playerCanvas.transform);
+
+        if (pg1prefab != null)
+            pg1 = Instantiate(pg1prefab, playerCanvas.transform);
+        if (pg2prefab != null)
+            pg2 = Instantiate(pg2prefab, playerCanvas.transform);
+        if (pg3prefab != null)
+            pg3 = Instantiate(pg3prefab, playerCanvas.transform);
+        if (pg4prefab != null)
+            pg4 = Instantiate(pg4prefab, playerCanvas.transform);
+
     }
 
     // Update is called once per frame
@@ -91,6 +114,7 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
         UpdateCurrentAmmoInWeapon();
         UpdateCurrentStockAmmo();
         UpdateCurrentPoints();
+        UpdateCurrentPerks();
     }
     public void UpdateCurrentWave(int currentWave)
     {
@@ -135,6 +159,17 @@ public class PlayerGUIHandler : MonoBehaviour //attaches to player
             currentPointsText.text = currentTargetedPlayer.playerStats.points.ToString();
             currentPointsText.color = Color.white;
         }
+    }
+    public void UpdateCurrentPerks()
+    {
+        if (currentTargetedPlayer.GetPlayerPerks().activePerks.Count >= 1 /*&& pg1 != null*/)
+            pg1.perk = currentTargetedPlayer.GetPlayerPerks().activePerks[0];
+        if (currentTargetedPlayer.GetPlayerPerks().activePerks.Count >= 2)
+            pg2.perk = currentTargetedPlayer.GetPlayerPerks().activePerks[1];
+        if (currentTargetedPlayer.GetPlayerPerks().activePerks.Count >= 3)
+            pg3.perk = currentTargetedPlayer.GetPlayerPerks().activePerks[2];
+        if (currentTargetedPlayer.GetPlayerPerks().activePerks.Count >= 4)
+            pg4.perk = currentTargetedPlayer.GetPlayerPerks().activePerks[3];
     }
 
     //display

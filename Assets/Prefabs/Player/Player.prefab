@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d8781e555440844bdde07f4d67e271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activePerks: []
   perkMaximum: 5
   player: {fileID: 6685732726722849603}
 --- !u!114 &6802542301641481002
@@ -152,6 +153,14 @@ MonoBehaviour:
   stockAmmoText: {fileID: 0}
   weaponNameText: {fileID: 0}
   interactPromptText: {fileID: 0}
+  pg1prefab: {fileID: 6469670671888273663, guid: fcdf1385dbafa0a408454d76fbd4aa2d, type: 3}
+  pg2prefab: {fileID: 8084057579441145390, guid: 1953e998d8b22d445b54b85c29de6ae6, type: 3}
+  pg3prefab: {fileID: 4327410491848883561, guid: a07b78c3a3b904a4dae58907c67f3f99, type: 3}
+  pg4prefab: {fileID: 8442158890397404960, guid: e0104f04762ec0a4597b2f8cc5fbbdf1, type: 3}
+  pg1: {fileID: 0}
+  pg2: {fileID: 0}
+  pg3: {fileID: 0}
+  pg4: {fileID: 0}
 --- !u!114 &7006765439140457937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,6 +197,8 @@ MonoBehaviour:
   - {fileID: 0}
   activeWeapon: {fileID: 0}
   currentWeaponSlot: 0
+  reloadState: 0
+  timeToReload: 0
   debugHandler: {fileID: 0}
   isDebuggingOn: 0
 --- !u!114 &405819474494968721

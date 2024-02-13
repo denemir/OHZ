@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerPerks : MonoBehaviour
 {
-    private List<Perk> activePerks = new List<Perk>();
+    public List<Perk> activePerks = new List<Perk>();
     public int perkMaximum;
     private int currentNumOfPerks;
     public Player player;

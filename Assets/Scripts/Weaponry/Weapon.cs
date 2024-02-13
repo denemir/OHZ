@@ -143,6 +143,7 @@ public class Weapon : MonoBehaviour
     {
         DecreaseSpread(); //decrease spread over time
 
+        //check if player holding weapon has DTRB
         if(player != null)
             isDoubleTapRootBeerActive = DoesPlayerHaveDoubleTapRootBeer();
     }
