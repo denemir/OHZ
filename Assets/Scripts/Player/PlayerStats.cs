@@ -47,6 +47,10 @@ public class PlayerStats : MonoBehaviour
     {
         currentHealth += health;
     }
+    public void AddMaxHealth(int health)
+    {
+        maxHealth += health;
+    }
     public void Add10Points()
     {
         points += 10;
