@@ -56,4 +56,13 @@ public class PlayerPerks : MonoBehaviour
     {
         return activePerks.Contains(perk);
     }
+    public bool DoesPlayerHavePerk(string name)
+    {
+        foreach(Perk perk in activePerks)
+        {
+            if (perk.perkName.ToLower() == name.ToLower())
+                return true;
+        }
+        return false;
+    }
 }

@@ -112,6 +112,7 @@ public class Weapon : MonoBehaviour
     public Character character;
     public RightHand rightHand;
     public PlayerGUIHandler playerGUIHandler;
+    private bool isDoubleTapRootBeerActive;
 
     // Start is called before the first frame update
     void Start()
@@ -141,6 +142,9 @@ public class Weapon : MonoBehaviour
     void FixedUpdate()
     {
         DecreaseSpread(); //decrease spread over time
+
+        if(player != null)
+            isDoubleTapRootBeerActive = DoesPlayerHaveDoubleTapRootBeer();
     }
 
     //weapon actions
@@ -160,8 +164,12 @@ public class Weapon : MonoBehaviour
                     break;
             }
             IncreaseSpread();
-            roundsPerMinuteTimer = Time.time + timeBetweenShots;
             currentAmmoInMag--;
+
+            //double tap rootbeer & setting timer between shots
+            if(isDoubleTapRootBeerActive)
+                roundsPerMinuteTimer = Time.time + (timeBetweenShots * 0.77f); //double tap rootbeer increases rpm by 33%
+            else roundsPerMinuteTimer = Time.time + timeBetweenShots;
         }
 
     } //shoot action is performed
@@ -271,7 +279,7 @@ public class Weapon : MonoBehaviour
         //somehow instantiate the p-a-p variant of the model
     }
 
-    //misc
+    //model
     public void Drop()
     {
         weaponModel.SetActive(false);
@@ -314,4 +322,9 @@ public class Weapon : MonoBehaviour
 
     }
 
+    //checks
+    private bool DoesPlayerHaveDoubleTapRootBeer()
+    {
+        return player.GetPlayerPerks().DoesPlayerHavePerk("double tap rootbeer");
+    }
 }
