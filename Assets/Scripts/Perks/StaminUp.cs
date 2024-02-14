@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StaminUp : MonoBehaviour
+public class StaminUp : Perk
 {
-    // Start is called before the first frame update
+    private float originalPlayerSpeed;
+    
     void Start()
     {
-        
+        perkName = "StaminUp";
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void ApplyPerkEffect(Player player)
     {
-        
+        originalPlayerSpeed = player.GetPlayerMovementHandler().moveSpeed;
+        player.GetPlayerMovementHandler().moveSpeed = player.GetPlayerMovementHandler().moveSpeed * 1.33f;
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     //weapons
-    private int numberOfWeaponSlots/* = 2*/; //can only be 3 with a perk
+    private int numberOfWeaponSlots = 2; //can only be 3 with a perk
     public GameObject[] weaponPrefabs;
     public Weapon[] weapons;
     public Weapon activeWeapon;
@@ -33,6 +33,7 @@ public class PlayerInventory : MonoBehaviour
     //perks
     private bool isSpeedColaActive;
     private bool isDoubleTapRootbeerActive;
+    private bool isMuleKickActive;
 
     // Start is called before the first frame update
     void Start()
@@ -78,7 +79,6 @@ public class PlayerInventory : MonoBehaviour
             else reloadState = ReloadState.Not_Reloading;
 
         } //reload
-
     }
 
     //modifying weapons
@@ -279,11 +279,6 @@ public class PlayerInventory : MonoBehaviour
         if(weaponPrefabs[0] != null)
         {
             return weaponPrefabs.Contains(targetWeapon);
-            //foreach (GameObject weapon in weaponPrefabs)
-            //{
-            //    if (weapon.GetComponent<Weapon>().weaponName == targetWeapon.weaponName)
-            //        return true;
-            //}
         }
         
         return false;
@@ -344,6 +339,22 @@ public class PlayerInventory : MonoBehaviour
     {
         return isDoubleTapRootbeerActive;
     }
+    public void SetMuleKickActive()
+    {
+        isMuleKickActive = true;
+        numberOfWeaponSlots = 3;
+        ExpandWeaponInventory();
+        //weapons[2] = null;
+        //weaponPrefabs[2] = null;
+    }
+    public void SetMuleKickInactive()
+    {
+        isMuleKickActive = false;
+    }
+    public bool IsMuleKickActive()
+    {
+        return isMuleKickActive;
+    }
 
     //reloading
     public void BeginReloading()
@@ -359,5 +370,20 @@ public class PlayerInventory : MonoBehaviour
         currentTimer = 0;
         reloadState = ReloadState.Not_Reloading;
     } //stops the reload
+
+    //expanding weapons pool
+    private void ExpandWeaponInventory()
+    {
+        Weapon[] newWeapons = new Weapon[3];
+        GameObject[] newWeaponPrefabs = new GameObject[3];
+        for(int i = 0; i < weapons.Count(); i++)
+        {
+            newWeapons[i] = weapons[i];
+            newWeaponPrefabs[i] = weaponPrefabs[i];
+        }
+
+        weapons = newWeapons;
+        weaponPrefabs = newWeaponPrefabs;
+    }
 
 }

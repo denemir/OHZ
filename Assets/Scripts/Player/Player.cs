@@ -36,7 +36,8 @@ public class Player : MonoBehaviour
     public GameObject arrowObject;
 
     //movement
-    public float moveSpeed = 5f;
+    //public float moveSpeed = 5f;
+    private NewMovementHandler newMovementHandler;
     private PlayerRotation playerRotation;
     public float rotationAngle;
     public bool isSprintToggle;
@@ -110,6 +111,7 @@ public class Player : MonoBehaviour
                     case InputState.KandM:
                         CheckSwapToPrimaryWeapon();
                         CheckSwapToSecondaryWeapon();
+                        CheckSwapToTertiaryWeapon();
                         break;
                     case InputState.Controller:
                         CheckCycleWeapons();
@@ -144,6 +146,7 @@ public class Player : MonoBehaviour
         InitializePlayerInventory();
         InitializePlayerPerks();
         InitializeCharacterModel();
+        InitializePlayerMovementHandler();
         InitializeArrowIndicator();
         InitializeCamera();
         InitializeNameTag();
@@ -178,6 +181,12 @@ public class Player : MonoBehaviour
             CheckRightHand();
         }
         else Debug.Log("Character not found in prefab for player " + name + ".");
+    }
+    private void InitializePlayerMovementHandler()
+    {
+        if (GetComponent<NewMovementHandler>() != null)
+            newMovementHandler = GetComponent<NewMovementHandler>();
+        else Debug.Log("Player missing NewMovementHandler component. Please attach NewMovementHandler script to Player.");
     }
 
     private void InitializeArrowIndicator()
@@ -390,6 +399,13 @@ public class Player : MonoBehaviour
             playerInventory.SwapCurrentWeapon(1);
         }
     }
+    private void CheckSwapToTertiaryWeapon()
+    {
+        if (!Input.GetButton("Fire1") /*&& playerInventory.isSwapWeaponTimerZero()*/ && playerInventory.GetCurrentWeaponSlot() != 2 && Input.GetButtonDown("Tertiary Weapon"))
+        {
+            playerInventory.SwapCurrentWeapon(1);
+        }
+    }
     private void CheckCycleWeapons() //primarily for controller players, but can also be set for K&M players
     {
         if (!Input.GetButton("Fire1") && Input.GetButtonDown("Cycle Weapons (Controller)"))
@@ -440,5 +456,9 @@ public class Player : MonoBehaviour
     public PlayerPerks GetPlayerPerks()
     {
         return playerPerks;
+    }
+    public NewMovementHandler GetPlayerMovementHandler()
+    {
+        return newMovementHandler;
     }
 }

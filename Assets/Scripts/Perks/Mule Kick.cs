@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MuleKick : MonoBehaviour
+public class MuleKick : Perk
 {
     // Start is called before the first frame update
     void Start()
@@ -14,5 +14,10 @@ public class MuleKick : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public override void ApplyPerkEffect(Player player)
+    {
+        player.GetPlayerInventory().SetMuleKickActive();
     }
 }
