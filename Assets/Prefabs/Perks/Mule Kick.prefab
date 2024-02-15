@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   perkName: Mule Kick
   perkDescription: Unlocks 3rd weapon slot
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: b25114c3f98ff3f4cb4c93c42d5a4868, type: 3}

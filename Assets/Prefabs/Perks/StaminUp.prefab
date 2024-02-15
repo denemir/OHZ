@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   perkName: StaminUp
   perkDescription: 50% Increase to movement speed.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: d1b4984bbb4d4b24aa153eea4c9114a9, type: 3}
