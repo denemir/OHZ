@@ -35,6 +35,9 @@ public class PlayerInventory : MonoBehaviour
     private bool isDoubleTapRootbeerActive;
     private bool isMuleKickActive;
 
+    //pap
+    private bool isPlayerCrackingKnuckles; //is player pack a punching currently
+
     // Start is called before the first frame update
     void Start()
     {
@@ -344,8 +347,6 @@ public class PlayerInventory : MonoBehaviour
         isMuleKickActive = true;
         numberOfWeaponSlots = 3;
         ExpandWeaponInventory();
-        //weapons[2] = null;
-        //weaponPrefabs[2] = null;
     }
     public void SetMuleKickInactive()
     {
@@ -386,4 +387,13 @@ public class PlayerInventory : MonoBehaviour
         weaponPrefabs = newWeaponPrefabs;
     }
 
+    //pack a punching
+    public void GiveUpWeaponForPackAPunch()
+    {
+        CrackKnuckles();
+    }
+    private void CrackKnuckles()
+    {
+        /*cracking*/
+    }
 }

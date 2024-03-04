@@ -21,16 +21,7 @@ public class Weapon : MonoBehaviour
     public float criticalChance;
 
     //reload && ammunition
-    //public enum ReloadState
-    //{
-    //    Not_Reloading,
-    //    Reloading
-    //}
-    //public ReloadState reloadState;
-    //public bool isActive; //if isn't active, do not add to timer (rework timer to be incr. based rather than clock based
     public float timeToReload;
-    //private float reloadTimer; //tracks duration of reload
-    //protected float currentTimer; //current state of timer
     public int magazineSize;
     public int currentAmmoInMag;
     public int currentStockAmmo; //ammo in stockpile by default (starting ammo)
@@ -52,29 +43,9 @@ public class Weapon : MonoBehaviour
 
     //pack a punching
 
-    [Header("Pack-A-Punch Variant")]
-    public bool canBePackAPunched;
-
-    //fire rate
-    public float papRoundsPerMinute;
-
-    //damage
-    public int papDamage;
-    public int papCriticalDamage;
-    public float papCriticalChance;
-
-    //reload && ammunition
-    public float papTimeToReload;
-    public int papMagazineSize;
-    public int papCurrentAmmoInMag;
-    public int papCurrentStockAmmo; //ammo in stockpile by default (starting ammo)
-    public int papMaxStockAmmo;
-    public int papRoundsReloadedPerInstance; //in case weapon is hand loaded, how many rounds are loaded each time?
-
-    //recoil
-    public float papRecoilSpread; //max spread (positive goes one way from the guns barrel, negative goes the other way)
-    public float papRecoilRate; //how much each individual shot spreads the recoil
-
+    [Header("Pack-A-Punch")]
+    public bool isPackAPunched;
+    public PackAPunchedWeapon packAPunchVariant;
 
     //interactions
     public int cost; //if weapon is a wall buy, otherwise keep at 950
@@ -122,7 +93,7 @@ public class Weapon : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         //backups
         if (weaponModel == null)
@@ -262,22 +233,13 @@ public class Weapon : MonoBehaviour
     }
 
     //pack-er-punching
-    public void PackAPunch()
+    public PackAPunchedWeapon GetPackAPunchVariant()
     {
-        //set stats
-        roundsPerMinute = papRoundsPerMinute;
-        timeBetweenShots = 1 / (roundsPerMinute / 60f);
-        damage = papDamage;
-        criticalDamage = papCriticalDamage;
-        criticalChance = papCriticalChance;
-        timeToReload = papTimeToReload;
-        magazineSize = papMagazineSize;
-        maxStockAmmo = papMaxStockAmmo;
-        roundsReloadedPerInstance = papRoundsReloadedPerInstance; //in case weapon is hand loaded, how many rounds are loaded each time?
-        recoilSpread = papRecoilSpread; //max spread (positive goes one way from the guns barrel, negative goes the other way)
-        recoilRate = papRecoilRate;
-
-        //somehow instantiate the p-a-p variant of the model
+        return packAPunchVariant;
+    }
+    public bool IsWeaponPackAPunched()
+    {
+        return isPackAPunched;
     }
 
     //model

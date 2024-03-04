@@ -388,6 +388,8 @@ public class Player : MonoBehaviour
     {
         if (!Input.GetButton("Fire1")/* && playerInventory.isSwapWeaponTimerZero()*/ && playerInventory.GetCurrentWeaponSlot() != 0 && Input.GetButtonDown("Primary Weapon"))
         {
+            if (playerInventory.reloadState != PlayerInventory.ReloadState.Not_Reloading)
+                playerInventory.CancelReload();
             playerInventory.SwapCurrentWeapon(0);
             //Debug.Log("0");
         }
@@ -396,14 +398,20 @@ public class Player : MonoBehaviour
     {
         if (!Input.GetButton("Fire1") /*&& playerInventory.isSwapWeaponTimerZero()*/ && playerInventory.GetCurrentWeaponSlot() != 1 && Input.GetButtonDown("Secondary Weapon"))
         {
+            ////if player switches weapon mid reload, cancel reload or else it will reload swapped weapon
+            if (playerInventory.reloadState != PlayerInventory.ReloadState.Not_Reloading)
+                playerInventory.CancelReload();
+
             playerInventory.SwapCurrentWeapon(1);
         }
     }
     private void CheckSwapToTertiaryWeapon()
     {
-        if (!Input.GetButton("Fire1") /*&& playerInventory.isSwapWeaponTimerZero()*/ && playerInventory.GetCurrentWeaponSlot() != 2 && Input.GetButtonDown("Tertiary Weapon"))
+        if (playerInventory.IsMuleKickActive() && !Input.GetButton("Fire1") /*&& playerInventory.isSwapWeaponTimerZero()*/ && playerInventory.GetCurrentWeaponSlot() != 2 && Input.GetButtonDown("Tertiary Weapon"))
         {
-            playerInventory.SwapCurrentWeapon(1);
+            if (playerInventory.reloadState != PlayerInventory.ReloadState.Not_Reloading)
+                playerInventory.CancelReload(); 
+            playerInventory.SwapCurrentWeapon(2);
         }
     }
     private void CheckCycleWeapons() //primarily for controller players, but can also be set for K&M players

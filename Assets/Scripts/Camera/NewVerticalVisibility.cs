@@ -10,7 +10,7 @@ public class NewVerticalVisibility : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -24,9 +24,18 @@ public class NewVerticalVisibility : MonoBehaviour
             foreach (Collider collider in colliders)
             {
                 if (collider.gameObject.transform.position.y > GetHeadPosition().y + 3.5 && WithinXBounds(collider) && WithinZBounds(collider) || ((collider.gameObject.transform.position.y > player.transform.position.y && collider.bounds.size.y >= GetHeadPosition().y && WithinXBounds(collider) && WithinZBounds(collider) && collider.gameObject.transform.position.z < player.transform.position.z - 1)))
+                {
                     collider.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-                else collider.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-
+                    //collider.gameObject.GetComponent<Renderer>().material.SetFloat("_Mode", 1);
+                    //collider.gameObject.GetComponent<Renderer>().material.SetColor("_Color", new Color(0.5f, 0.5f, 0.5f, 0f));
+                }
+                else
+                {
+                    /*collider.gameObject.GetComponent<Renderer>().material.SetColor("_Color", new Color(0.5f, 0.5f, 0.5f, 1f));*/                    
+                    //collider.gameObject.GetComponent<Renderer>().material.SetColor("_Color", new Color(1f, 1f, 1f, 1f));
+                    //collider.gameObject.GetComponent<Renderer>().material.SetFloat("_Mode", 0);
+                    collider.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                }
                 //if (collider.gameObject.transform.position.y > player.transform.position.y && collider.bounds.size.y >= GetHeadPosition().y && WithinXBounds(collider) && WithinZBounds(collider) && collider.gameObject.transform.position.z < player.transform.position.z)
                 //    collider.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
                 //else collider.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
