@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PAP : Interactable
+public class PAP : MonoBehaviour
 {
     //interactions
     private Interactable interactable;
@@ -52,7 +52,8 @@ public class PAP : Interactable
     // Update is called once per frame
     void Update()
     {
-        
+        //Updating states
+        UpdateInteractionStates();
     }
 
     //interactions
@@ -72,7 +73,7 @@ public class PAP : Interactable
         //take back pack a punched weapon
         interactable.interactions.Add(new Interactable.Interaction
         {
-            prompt = "Hold " + interactKey + " to accept the " +  packAPunchedWeapon.name,
+            prompt = "Hold " + interactKey + " to accept the " /*+  packAPunchedWeapon.name*/,
             key = interactKey,
             button = interactButton,
             action = acceptWeapon,
@@ -117,6 +118,11 @@ public class PAP : Interactable
         //update interaction prompts
         interactable.interactions[2].prompt = "Hold " + interactKey + " to pickup " + packAPunchedWeapon.GetComponent<Weapon>().weaponName;
     }
+    private void UpdateInteractionStates()
+    {
+
+    }
+
     //pack a punching
     private void PackAPunchWeapon(Weapon weapon)
     {
