@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,6 +53,8 @@ public class PAP : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isInitialized)
+            InitializeInteractions();
         //Updating states
         UpdateInteractionStates();
     }
@@ -86,6 +89,9 @@ public class PAP : MonoBehaviour
         {
             prompt = ""
         });
+
+        interactable.activeInteraction = interactable.interactions[0];
+        isInitialized = true;
     }
     private void SetInteractingPlayer(Player player)
     {
