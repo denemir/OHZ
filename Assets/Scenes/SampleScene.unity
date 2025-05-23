@@ -8120,7 +8120,7 @@ GameObject:
   - component: {fileID: 1903767239}
   - component: {fileID: 1903767238}
   - component: {fileID: 1903767243}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pack-A-Punch
   m_TagString: Untagged
   m_Icon: {fileID: 0}

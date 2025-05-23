@@ -131,7 +131,6 @@ public class PerkMachines : MonoBehaviour
         //set interaction to be active
         interactable.activeInteraction = interactable.interactions[0];
         isInitialized = true;
-        //Debug.Log("Initialized");
     }
 
     //pre-interaction

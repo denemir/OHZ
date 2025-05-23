@@ -39,7 +39,7 @@ public class PAP : MonoBehaviour
 
         if (GetComponent<Interactable>() != null)
         {
-            interactable = GetComponent<Interactable>();
+             interactable = GetComponent<Interactable>();
         }
         else Debug.Log("Interactable component not found on Mysterybox. Please attach Interactable script to Mysterybox Prefab.");
 
@@ -56,7 +56,7 @@ public class PAP : MonoBehaviour
         if (!isInitialized)
             InitializeInteractions();
         //Updating states
-        UpdateInteractionStates();
+        //UpdateInteractionStates();
     }
 
     //interactions
@@ -91,6 +91,7 @@ public class PAP : MonoBehaviour
         });
 
         interactable.activeInteraction = interactable.interactions[0];
+        Debug.Log(interactable.interactions[0].prompt);
         isInitialized = true;
     }
     private void SetInteractingPlayer(Player player)
