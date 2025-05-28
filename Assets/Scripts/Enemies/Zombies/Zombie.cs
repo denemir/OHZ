@@ -35,6 +35,7 @@ public class Zombie : Enemy
     // Start is called before the first frame update
     void Start()
     {
+        // defining hitboxes
         targetZone = new GameObject("TargetZone").transform;
         targetZone.SetParent(transform); //attach to zombie
         targetZone.localPosition = new Vector3(0, 0f, 0f);
@@ -156,6 +157,7 @@ public class Zombie : Enemy
 
     //post death
 
+    //debug
     public void OnDrawGizmosSelected()
     {
         if (targetZone != null)

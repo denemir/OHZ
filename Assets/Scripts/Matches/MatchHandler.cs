@@ -39,7 +39,7 @@ public class MatchHandler : MonoBehaviour
         Active,
         Inactive
     }
-    private DoublePointsState dps; //DoublePointsState (icydk)
+    private DoublePointsState dps; // whether or not double points is active
     public enum FireSaleState
     { 
         Active,
@@ -77,13 +77,13 @@ public class MatchHandler : MonoBehaviour
     //powerups
     public void Nuke() //kaboom.
     {
-
+        //zombiePool.NukeAllZombies();
     }
     public void MaxAmmo()
     {
         foreach(Player player in players)
         {
-            //if (player is alive)
+            //(if player is alive)
             foreach (Weapon weapon in player.GetPlayerInventory().weapons)
             {
                 weapon.MaxAmmo();
@@ -93,7 +93,7 @@ public class MatchHandler : MonoBehaviour
     public void Carpenter()
     {
 
-    }
+    } //repair all barricades
     public void BonusPoints()
     {
         foreach (Player player in players)

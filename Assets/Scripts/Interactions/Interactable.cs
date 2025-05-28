@@ -28,7 +28,6 @@ public class Interactable : MonoBehaviour
         //keycode
         public KeyCode getKeyCode() { return key; }
         public void setKeyCode(KeyCode keyCode) { key = keyCode; }
-
     }
 
     //setting interactions
