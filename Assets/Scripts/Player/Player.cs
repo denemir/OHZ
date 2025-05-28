@@ -122,6 +122,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // fixed update for movement & rotation to ensure player does not move according to frame rate
     void FixedUpdate()
     {
         if (characterObject == null)
@@ -216,9 +217,9 @@ public class Player : MonoBehaviour
     {
         //GameObject cameraInstance = Instantiate(cameraPrefab);
         //activeCamera = cameraInstance.GetComponent<Camera>();
-        activeCamera.GetComponent<CameraFollow>().target = transform;
-        activeCamera.GetComponent<AudioListener>().enabled = true;
         //cameraInstance.GetComponent<AudioListener>().enabled = true;
+        activeCamera.GetComponent<CameraFollow>().target = transform;
+        activeCamera.GetComponent<AudioListener>().enabled = true;        
         activeCamera.GetComponent<VerticalVisibility>().SetTarget(this);
 
     }
@@ -283,7 +284,7 @@ public class Player : MonoBehaviour
     public bool DoesCharacterHaveRightHand()
     {
         if (currentCharacter == null)
-            Debug.Log("sacks");
+            Debug.Log("Character model not located.");
         if (currentCharacter.GetComponentInChildren<MeshRenderer>()?.gameObject.GetComponentInChildren<RightHand>() != null)
             return true;
         Debug.Log("Character right hand does not exist.");
@@ -391,7 +392,6 @@ public class Player : MonoBehaviour
             if (playerInventory.reloadState != PlayerInventory.ReloadState.Not_Reloading)
                 playerInventory.CancelReload();
             playerInventory.SwapCurrentWeapon(0);
-            //Debug.Log("0");
         }
     }
     private void CheckSwapToSecondaryWeapon()
@@ -433,7 +433,7 @@ public class Player : MonoBehaviour
     }
     private void CheckJump()
     {
-        switch (inputState) //////////////////fix later
+        switch (inputState) ////////////////// configure later
         {
             case InputState.KandM:
                 if (Input.GetAxisRaw("Jump") != 0)

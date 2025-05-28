@@ -39,7 +39,7 @@ public class MatchHandler : MonoBehaviour
         Active,
         Inactive
     }
-    private DoublePointsState dps; //DoublePointsState (icydk)
+    private DoublePointsState dps; // whether or not double points is active
     public enum FireSaleState
     { 
         Active,

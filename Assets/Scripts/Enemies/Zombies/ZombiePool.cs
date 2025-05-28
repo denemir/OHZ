@@ -10,7 +10,7 @@ public class ZombiePool : MonoBehaviour
     public int poolLimit; //24
 
     private List<Zombie> zombiePool;
-    public List<ZombieSpawnRegion> spawnRegion; //MAKE SURE WHEN A NEW REGION IS CREATED THAT IT IS ADDED TO THIS LIST, OTHERWISE IT WONT SPAWN POOP
+    public List<ZombieSpawnRegion> spawnRegion; //MAKE SURE WHEN A NEW REGION IS CREATED THAT IT IS ADDED TO THIS LIST, OTHERWISE IT WONT SPAWN
 
     // Start is called before the first frame update
     void Start()
