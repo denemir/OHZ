@@ -207,9 +207,7 @@ public class WaveHandler : MonoBehaviour
     //hellhound rounds
     private bool IsDogRound()
     {
-        if (currentWave == 5)
-            return true;
-        return false;
+        return currentWave % 5 == 0;
     }
     private bool AreDogsEliminated()
     {
@@ -251,6 +249,5 @@ public class WaveHandler : MonoBehaviour
         {
             GetComponentInParent<MatchHandler>().UpdatePlayerGUIWaveCounter(currentWave);
         }
-        else Debug.Log("no");
     }
 }

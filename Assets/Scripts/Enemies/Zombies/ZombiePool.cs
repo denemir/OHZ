@@ -65,7 +65,6 @@ public class ZombiePool : MonoBehaviour
         for (int i = 0; i < poolLimit; i++)
         {
             AddZombieToPool();
-            //Debug.Log("adding");
         }
     }
 
@@ -77,7 +76,6 @@ public class ZombiePool : MonoBehaviour
         {
             if (!zombie.gameObject.activeInHierarchy)
             {
-                //zombie.gameObject.SetActive(true);
                 return zombie;
             }
         }
@@ -85,11 +83,13 @@ public class ZombiePool : MonoBehaviour
         //all zombies are currently in use
         return null;
     } //pull unused Zombie
+
     public void ReturnZombie(Zombie zombie)
     {
         zombie.transform.position = transform.position;
         zombie.gameObject.SetActive(false);
     }     //return zombie that is no longer in use
+
     private void AddZombieToPool()
     {
         //adding bullets to pool
@@ -99,6 +99,7 @@ public class ZombiePool : MonoBehaviour
         zombie.gameObject.SetActive(false);
     } //add individual zombie to pool
     //returns if the pool is currently full (implying either all the zombies are eliminated or haven't spawned)
+
     public bool IsPoolEmpty()
     {
         if (GetZombie() == null)
@@ -107,12 +108,14 @@ public class ZombiePool : MonoBehaviour
         }
         return false;
     }
+
     public bool IsPoolFull()
     {
         if (GetNumberOfAvailableZombies() == poolLimit)
             return true;
         return false;
     }
+
     public int GetNumberOfAvailableZombies()
     {
         int count = 0;

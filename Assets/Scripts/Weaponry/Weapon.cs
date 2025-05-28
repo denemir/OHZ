@@ -12,7 +12,7 @@ public class Weapon : MonoBehaviour
     public float roundsPerMinute;
     protected float timeBetweenShots;
     private float roundsPerMinuteTimer; //if != 0, can't shoot :P
-    public bool isFullAuto;
+    public bool isFullAuto; //should be replaced with weapon state to account for burst fire
     public bool canToggleFullAuto; //decides if weapon can fire full automatic
 
     //damage
@@ -38,7 +38,10 @@ public class Weapon : MonoBehaviour
     //handling
     public float weaponSwapTime;
     /// <summary>
-    ///how much time is added to the weapon swap.weapon swap time works like this: when swapping between 2 weapons, the total time to swap accounts for both weapons.smaller weapons (such as smgs and pistols, have much faster swap times.the swap time accounts for both pulling out, and putting away. (ex., 1911 has swap value of 50. MAG-10 has swap value of 120. The total time to swap would be 170.)
+    ///how much time is added to the weapon swap.weapon swap time works like this: 
+    ///when swapping between 2 weapons, the total time to swap accounts for both weapons.smaller weapons (such as smgs
+    ///and pistols, have much faster swap times.the swap time accounts for both pulling out, and putting 
+    ///away. (ex., 1911 has swap value of 50. MAG-10 has swap value of 120. The total time to swap would be 170.)
     /// </summary>
 
     //pack a punching
@@ -95,7 +98,7 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
-        //backups
+        //backups for model not spawning
         if (weaponModel == null)
         {
             SetWeaponModel();
@@ -103,6 +106,7 @@ public class Weapon : MonoBehaviour
         if (bulletPool == null)
             bulletPool = GetComponent<BulletPool>();
 
+        // set where the weapon fires from
         if (barrelTip == null)
         {
             SetBarrelTip();
@@ -119,7 +123,7 @@ public class Weapon : MonoBehaviour
             isDoubleTapRootBeerActive = DoesPlayerHaveDoubleTapRootBeer();
     }
 
-    //weapon actions
+    ////weapon actions
 
     //shooting
     public void Shoot(Transform shooterTransform)
@@ -226,11 +230,11 @@ public class Weapon : MonoBehaviour
     public void IncreaseSpread()
     {
         currentRecoilSpread = Mathf.Clamp(currentRecoilSpread + recoilRate, 0f, recoilSpread); //increases spread within set range
-    } //recoil
+    } //adding spread to weapon fire
     public void DecreaseSpread()
     {
         currentRecoilSpread = Mathf.Lerp(currentRecoilSpread, 0, Time.deltaTime * 1.5f); //decrease spread over time
-    }
+    } //gradual decrease after not firing
 
     //pack-er-punching
     public PackAPunchedWeapon GetPackAPunchVariant()

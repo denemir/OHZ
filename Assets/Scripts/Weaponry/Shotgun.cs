@@ -35,6 +35,11 @@ public class Shotgun : Weapon
         }
     }
 
+    //public void FireSlug(Transform shooterTransform)
+    //{
+
+    //}
+
     //public void FireSinglePellet() //picks a random place within spread range for individual pellet to launch, loop within shotgun fires multiple pellets simultaeneously
     //{
     //    Weapon.Fire();
