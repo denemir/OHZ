@@ -33,20 +33,15 @@ public class PAP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //buttons
-        interactButton = "Interact";
-        giveUpWeaponButton = "AltInteract";
-
         if (GetComponent<Interactable>() != null)
         {
-             interactable = GetComponent<Interactable>();
+            interactable = GetComponent<Interactable>();
         }
-        else Debug.Log("Interactable component not found on Mysterybox. Please attach Interactable script to Mysterybox Prefab.");
+        else Debug.Log("Interactable component not found on Pack-A-Punch. Please attach Interactable script to Pack-A-Punch Prefab.");
 
         if (GetComponent<Interactable>().interactions != null)
         {
             InitializeInteractions();
-            isInitialized = true;
         }
     }
 
@@ -56,12 +51,16 @@ public class PAP : MonoBehaviour
         if (!isInitialized)
             InitializeInteractions();
         //Updating states
-        //UpdateInteractionStates();
+        UpdateInteractionStates();
     }
 
     //interactions
     private void InitializeInteractions()
     {
+        //buttons
+        interactButton = "Interact";
+        giveUpWeaponButton = "AltInteract";
+
         //pack a punch weapon
         interactable.interactions.Add(new Interactable.Interaction
         {
@@ -91,7 +90,6 @@ public class PAP : MonoBehaviour
         });
 
         interactable.activeInteraction = interactable.interactions[0];
-        Debug.Log(interactable.interactions[0].prompt);
         isInitialized = true;
     }
     private void SetInteractingPlayer(Player player)
@@ -114,7 +112,7 @@ public class PAP : MonoBehaviour
             return;
         }
     }
-    private void InitiatePackAPunch()
+    public void InitiatePackAPunch()
     {
         isOccupied = true;
         DeductPoints(interactingPlayer);

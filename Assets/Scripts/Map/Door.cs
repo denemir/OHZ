@@ -28,7 +28,6 @@ public class Door : MonoBehaviour
         if (GetComponent<Interactable>() != null)
         {
             interactable = GetComponent<Interactable>();
-            GetComponent<Interactable>().interactions = new List<Interactable.Interaction>();
             InitializeInteractions();
         }
         else Debug.Log("Interactable component not found on Door. Please attach Interactable script to Door Prefab.");
