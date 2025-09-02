@@ -237,6 +237,10 @@ public class Weapon : MonoBehaviour
     } //gradual decrease after not firing
 
     //pack-er-punching
+    //public void PackAPunchWeapon()
+    //{
+
+    //}
     public PackAPunchedWeapon GetPackAPunchVariant()
     {
         return packAPunchVariant;

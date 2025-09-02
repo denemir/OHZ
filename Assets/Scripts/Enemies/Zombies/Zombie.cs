@@ -120,9 +120,14 @@ public class Zombie : Enemy
         {
             if(collider.GetComponent<GameObject>() == target.gameObject)
             {
-                
+                Swing();
             }
         }
+    }
+    /**Attempt basic swing attack, if target is within damage distance make call to AttackTarget */
+    private void Swing()
+    {
+
     }
     private void AttackTarget()
     {

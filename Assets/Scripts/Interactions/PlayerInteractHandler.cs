@@ -10,7 +10,7 @@ public class PlayerInteractHandler : MonoBehaviour
     private Transform interactionZone; //boundary in front of the player in which determines if a player can interact with an interactable
     public LayerMask interactionLayer;
 
-    //key detection
+    // key detection
     private bool oldKeyDown;
     private bool oldButtonDown;
 
@@ -79,7 +79,6 @@ public class PlayerInteractHandler : MonoBehaviour
             case Player.InputState.KandM:
                 return Input.GetKey(interactable.activeInteraction.altKey);
             case Player.InputState.Controller:
-                //Debug.Log(interactable.activeInteraction.altButton);
                 if (Input.GetButton(interactable.activeInteraction.altButton))
                     return Input.GetButton(interactable.activeInteraction.altButton);
                 return false;
@@ -154,7 +153,6 @@ public class PlayerInteractHandler : MonoBehaviour
             foreach (Interactable interactable in interactablesToRemove)
             {
                 GetComponent<PlayerGUIHandler>().RemovePrompt();
-                //Debug.Log("Interactable out of range: " + interactable.name);
             }
         }
 
