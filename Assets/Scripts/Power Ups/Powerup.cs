@@ -4,40 +4,50 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
-    //powerup stats
-    public string powerupName;
-    public string description;
-    public bool isInstant;
+    // powerup stats
+    public string Name { get; set; }
+    public bool IsInstant { get; set; }
+    public bool IsDrop { get; set; }
+    public bool IsDropped { get; set; }
+    public bool IsCurrentlyActive { get; private set; }
 
-    //lifetime (time of powerup effects)
-    public float maxLifetime;
-    private float currentLifetime;
+    // lifetime (time of powerup effects)
+    public float MaxActiveLifetime;
+    private float CurrentActiveLifetime;
+    public float PickupLifetime;
+    private float CurrentPickupLifetime;
 
-    //pickup lifetime (time before powerup itself despawns)
-    public float pickupLifetime;
-    private float currentPickupLifetime;
-
-    //model & icon
-    public GameObject powerupModel;
+    // model & icon
     public Sprite icon;
 
-    //interaction
+    private void FixedUpdate()
+    {
+        if (IsCurrentlyActive) DecrementEffectTimer();
+        if (IsDropped) DecrementPickupTimer();
+    }
+
+    // interaction
     private void DetectCollision()
     {
 
-    } //check if player intersects collider, if so then apply effects
+    }
 
-    //effects
-    public void ApplyEffect(MatchHandler match)
+    // effects
+    public virtual void ApplyEffectToAllPlayers(MatchHandler match)
     {
 
     }
+    public virtual void ApplyEffectToPlayer(Player player)
+    {
+
+    }
+
     private void DecrementPickupTimer()
     {
-        currentPickupLifetime -= 0.005f;
+        CurrentPickupLifetime -= 0.005f;
     }
     private void DecrementEffectTimer()
     {
-
+        CurrentActiveLifetime -= 0.005f;
     }
 }
