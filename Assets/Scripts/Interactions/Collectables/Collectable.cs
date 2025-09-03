@@ -15,8 +15,6 @@ public class Collectable : MonoBehaviour
     public bool IsActive { get; set; } // whether the collectable has been picked up and the timer is running
     public float MaxPickupTime { get; set; }
     public float RemainingPickupTime { get; set; }
-    public float MaxActiveTime { get; set; }
-    public float RemainingActiveTime { get; set; }
     public bool IsColliding { get; set; }
     public UnityEvent action { get; set; }
 
@@ -25,7 +23,6 @@ public class Collectable : MonoBehaviour
     void Start()
     {
         IsActive = false;
-        RemainingActiveTime = 0;
     }
 
     //// Update is called once per frame
@@ -36,11 +33,6 @@ public class Collectable : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (IsActive && RemainingActiveTime > 0.0)
-        {
-            RemainingActiveTime -= 0.05f;
-        }
-
         if (IsDrop && !IsActive && RemainingPickupTime > 0.0)
         {
             RemainingPickupTime -= 0.05f;
@@ -52,13 +44,12 @@ public class Collectable : MonoBehaviour
     {
         action.Invoke();
         IsActive = true;
-        RemainingActiveTime = MaxActiveTime;
         RemainingPickupTime = 0;
     }
 
     public virtual void Spawn()
     {
-
+        RemainingPickupTime = MaxPickupTime;
     }
 
     public virtual void Despawn()
