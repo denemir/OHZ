@@ -31,7 +31,7 @@ public class Tactical : MonoBehaviour
         
     }
 
-    public void Use()
+    public virtual void Use()
     {
 
     }
