@@ -32,16 +32,25 @@ public class PlayerPerks : MonoBehaviour
     }
     public void LosePerk(Perk perk)
     {
-
+        if (activePerks.Contains(perk))
+        {
+            perk.RemovePerkEffect(player);
+            activePerks.Remove(perk);
+        }
     }
     public void LoseRandomPerk()
     {
-
+        if (activePerks.Count > 0)
+        {
+            int index = Random.Range(0, activePerks.Count - 1);
+            Perk perk = activePerks[index];
+            perk.RemovePerkEffect(player);
+            activePerks.RemoveAt(index);
+        }
     }
     public Perk GetPerk(int slot)
     { 
-        if(slot < activePerks.Count)
-        return activePerks[slot];
+        if(slot < activePerks.Count) return activePerks[slot];
         return null;
     }
 

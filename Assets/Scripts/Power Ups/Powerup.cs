@@ -10,12 +10,13 @@ public class Powerup : MonoBehaviour
     public bool IsDrop { get; set; }
     public bool IsDropped { get; set; }
     public bool IsCurrentlyActive { get; private set; }
+    public bool HasPickupLifetime { get; set; }
 
     // lifetime (time of powerup effects)
     public float MaxActiveLifetime;
     private float CurrentActiveLifetime;
-    public float PickupLifetime;
-    private float CurrentPickupLifetime;
+    public float? PickupLifetime;
+    private float? CurrentPickupLifetime;
 
     // model & icon
     public Sprite icon;

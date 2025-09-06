@@ -18,4 +18,14 @@ public class Perk : MonoBehaviour
     {
 
     }
+
+    public virtual void RemovePerkEffect()
+    {
+
+    }
+
+    public virtual void RemovePerkEffect(Player player)
+    {
+
+    }
 }
